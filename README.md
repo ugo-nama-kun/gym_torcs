@@ -19,7 +19,7 @@ We are assuming you are using Ubuntu 14.04 LTS machine and installed
 * xautomation (http://linux.die.net/man/7/xautomation)
 * OpenAI-Gym (https://github.com/openai/gym)
 * numpy
-* vtorcs-RL-color (installation of vtorcs-RL-color is written in vtorcs-RL-color directory)
+* vtorcs-RL-color (installation of vtorcs-RL-color is explained in vtorcs-RL-color directory)
 
 # Example Code
 The example code and agent are written in example_experiment.py and sample_agent.py.
