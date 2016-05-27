@@ -1,0 +1,78 @@
+;
+; learning.def
+;
+
+LIBRARY
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	NewStringBuffer
+	FreeStringBuffer
+	SetStringBufferLength
+	strBaseName
+	strRemoveSuffix
+	strConcat
+	message
+;	make_message
+	read_string
+	string_copy
+	NewANN
+	DeleteANN
+	?LoadANN@@YAPAUANN_@@PAD@Z
+	?LoadANN@@YAPAUANN_@@PAU_iobuf@@@Z
+	?SaveANN@@YAHPAUANN_@@PAD@Z
+	?SaveANN@@YAHPAUANN_@@PAU_iobuf@@@Z
+	ANN_AddHiddenLayer
+	ANN_AddRBFHiddenLayer
+	ANN_Init
+	ANN_SetOutputsToTanH
+	ANN_SetOutputsToLinear
+	ANN_SetLearningRate
+	ANN_SetLambda
+	ANN_SetZeta
+	ANN_Reset
+	ANN_Input
+	ANN_StochasticInput
+	ANN_Train
+	ANN_Delta_Train
+	ANN_SetBatchMode
+	ANN_BatchAdapt
+	ANN_Test
+	ANN_GetOutput
+	ANN_GetError
+	ANN_GetErrorVector
+	ANN_AddLayer
+	ANN_AddRBFLayer
+	?ANN_FreeLayer@@YAXPAULayer_@@@Z
+	?ANN_FreeLayer@@YAXPAX@Z
+	ANN_CalculateLayerOutputs
+	ANN_Backpropagate
+	ANN_RBFCalculateLayerOutputs
+	ANN_RBFBackpropagate
+	ANN_LayerBatchAdapt
+	Exp
+	Exp_d
+	htan
+	htan_d
+	dtan
+	dtan_d
+	linear
+	linear_d
+	ANN_LayerShowWeights
+	ANN_ShowWeights
+	ANN_ShowOutputs
+	ANN_ShowInputs
+	ANN_LayerShowInputs
+	ArgMin
+	ArgMax
+	SmoothMaxGamma
+	SmoothMaxPNorm
+	SoftMax
+	SoftMin
+	Normalise
+	EuclideanNorm
+	SquareNorm
+	LNorm
+	Sum
+

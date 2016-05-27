@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file        : defaultcar.xml
+    created     : Fri Sep 26 20:06:44 CEST 2003
+    copyright   : (C) 2003 by Eric Espié                         
+    email       : Eric.Espie@torcs.org   
+    version     : $Id: defaultcar.xml,v 1.2 2003/11/08 16:37:17 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+
+<params name="car" type="params">
+
+  <section name="Brake System">
+    <attnum name="front-rear brake repartition" min="0.0" max="1.0" val="0.9"/>
+    <attnum name="max pressure" min="100" max="150000" unit="kPa" val="25000"/>
+  </section>
+
+  <section name="Front Anti-Roll Bar">
+    <attnum name="spring" min="0" max="10000" unit="lbs/in" val="1000"/>
+    <attnum name="suspension course" min="0" max="1" unit="m" val="0.2"/>
+    <attnum name="bellcrank" min="0.5" max="5" val="2.5"/>
+  </section>
+
+  <section name="Rear Anti-Roll Bar">
+    <attnum name="spring" min="0" max="10000" unit="lbs/in" val="0"/>
+    <attnum name="suspension course" min="0" max="1" unit="m" val="0.2"/>
+    <attnum name="bellcrank" min="0.5" max="5" val="2.5"/>
+  </section>
+
+  <section name="Front Right Suspension">
+    <attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+    <attnum name="suspension course" min="0" max="1" unit="m" val="0.25"/>
+    <attnum name="packers" unit="mm" min="0" max="100" val="50"/>
+    <attnum name="bellcrank" val="1"/>
+    <attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="100"/>
+    <attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+    <attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="100"/>
+    <attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+  </section>
+  <section name="Front Left Suspension">
+    <attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+    <attnum name="suspension course" min="0" max="1" unit="m" val="0.25"/>
+    <attnum name="packers" unit="mm" min="0" max="100" val="50"/>
+    <attnum name="bellcrank" val="1"/>
+    <attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="10"/>
+    <attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+    <attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="10"/>
+    <attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+  </section>
+  <section name="Rear Right Suspension">
+    <attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+    <attnum name="suspension course" min="0" max="1" unit="m" val="0.25"/>
+    <attnum name="packers" unit="mm" min="0" max="100" val="50"/>
+    <attnum name="bellcrank" val="1"/>
+    <attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="10"/>
+    <attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+    <attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="10"/>
+    <attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+  </section>
+  <section name="Rear Left Suspension">
+    <attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+    <attnum name="suspension course" min="0" max="1" unit="m" val="0.25"/>
+    <attnum name="packers" unit="mm" min="0" max="100" val="50"/>
+    <attnum name="bellcrank" val="1"/>
+    <attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="10"/>
+    <attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+    <attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="10"/>
+    <attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="500"/>
+  </section>
+
+
+</params>
+
+
+
+

@@ -1,0 +1,222 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: introduction.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>introduction</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="introduction into collision avoidance and overtaking"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, collision, avoidance, overtaking, opponent"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>7.1 Collecting Data About Opponents</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  In this chapter we implement the ability to avoid collisions and to overtake
+		  opponents. I show you quite simple implementations, therefore there is much
+		  room left for improvements. For me it is one of the most interesting parts of the robots,
+		  because you can implement it in very different ways and it is not easy to predict
+		  which ideas will work well and which will not. The following implementation
+		  starts with collecting data about the opponents. After that we implement collision
+		  avoidance and finally overtaking.
+		</p>
+
+		<h3>The Opponent Class</h3>
+		<p>
+		  First we define a class for our opponents. It holds data about the opponents relative
+		  to our robot, e. g. the distance between opponent X's car and ours. For simplicity
+		  I will also put some data into it which is just dependent of the opponent. This is not
+		  efficient if we run more than one robot with our module, it would be better to put
+		  that data into a separate class whose instances are visible from all robots of our
+		  module and are just updated
+		  once per timestep (e. g. when we start <span style="color:red;">bt 1</span>
+		  and <span style="color:red;">bt 2</span> both will compute the speed
+		  of opponent X, that is neither efficient nor necessary).
+		  You can achieve such an update with checking the simulation time and just update the
+		  data when the simulation time has changed. The code would then look somelike that:
+		</p>
+		<p><pre class="lbcolor">static double currenttime;   /* class variable in Driver */
+...
+if (currenttime != situation->currentTime) {
+    currenttime = situation->currentTime;
+    allcars.update();
+}</pre></p>
+
+		<h3>The Opponents Class</h3>
+		<p>
+		  The Opponents class will just hold an array of opponents.
+		</p>
+
+		<h3>The opponent.h File</h3>
+		<p>
+		  Put the following stuff into opponent.h in the <span style="color:red;">bt</span>
+		  directory. I will explain the details
+		  in the discussion of opponent.cpp.
+		</p>
+
+		<p><pre class="lcolor">/***************************************************************************
+
+    file                 : opponent.h
+    created              : Thu Apr 22 01:20:19 CET 2003
+    copyright            : (C) 2003 Bernhard Wymann
+
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef _OPPONENT_H_
+#define _OPPONENT_H_
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+
+#include &lt;tgf.h&gt;
+#include &lt;track.h&gt;
+#include &lt;car.h&gt;
+#include &lt;raceman.h&gt;
+#include &lt;robottools.h&gt;
+#include &lt;robot.h&gt;
+
+#include "linalg.h"
+#include "driver.h"</pre></p>
+
+		<p>
+		  The following lines define bitmasks which we will use to classify the opponents. I will
+		  explain them later.
+		</p>
+
+<p><pre class="lcolor">#define OPP_IGNORE	0
+#define OPP_FRONT	(1&lt;&lt;0)
+#define OPP_BACK	(1&lt;&lt;1)
+#define OPP_SIDE	(1&lt;&lt;2)
+#define OPP_COLL	(1&lt;&lt;3)</pre></p>
+
+		<p>
+		  Because of a cross dependency we need to define a Driver class prototype. After that
+		  the declaration of the Opponent class starts.
+		</p>
+
+<p><pre class="lcolor">class Driver;
+
+/* Opponent maintains the data for one opponent */
+class Opponent {
+    public:
+        Opponent();
+
+        void setCarPtr(tCarElt *car) { this->car = car; }
+        static void setTrackPtr(tTrack *track) { Opponent::track = track; }
+
+        static float getSpeed(tCarElt *car);
+        tCarElt *getCarPtr() { return car; }
+        int getState() { return state; }
+        float getCatchDist() { return catchdist; }
+        float getDistance() { return distance; }
+        float getSideDist() { return sidedist; }
+        float getWidth() { return width; }
+        float getSpeed() { return speed; }
+
+        void update(tSituation *s, Driver *driver);
+
+    private:
+        float getDistToSegStart();
+
+        tCarElt *car;       /* pointer to the opponents car */
+        float distance;     /* approximation of the real distance */
+        float speed;        /* speed in direction of the track */
+        float catchdist;    /* distance needed to catch the opponent */
+        float width;        /* the cars needed width on the track */
+        float sidedist;     /* distance of center of gravity of the cars */
+        int state;          /* state bitmask of the opponent */
+
+        /* class variables */
+        static tTrack *track;
+
+        /* constants */
+        static float FRONTCOLLDIST;
+        static float BACKCOLLDIST;
+        static float SIDECOLLDIST;
+        static float LENGTH_MARGIN;
+        static float SIDE_MARGIN;
+};</pre></p>
+
+		<p>
+		  Finally follows the declaration of the Opponents class. Like you can see it is just
+		  responsible for the update of the opponents.
+		</p>
+
+
+<p><pre class="lcolor">/* The Opponents class holds an array of all Opponents */
+class Opponents {
+    public:
+        Opponents(tSituation *s, Driver *driver);
+        ~Opponents();
+
+        void update(tSituation *s, Driver *driver);
+        Opponent *getOpponentPtr() { return opponent; }
+        int getNOpponents() { return nopponents; }
+
+    private:
+        Opponent *opponent;
+        int nopponents;
+};
+
+
+#endif // _OPPONENT_H_</pre></p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have created opponent.h.</li>
+		   <li>You have an idea of the data we collect.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./ch7.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./opponents.html">
+          <p style="text-align:right;">Collecting data.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

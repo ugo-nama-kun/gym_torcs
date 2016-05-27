@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+                          Definitions for params files                                
+    file                 : params.dtd
+    created              : Fri Aug 13 22:29:02 CEST 1999
+    copyright            : (C) 1999 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: params.dtd,v 1.3 2002/11/16 07:20:36 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+
+<!ELEMENT params (section)+>
+<!ATTLIST params
+          name CDATA #REQUIRED
+	  type CDATA #REQUIRED
+	  mode CDATA #IMPLIED
+>
+
+<!ELEMENT section (attnum | attstr | section)+>
+<!ATTLIST section
+          name CDATA #REQUIRED
+>
+
+<!ELEMENT attnum EMPTY>
+<!ATTLIST attnum 
+          name CDATA #REQUIRED
+	  min  CDATA #IMPLIED
+	  max  CDATA #IMPLIED
+	  unit CDATA #IMPLIED
+          val  CDATA #REQUIRED
+>
+
+<!ELEMENT attstr EMPTY>
+<!ATTLIST attstr 
+          name CDATA #REQUIRED
+	  in   CDATA #IMPLIED
+          val  CDATA #REQUIRED
+>
+
+
+
+
+

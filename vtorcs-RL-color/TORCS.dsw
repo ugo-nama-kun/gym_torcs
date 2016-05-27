@@ -1,0 +1,557 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNUNG: DIESE ARBEITSBEREICHSDATEI DARF NICHT BEARBEITET ODER GELÖSCHT WERDEN!
+
+###############################################################################
+
+Project: "TORCS"=.\TORCS.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lliaw
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name racemantools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name wtorcs
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name txml
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name simuv2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name solid
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name quickrace
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ssggraphlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cylos1
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name damned
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name inferno
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name inferno2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name inferno3
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name inferno4
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name track
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name human
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name k1999
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tita
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tanhoj
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name berniw
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name berniw2
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name inferno5
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name inferno6
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name raceengine
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name client
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name accc
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name berniw3
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name bt
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name nfs2ac
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name trackgen
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name nfsperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name learning
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name olethros
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "accc"=.\src\tools\accc\accc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "berniw"=.\src\drivers\berniw\berniw.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "berniw2"=.\src\drivers\berniw2\berniw2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "berniw3"=.\src\drivers\berniw3\berniw3.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "bt"=.\src\drivers\bt\bt.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "client"=.\src\libs\client\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ssggraphlib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "damned"=.\src\drivers\damned\damned.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "human"=.\src\drivers\human\human.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "inferno"=.\src\drivers\inferno\inferno.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "inferno2"=.\src\drivers\inferno2\inferno2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "learning"=.\SRC\LIBS\learning\learning.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "lliaw"=.\src\drivers\lliaw\lliaw.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "nfs2ac"=.\src\tools\nfs2ac\nfs2ac.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "nfsperf"=.\SRC\TOOLS\NFSPERF\nfsperf.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "olethros"=.\SRC\DRIVERS\olethros\olethros.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name learning
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "robottools"=.\src\libs\robottools\robottools.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "simuv2"=.\src\modules\simu\simuv2\simuv2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name solid
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "solid"=".\src\modules\simu\simuv2\SOLID-2.0\solid.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ssggraphlib"=.\src\modules\graphic\ssggraph\ssggraphlib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "tgf"=.\src\libs\tgf\tgf.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name txml
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "tita"=.\src\drivers\tita\tita.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "track"=.\src\modules\track\track.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name robottools
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "trackgen"=.\src\tools\trackgen\trackgen.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name client
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "txml"=.\src\libs\txml\txml.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "wtorcs"=.\src\windows\wtorcs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name txml
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name quickrace
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name raceengine
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name racemantools
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name client
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name tgf
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

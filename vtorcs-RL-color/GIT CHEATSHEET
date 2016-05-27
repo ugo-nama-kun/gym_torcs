@@ -1,0 +1,18 @@
+
+update:
+git commit
+git push
+
+for lots of files:
+git commit -a
+
+add a comment on the top of the file before closing
+
+update removal
+git rm $(git ls-files --deleted)
+or better:
+git add -u
+
+remove only from repository and from tracking, not from local
+git rm -r --cached DIR
+

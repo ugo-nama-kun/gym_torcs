@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_26" class="java.beans.XMLDecoder"> 
+ <object class="utils.Properties"> 
+  <void property="author"> 
+   <string>HKou</string> 
+  </void> 
+  <void property="category"> 
+   <string>evo</string> 
+  </void> 
+  <void property="currentA"> 
+   <double>6.283185307179599</double> 
+  </void> 
+  <void property="currentX"> 
+   <double>3.694822225952521E-13</double> 
+  </void> 
+  <void property="currentY"> 
+   <double>1.8868670232117223E-12</double> 
+  </void> 
+  <void property="curveNameCount"> 
+   <int>7</int> 
+  </void> 
+  <void property="description"> 
+   <string></string> 
+  </void> 
+  <void property="path"> 
+   <string>evo/evo-1-r</string> 
+  </void> 
+  <void property="straightNameCount"> 
+   <int>12</int> 
+  </void> 
+  <void property="trackName"> 
+   <string>evo-1-r</string> 
+  </void> 
+ </object> 
+</java> 

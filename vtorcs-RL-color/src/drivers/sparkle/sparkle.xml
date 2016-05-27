@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    file                 : sparkle.xml
+    created              : Wed Jan 8 18:31:16 CET 2003
+    copyright            : (C) 2002 Bernhard Wymann
+    email                : berniw@bluewin.ch
+    version              : $Id: sparkle.xml,v 1.2 2003/08/13 00:03:15 berniw Exp $
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+
+<params name="sparkle" type="robotdef">
+  <section name="Robots">
+    <section name="index">
+
+      <section name="0">
+        <attstr name="name" val="sparkle 1"></attstr>
+        <attstr name="desc" val=""></attstr>
+        <attstr name="team" val="sparkle"></attstr>
+        <attstr name="author" val="Eva Tscheulin"></attstr>
+        <attstr name="car name" val="baja-bug"></attstr>
+        <attnum name="race number" val="81"></attnum>
+        <attnum name="red" val="1.0"></attnum>
+        <attnum name="green" val="0.0"></attnum>
+        <attnum name="blue" val="1.0"></attnum>
+      </section>
+
+    </section>
+  </section>
+</params>

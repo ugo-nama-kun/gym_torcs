@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	 file        : dtmrace.xml
+	 created     : Fri Jan  3 13:19:48 CET 2003
+	 copyright   : (C) 2003 by Eric Espi�                         
+	 email       : Eric.Espie@torcs.org   
+	 version     : $Id: dtmrace.xml,v 1.9.2.1 2008/08/05 23:47:46 berniw Exp $                                  
+	 -->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../libs/tgf/params.dtd">
+
+<params name="dtm race" type="param" mode="mw">
+	
+	<section name="Header">
+		<attstr name="name" val="Challenge Race"/>
+		<attstr name="description" val="Multiple races"/>
+		<attnum name="priority" val="50"/>
+		<attstr name="menu image" val="data/img/splash-dtm.png"/>
+		<attstr name="run image" val="data/img/splash-run-practice.png"/>
+		<attstr name="start image" val="data/img/splash-dtmstart.png"/>
+	</section>
+	
+	<section name="Tracks">
+		<attnum name="maximum number" val="1"/>
+		
+		<section name="1">
+			<attstr name="name" val="e-track-6"/>
+			<attstr name="category" val="road"/>
+		</section>
+	</section>
+	
+	<section name="Races">
+		
+		<section name="1">
+			<attstr name="name" val="Qualifications"/>
+		</section>
+		
+		<section name="2">
+			<attstr name="name" val="Sprint Race"/>
+		</section>
+		
+		<section name="3">
+			<attstr name="name" val="Main Race"/>
+		</section>
+	</section>
+	
+	<section name="Qualifications">
+		<attnum name="laps" val="3"/>
+		<attstr name="type" val="qualifications"/>
+		<attstr name="starting order" val="drivers list"/>
+		<attstr name="display mode" val="results only"/>
+		<attstr name="restart" val="no"/>
+		<attstr name="display results" val="yes"/>
+		<attstr name="must complete" val="yes"/>
+		
+		<section name="Starting Grid">
+			<attnum name="rows" val="1.000000"/>
+			<attnum name="distance to start" val="100.000000"/>
+			<attnum name="distance between columns" val="20.000000"/>
+			<attnum name="offset within a column" val="10.000000"/>
+			<attnum name="initial speed" val="0.000000"/>
+			<attnum name="initial height" val="0.200000"/>
+		</section>
+	</section>
+	
+	<section name="Sprint Race">
+		<attnum name="distance" val="50" unit="km"/>
+		<attstr name="type" val="race"/>
+		<attstr name="starting order" val="last race"/>
+		<attstr name="restart" val="no"/>
+		<attnum name="maximum drivers" val="40"/>
+		<attstr name="splash menu" val="yes"/>
+		
+		<section name="Starting Grid">
+			<attnum name="rows" val="2.000000"/>
+			<attnum name="distance to start" val="25.000000"/>
+			<attnum name="distance between columns" val="20.000000"/>
+			<attnum name="offset within a column" val="10.000000"/>
+			<attnum name="initial speed" val="0.000000"/>
+			<attnum name="initial height" val="0.200000"/>
+		</section>
+		
+		<section name="Points">
+			<section name="1">
+				<attnum name="points" val="10"/>
+			</section>
+			<section name="2">
+				<attnum name="points" val="8"/>
+			</section>
+			<section name="3">
+				<attnum name="points" val="6"/>
+			</section>
+			<section name="4">
+				<attnum name="points" val="5"/>
+			</section>
+			<section name="5">
+				<attnum name="points" val="4"/>
+			</section>
+			<section name="6">
+				<attnum name="points" val="3"/>
+			</section>
+			<section name="7">
+				<attnum name="points" val="2"/>
+			</section>
+			<section name="8">
+				<attnum name="points" val="1"/>
+			</section>
+		</section>
+		
+	</section>
+	
+	<section name="Main Race">
+		<attnum name="distance" val="180" unit="km"/>
+		<attstr name="type" val="race"/>
+		<attstr name="starting order" val="last race"/>
+		<attstr name="restart" val="no"/>
+		<attstr name="splash menu" val="yes"/>
+		
+		<section name="Starting Grid">
+			<attnum name="rows" val="2.000000"/>
+			<attnum name="distance to start" val="25.000000"/>
+			<attnum name="distance between columns" val="20.000000"/>
+			<attnum name="offset within a column" val="10.000000"/>
+			<attnum name="initial speed" val="0.000000"/>
+			<attnum name="initial height" val="0.200000"/>
+		</section>
+		
+		<section name="Points">
+			<section name="1">
+				<attnum name="points" val="20"/>
+			</section>
+			<section name="2">
+				<attnum name="points" val="16"/>
+			</section>
+			<section name="3">
+				<attnum name="points" val="12"/>
+			</section>
+			<section name="4">
+				<attnum name="points" val="10"/>
+			</section>
+			<section name="5">
+				<attnum name="points" val="8"/>
+			</section>
+			<section name="6">
+				<attnum name="points" val="6"/>
+			</section>
+			<section name="7">
+				<attnum name="points" val="4"/>
+			</section>
+			<section name="8">
+				<attnum name="points" val="2"/>
+			</section>
+		</section>
+	</section>
+	
+	<section name="Drivers">
+		<attnum name="maximum number" val="50"/>
+		<attstr name="focused module" val="human"/>
+		<attnum name="focused idx" val="5.000000"/>
+		
+		<section name="1">
+			<attnum name="idx" val="7"/>
+			<attstr name="module" val="berniw"/>
+		</section>
+		
+		<section name="2">
+			<attnum name="idx" val="7"/>
+			<attstr name="module" val="olethros"/>
+		</section>
+		
+		<section name="3">
+			<attnum name="idx" val="9"/>
+			<attstr name="module" val="lliaw"/>
+		</section>
+		
+		<section name="4">
+			<attnum name="idx" val="3"/>
+			<attstr name="module" val="tita"/>
+		</section>
+		
+		<section name="5">
+			<attnum name="idx" val="4"/>
+			<attstr name="module" val="inferno"/>
+		</section>
+		
+		<section name="6">
+			<attnum name="idx" val="8"/>
+			<attstr name="module" val="damned"/>
+		</section>
+		
+		<section name="7">
+			<attnum name="idx" val="5"/>
+			<attstr name="module" val="bt"/>
+		</section>
+		
+		<section name="8">
+			<attnum name="idx" val="1.000000"/>
+			<attstr name="module" val="human"/>
+		</section>
+		
+	</section>
+	
+	<section name="Configuration">
+		
+		<section name="1">
+			<attstr name="type" val="track select"/>
+		</section>
+		
+		<section name="2">
+			<attstr name="type" val="drivers select"/>
+		</section>
+	</section>
+	
+</params>

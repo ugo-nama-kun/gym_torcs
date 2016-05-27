@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: utility1.html,v 1.1 2004/11/30 14:02:10 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Basic Utility Functions</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="basic utility functions"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, utility, braking"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #pic1 { float:left; border:0px; width:261px; height:202px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    -->
+  </style>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>3.1 Basic Utility Functions</h1>
+
+        <h3>Introduction</h3>
+        <p>
+          Ah, it's you. Welcome back. The boring "administrative" stuff is over, now we start to bang out the most out of our car.
+          This chapter will introduce you in braking and gear changing. We will still drive on the middle of
+          the track, so don't expect exciting lap times. But what braking concerns, you will implement in
+          this chapter all "secrets" from my berniw robot. But before we start let's record some lap
+          times of our current implementation with the cg-nascar-rwd car:
+        </p>
+        <ul style="list-style-type:disk; color:black;">
+          <li>mixed-2: 1:24:24, 13314 damage.</li>
+          <li>e-track-2: 2:18:76, 201 damage.</li>
+          <li>e-track-4: 4:51:75, 4 damage.</li>
+        </ul>
+        <p>
+          In the "Basic" sections of this chapter I will introduce you into driving without considering
+          aerodynamics, anti wheel locking and traction control. In the "Advanced" sections we will add
+          this features. First we start with developing some useful utility functions.
+        </p>
+
+        <h3>About Speed Limits</h3>
+        <p>
+          <img id="pic1" src="images/basic1.jpg" alt="speed formula" border="0"></img>
+          Of course, all speed junkies get now sick because of the section title. But keep in mind, if you
+          want to race, use TORCS or go to the race track, please don't use public roads. But that's not
+          the subject, I want to discuss the physical speed limits...<br/>
+          Like you know from experience, you can't pass a turn with any speed, there are limits which can be
+          described with physical laws. Of course we need to know how fast we can pass a turn. The force that 
+          pushes the car outside
+          the turn is called centrifugal force. That's the left part of the top equation on the sketch. To hold
+          the car on the track, we need to compensate it. Our tires will do that job with friction on the
+          track. The maximum possible speed in a turn results if you solve the equation. You should notice that we
+          assume that all wheels have the same mu
+          and the load is equally distributed over all wheels. We further simplify with the friction
+          coefficient mu, in reality it's a complex function which depends on the relative speed vector
+          between the surfaces, the current load, the shape of the patch, the temperature, ... This leads to
+          the following function:
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <p>
+          <pre class="lcolor">/* Compute the allowed speed on a segment */
+float Driver::getAllowedSpeed(tTrackSeg *segment)
+{
+    if (segment-&gt;type == TR_STR) {
+        return FLT_MAX;
+    } else {
+        float mu = segment-&gt;surface-&gt;kFriction;
+        return sqrt(mu*G*segment-&gt;radius);
+    }
+}</pre>
+        </p>
+        <p>
+          The function gets a pointer to the segment in question. If it's a straight segment there is no limit,
+          else we compute the limit according to the above formula. You can improve the function e. g. with
+          taking into account the center of gravity of the car.
+        </p>
+
+        <h3>Distance</h3>
+        <p>
+          For braking we need also to know distances. Here is a function that computes the distance of the car
+          to the end of the current segment (remember the track segments or look up chapter 1.3). I put this into a function, because car->_trkPos.toStart contains
+          depending on the segment type the arc or the length, so we need to convert it sometimes to the length
+          (arc times radius = length).
+        </p>
+        <p>
+          <pre class="lcolor">/* Compute the length to the end of the segment */
+float Driver::getDistToSegEnd(tCarElt* car)
+{
+    if (car-&gt;_trkPos.seg-&gt;type == TR_STR) {
+        return car-&gt;_trkPos.seg-&gt;length - car-&gt;_trkPos.toStart;
+    } else {
+        return (car-&gt;_trkPos.seg-&gt;arc - car-&gt;_trkPos.toStart)*car-&gt;_trkPos.seg-&gt;radius;
+    }
+}</pre>
+        </p>
+
+        <h3>Accelerator</h3>
+        <p>
+          We need also to know for a given speed how much accelerator pedal we have to apply. If we tell TORCS
+          to accelerate 100% (1.0), it tries to run the engine at the maximum allowed rpm (car->_enginerpmRedLine). We can
+          compute the angular speed of the wheel with the speed and the wheel radius. This has to be equal like
+          the desired rpm divided by the gear ratio. So we finally end up with an equation for the desired rpm,
+          the pedal value is then rpm/enginerpmRedLine. If the given speed is much higher than the current speed, we will
+          accelerate full.
+        </p>
+        <p>
+          <pre class="lcolor">/* Compute fitting acceleration */
+float Driver::getAccel(tCarElt* car)
+{
+    float allowedspeed = getAllowedSpeed(car-&gt;_trkPos.seg);
+    float gr = car-&gt;_gearRatio[car-&gt;_gear + car-&gt;_gearOffset];
+    float rm = car-&gt;_enginerpmRedLine;
+    if (allowedspeed &gt; car-&gt;_speed_x + FULL_ACCEL_MARGIN) {
+        return 1.0;
+    } else {
+        return allowedspeed/car-&gt;_wheelRadius(REAR_RGT)*gr /rm;
+    }
+}</pre>
+        </p>
+
+        <h3>Finishing Implementation</h3>
+        <p>
+          We have to define the constants G and FULL_ACCEL_MARGIN in driver.cpp
+        </p>
+        <p>
+          <pre class="lcolor">const float Driver::G = 9.81;                  /* [m/(s*s)] */
+const float Driver::FULL_ACCEL_MARGIN = 1.0;   /* [m/s] */</pre></p>
+        <p>
+          and in driver.h.
+        </p>
+          <pre class="lcolor">static const float G;
+static const float FULL_ACCEL_MARGIN;</pre></p>
+        <p>
+          Put also the above method interfaces into driver.h.
+        </p>
+          <pre class="lcolor">float getAllowedSpeed(tTrackSeg *segment);
+float getAccel(tCarElt* car);
+float getDistToSegEnd(tCarElt* car);</pre>
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You respect speed limits on public roads.</li>
+           <li>You know the physics of driving through turns.</li>
+           <li>You have implemented it.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./ch3.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./braking1.html">
+          <p style="text-align:right;">Now let's apply brakes.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

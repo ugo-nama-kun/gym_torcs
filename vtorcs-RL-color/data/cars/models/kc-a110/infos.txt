@@ -1,0 +1,50 @@
+Alpine A110 1600S - Type 1600VB 1972 - N° Chassis :  	   	 
+  	  			  	 
+Moteur : 	4 cylindres en ligne 	  	 
+type 	longitudinal, porte-à-faux arrière 	  	 
+emplacement 	porte à faux arrière 	  	 
+cylindrée 	1605cc 	  	 
+alésage x course (mm) 	78 x 84 mm 	  	 
+rapport volumétrique 	10.25 : 1 	  	 
+puissance (ch à t/mn) 	123 cv à 6000 t/mn 	  	 
+puissance spécifique (ch/l) 	75 cv/l 	  	 
+couple maximun (m.kg à t/mn) 	15mkg à 5000 trs/mn 	  	 
+alimentation 	2 Weber 45DCOE 	  	 
+distribution 	arbre à cames lateral, tiges, culbuteurs et poussoirs 	  	 
+allumage 	bobine / distributeur 	  	 
+matière bloc/culasse 	fonte / aluminium 	  	 
+vilebrequin 	5 paliers 	  	 
+refroidissement 	par liquide (9 l), radiateur avant 	  	 
+équipement électrique 	alternateur 30 A - 12 V, 55Ah 	  	 
+		  	 
+Transmission : 		  	 
+mode 	aux roues arrière 	  	 
+embrayage 	monodique à sec 	  	 
+nombre de rapports 	5 + MA 	  	 
+rapport de boîte 	1° - 3,61/1 - 8.520 km/h à 1000 t/mn
+			2° - 2,36/1 - 13.010 km/h à 1000 t/mn
+			3° - 1,69/1 - 18.180 km/h à 1000 t/mn
+			4° - 1,29/1 - 23.845 km/h à 1000 t/mn
+			5° - 1,03/1 - 31.760 km/h à 1000 t/mn
+			AR - 3,08/1A 	  	 
+		  	 
+Châssis : 		  	 
+type et structure 	poutre centrale, carrosserie en polyester 	  	 
+suspension avant 	triangle superposés, ressorts helicoïdaux, amortisseurs telescopiques, barre anti-roulis 	  	 
+suspension arrière 	demi-essieu avec jambes de force obliques articulées sous le plancher dans le prolongement des axes d'articulation des trompettes 	  	 
+freins 	4 disques, double circuit de freinage 	  	 
+direction 	à crémaillière 	  	 
+jantes 	pneus 165 x 13" 	  	 
+		  	 
+Dimensions : 		  	 
+longueur x largeur x hauteur 	380,5 x 152 x 1138 cm 	  	 
+empattement 	210 cm 	  	 
+voies avant et arrière 	163,6 - 132,5 mm 	  	 
+capacité essence 	38 	  	 
+capacité liquide refroidissement 	10 l 	  	 
+poids en ordre de marche 	715 kg 	  	 
+puissance fiscale 	9 CV 	  	 
+		  	 
+Performances 		  	 
+vitesse maxi 	210 km/h 	  	 
+1000m départ arrté 	29,4 s

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    file                 : scr_server.xml
+    created              : Tue Dec 18 23:40:54 CET 2007
+    copyright            : (C) 2002 Daniele Loiacono
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+<params name="scr_server" type="robotdef">
+  <section name="Robots">
+    <section name="index">
+      <section name="0">
+	<attstr name="name" val="scr_server 1"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="1"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="1">
+	<attstr name="name" val="scr_server 2"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="2"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="2">
+	<attstr name="name" val="scr_server 3"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="3"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="3">
+	<attstr name="name" val="scr_server 4"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="4"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="4">
+	<attstr name="name" val="scr_server 5"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="5"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="5">
+	<attstr name="name" val="scr_server 6"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="6"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="6">
+	<attstr name="name" val="scr_server 7"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="7"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="7">
+	<attstr name="name" val="scr_server 8"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="8"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="8">
+	<attstr name="name" val="scr_server 9"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="9"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+      <section name="9">
+	<attstr name="name" val="scr_server 10"></attstr>
+	<attstr name="desc" val=""></attstr>
+	<attstr name="team" val=""></attstr>
+	<attstr name="author" val="Daniele Loiacono"></attstr>
+	<attstr name="car name" val="car1-trb1"></attstr>
+	<attnum name="race number" val="10"></attnum>
+	<attnum name="red" val="1.0"></attnum>
+	<attnum name="green" val="1.0"></attnum>
+	<attnum name="blue" val="1.0"></attnum>
+      </section>
+</section>
+  </section>
+</params>

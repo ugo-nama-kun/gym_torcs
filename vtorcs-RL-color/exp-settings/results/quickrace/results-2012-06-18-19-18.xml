@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE params SYSTEM "/home/giuse/torcs-1.3.1/BUILD/share/games/torcs/config/params.dtd">
+<?xml-stylesheet type="text/xsl" href="file:////home/giuse/torcs-1.3.1/BUILD/share/games/torcs/config/style.xsl"?>
+
+<params name="Results">
+  <section name="Header">
+    <attnum name="date" val="1.34004e+09"/>
+  </section>
+
+  <section name="Current">
+    <attnum name="current track" val="1"/>
+    <attnum name="current race" val="1"/>
+    <attnum name="current driver" val="1"/>
+  </section>
+
+  <section name="Street 1">
+    <section name="Drivers">
+      <section name="1">
+        <attstr name="dll name" val="human"/>
+        <attnum name="index" val="1"/>
+      </section>
+
+    </section>
+
+    <section name="Results">
+      <section name="Quick Race">
+        <attnum name="laps" val="0"/>
+        <section name="Rank">
+          <section name="1">
+            <attstr name="name" val="Player"/>
+            <attstr name="car" val="car7-trb1"/>
+            <attnum name="index" val="0"/>
+            <attnum name="laps" val="0"/>
+            <attnum name="time" val="0"/>
+            <attnum name="best lap time" val="0"/>
+            <attnum name="top speed" val="55.56"/>
+            <attnum name="dammages" val="10087"/>
+            <attnum name="pits stops" val="0"/>
+            <attstr name="module" val="human"/>
+            <attnum name="idx" val="1"/>
+            <attnum name="points" val="0"/>
+          </section>
+
+        </section>
+
+      </section>
+
+    </section>
+
+  </section>
+
+  <section name="Standings">
+    <section name="1">
+      <attstr name="name" val="Player"/>
+      <attstr name="module" val="human"/>
+      <attnum name="idx" val="1"/>
+      <attnum name="points" val="0"/>
+    </section>
+
+  </section>
+
+</params>

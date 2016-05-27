@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: braking1.html,v 1.1 2004/11/30 14:02:09 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Basic Braking</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="basic breaking"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, braking"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #pic1 { float:left; border:0px; width:315px; height:279px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    -->
+  </style>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>3.2 Basic Braking</h1>
+
+        <h3>Braking Distance</h3>
+        <p>
+          <img id="pic1" src="images/basic2.jpg" alt="brake distance formulas" border="0"></img>
+          Like you have seen in the previous section, there is a physical speed limit in the turns.
+          Imagine the following situation: we drive on a straight with speed v1, and in distance d is a turn.
+          We can compute the possible speed (we call it v2) in the turn with the getAllowedSpeed() method,
+          which we have developed in the previous chapter. If we make some assumptions, we can compute the
+          required minimal braking distance s. Now if s is greater or equal than d we have to start braking
+          (you see we brake as late as possible, and even a bit later).<br/>
+          But how do we compute this distance? Look a the top formula on the sketch. This time we work with
+          energy equations. Our car has a certain amount of kinetic energy, and we want to reach a lower
+          energy state. We have to "burn" the energy difference in our brakes. You can solve the equation for
+          s, which is our braking distance. We assume in this equation, that mu is constant over s, what is
+          actually wrong e. g. at mixed tracks. But don't worry, it will work quite well anyway, but here is
+          room for improvement.<br/>
+          There is a special case of the formula, where v2 equals zero. We need that to compute the maximum
+          braking distance. The idea is that in the worst case we have to stop, so checking this distance
+          is sufficient.
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+        <h3>Implementation</h3>
+        <p>
+          Here is the code that computes if we need to brake.
+        </p>
+        <p>
+          <pre class="lcolor">float Driver::getBrake(tCarElt* car)
+{
+    tTrackSeg *segptr = car-&gt;_trkPos.seg;
+    float currentspeedsqr = car-&gt;_speed_x*car-&gt;_speed_x;
+    float mu = segptr-&gt;surface-&gt;kFriction;
+    float maxlookaheaddist = currentspeedsqr/(2.0*mu*G);</pre>
+        </p>
+        <p>maxlookaheddist is the distance we have to check (formula with special case v2 = 0).</p>
+        <p>
+          <pre class="lcolor">    float lookaheaddist = getDistToSegEnd(car);</pre>
+        </p>
+        <p>
+          lookaheaddist holds the distance we have already checked. First we check if we need to brake for
+          a speed limit on the end of the current segment.
+        </p>
+        <p>
+          <pre class="lcolor">    float allowedspeed = getAllowedSpeed(segptr);
+    if (allowedspeed &lt; car-&gt;_speed_x) return 1.0;</pre>
+        </p>
+        <p>
+          Compute the allowed speed on the current segment. We check our speed, and if we are too fast we
+          brake, else we continue with the algorithm. Here you can improve the return value, it's a bit tough
+          to brake full (e. g. make it dependent on the speed difference).
+        </p>
+        <p>
+          <pre class="lcolor">    segptr = segptr->next;
+    while (lookaheaddist &lt; maxlookaheaddist) {</pre>
+        </p>
+        <p>
+          The first line moves segptr to the next segment. The guard of the loop checks if we have already
+          checked far enough.
+        </p>
+        <p>
+          <pre class="lcolor">        allowedspeed = getAllowedSpeed(segptr);
+        if (allowedspeed &lt; car-&gt;_speed_x) {</pre>
+        </p>
+        <p>
+          Compute the allowed speed on the *segptr segment. If the allowed speed is smaller than the current
+          speed, we need to investigate further.
+        </p>
+        <p>
+          <pre class="lcolor">            float allowedspeedsqr = allowedspeed*allowedspeed;
+            float brakedist = (currentspeedsqr - allowedspeedsqr) / (2.0*mu*G);</pre>
+        </p>
+        <p>
+          Here we compute the braking distance according to the formula above.
+        </p>
+        <p>
+          <pre class="lcolor">            if (brakedist &gt; lookaheaddist) {</pre>
+        </p>
+        <p>
+          Here the magic check is done. If the required distance to brake is greater than the current distance
+          we need to brake. This works because the simulation timestep is small, so we fail the point in the
+          worst case with ~2.0 meters. So to fix that you can add always 2 meters to the brakedist, or better
+          a speed dependent value.
+        </p>
+
+        </p>
+        <p>
+          <pre class="lcolor">                return 1.0;
+            }
+        }
+        lookaheaddist += segptr-&gt;length;
+        segptr = segptr-&gt;next;
+    }
+    return 0.0;
+}</pre>
+        </p>
+        <p>
+          The remaining code is straightforward. If we decided to brake we return 1. If we loop further we update the
+          lookaheaddist and switch to the next segment. A comment to the return value: 1 means apply full
+          brakes, so we have later to adjust the pressure in the brake system, that the wheels don't lock up
+          immediately or we have enough pressure at all. You will see this on the xj-220,
+          the wheels will smoke very nice... A hint: it should also be possible to compute the right
+          pressure and do an automatic set up of that value.
+        </p>
+
+        <p>
+          Now we need also to change the drive method to call getAccel and getBrake.
+        </p>
+        <pre class="lcolor">        car-&gt;ctrl.gear = 4;
+        car-&gt;ctrl.brakeCmd = getBrake(car);
+        if (car-&gt;ctrl.brakeCmd == 0.0) {
+            car-&gt;ctrl.accelCmd = getAccel(car);
+        } else {
+            car-&gt;ctrl.accelCmd = 0.0;
+        }</pre>
+        </p>
+        <p>
+          We have to switch into a higher gear to check the stuff. We just accelerate if we don't brake. And
+          finally you need to update driver.h with the interface of getBrake.
+        </p>
+        </p>
+        <pre class="lcolor">        float getBrake(tCarElt* car);</pre>
+        </p>
+
+        <h3>Testdrive</h3>
+        <p>
+          Do some test runs with the different cars. Enable the debug vector (press "g") to watch the return
+          values of the robot. With cg-nascar-rwd you should recognize that the braking is very "flashy" on
+          high speeds, try to explain why. The lap times are now:
+        </p>
+         <ul style="list-style-type:disk; color:black;">
+          <li>mixed-2: 1:36:66, 4 damage.</li>
+          <li>e-track-2: 1:53:85, 0 damage.</li>
+          <li>e-track-4: 2:19:08, 4 damage.</li>
+        </ul>
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt32.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have understood the physics of braking.</li>
+           <li>You have implemented it.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./utility1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./gears.html">
+          <p style="text-align:right;">What about gears?</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

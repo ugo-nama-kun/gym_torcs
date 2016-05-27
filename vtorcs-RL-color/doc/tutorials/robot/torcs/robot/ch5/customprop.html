@@ -1,0 +1,160 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: customprop.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>add custom properties</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="straight class"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, car, setup, custom properties"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>5.5 Add Custom Properties</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  In this section you will learn how to add your own properties to the setup file and
+		  how to load it. As example we store a new property which contains the fuel required for
+		  one lap. We load this property and compute from that the whole amount of fuel we need
+		  for the race. Then we pass that back to the simulation, so that our car starts with
+		  the ideal amount of fuel.
+		</p>
+		
+        <h3>Implementation</h3>
+        <p>
+		  First I show you the changes needed in the setup file. For the example we take the
+		  driver <span style="color:red;">bt 1</span>
+		  on g-track-3 in practice mode. From that
+		  follows that we have to modify the file
+		  <span style="color:green;">0</span>/practice/g-track-3.xml. Add the following to
+		  the file above from &lt;/params&gt;. 
+		</p>
+		
+		<p><pre class="lcolor">    &lt;section name="<span style="color:red;">bt</span> private"&gt;
+        &lt;attnum name="fuelperlap" val="2.0"/&gt;
+    &lt;/section&gt;</pre>
+		</p>
+		
+		<p>
+		  We define a new section type for all our private settings. Inside the section we
+		  define our new property "fuelperlap" as numeric property and assign the value 2.0.
+		  You could also put your properties into another file.
+		</p>
+		
+		<p>
+		  Now we add the code to load the property to driver.cpp. First we define new
+		  constants to access the section and the attribute.
+		</p>
+		
+		<p><pre class="lcolor">#define BT_SECT_PRIV "<span style="color:red;">bt</span> private"
+#define BT_ATT_FUELPERLAP "fuelperlap"</pre>
+		</p>
+		
+		<p>
+		  The code to load and initialize settings has to be in Driver::initTrack(). Append
+		  the following code at the end of the method.
+		</p>
+		
+		<p><pre class="lcolor">    float fuel = GfParmGetNum(*carParmHandle, BT_SECT_PRIV, 
+        BT_ATT_FUELPERLAP, (char*)NULL, 5.0);</pre>
+		</p>
+		<p>
+		  Try to load our property. If it fails the value defaults to 5.0. After that compute
+		  the required fuel for the race. That's the number of laps times the fuel required per
+		  lap. To play safe we add fuel for an additional lap. After that set the initial fuel
+		  up.
+		</p>
+		
+		<p><pre class="lcolor">    fuel *= (s-&gt;_totLaps + 1.0);
+    GfParmSetNum(*carParmHandle, SECT_CAR, PRM_FUEL, (char*)NULL, MIN(fuel, 100.0));</pre>
+		</p>
+		
+		<p>
+		  If you run a practice session with <span style="color:red;">bt 1</span> on g-track-3
+		  the initial fuel should be 42.0 if everything works.
+		</p>
+		
+		<h3>Accessing Subsections</h3>
+		<p>
+		  You have seen that it is possible to have subsections in the setup files, so
+		  that it is possible to structure the parameters.
+		  But how do we access parameters in subsections? As example we assume that we add a
+		  subsection "test" in our private section, which contains the parameter "cool". 
+		</p>
+		<p><pre class="lbcolor">    &lt;section name="<span style="color:red;">bt</span> private"&gt;
+        &lt;attnum name="fuelperlap" val="2.0"/&gt;
+        &lt;section name="test"&gt;
+            &lt;attnum name="cool" val="2.0"/&gt;
+        &lt;/section&gt;
+    &lt;/section&gt;</pre>
+		</p>
+		<p>
+		  To access the parameter "cool" you have to assemble a path for the subsection,
+		  which contains simply the section
+		  names top down to the subsection separated by "/". So the path would be
+		  "<span style="color:red;">bt</span> private/test". Here is an example how to implement
+		  it.
+		</p>
+		<p><pre class="lbcolor">#define BT_SECT_PRIV_TEST "test"
+#define BT_ATT_COOL "cool"
+
+float cool;
+char path[256];
+sprintf(path, "%s/%s", BT_SECT_PRIV, BT_SECT_PRIV_TEST);
+cool = GfParmGetNum(*carParmHandle, path, BT_ATT_COOL, (char*)NULL, 0.0);</pre>
+		</p>
+		
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt55.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p> 
+
+		
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know how to load custom properties.</li>
+		   <li>You know how to access and create subsections.</li>
+		   <li>You know how to set up your car with computed values.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./properties.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./carsetup.html">
+          <p style="text-align:right;">Let's setup the car.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+Building Windows Installer for TORCS
+------------------------------------
+Required tools from nsis.sourceforge.net:
+- NSIS 2.06
+- HM NIS EDIT 2.0.3
+
+- Build a TORCS release and copy the runtime directory into this (here).
+- Rename the runtime to base.
+- Open torcs.nsi with HM NIS EDIT 2.0.3 and compile the installer.
+
+
+Updating the torcs.nsi file
+---------------------------
+- Because the above tools do NOT yet support the maintainance with the gui,
+  here are some notes of me and for me.
+- Install cygwin.
+- Install previous TORCS version, assume path is torcspath. Important: do not
+  run it, generated files could confuse us.
+- compile new final version, do not run it, we assume it is in directory
+  CWD/base.
+- Get different files:
+
+		diff -rq base torcspath > gaga
+
+- We are just interested in vanished/new files for the installer, create a
+  template for file lines in the script, is good for existing directories with
+  additional content (one line):
+
+		cat gaga | sed 's/\(.*\)\(base.*\): \(.*\)$/  File "\2\/\3"/g' |
+		sed 's/\//\\/g' | grep -v Only
+
+- If a whole new tree should be added (e.g. olethros), do this (one line), be
+  aware that the order needs some fixing afterwards:
+
+		find base/drivers/olethros -name "*" | sed 's/\//\\/g' |
+		sed 's/^\(.*\.[a-z]\{3\}\)$/  File "\1"/g' |
+		sed 's/^base\(.*\)$/  SetOutPath "$INSTDIR\1"/g'
+
+- Run the installer and install to a clean directory, check with diff against
+  the fresh built tree from above.  
+
+- For unistall entries use this after an install uninstall cycle:
+		
+		find . -type f | sed 's/\.\(.*\)$/  Delete "$INSTDIR\1"/g'
+
+Creating binary patches
+-----------------------
+- Have a look at the file patch.nsi.
+- Create a bat file to create the patch files in cygwin, run it aftrwards in the
+  cmd shell (assumes GenPat in current dir):
+
+	$ diff -rq /cygdrive/c/Programme/torcs-t2 /cygdrive/c/Programme/torcs | sed 's/^Files \(\/.*\) and \(\/.*\/\)\(.*\)\.\(.*\) differ$/\GenPat \1 \2\3\.\4 \3_\4.pat/' | sed 's/\//\\/g' | sed 's/GenPat/\.\\GenPat -B=8 /' | sed 's/\\cygdrive\\\(.\)/\1:/g'> gaga.bat
+
+- Create the file list for the installer:
+
+	$ diff -rq /cygdrive/c/Programme/torcs-t2 /cygdrive/c/Programme/torcs | sed 's/^Files \(\/.*\) and \(\/.*\/\)\(.*\)\.\(.*\) differ$/  File \/oname=\$TEMP\\\3_\4\.pat \3_\4\.pat/' | sed 's/\//\\/g' | sed 's/\\oname/\/oname/' > files
+
+- Create the patching commands:
+
+	$ diff -rq /cygdrive/c/Programme/torcs-t2 /cygdrive/c/Programme/torcs | sed 's/^Files \(\/.*\) and \(\/.*torcs\/\)\(.*\)\.\(.*\) differ$/  DetailPrint "Updating $INSTDIR\\\3\.\4\.\.\."@@@@  vpatch::vpatchfile "$TEMP\\/' | sed 's/\//\\/g'| sed 's/\(\$INSTDIR.*\\\)\(.*\)\.\(.*\)\(\.\.\..*\)/\1\2\.\3\4\2_\3.pat" "\1\2\.\3" "\1\2\.\3_"@@@@  Pop \$R0@@@@  DetailPrint "Result: \$R0"@@@@  StrCmp \$R0 "OK" 0 \+3@@@@  Delete "\1\2\.\3"@@@@  Rename "\1\2\.\3_" "\1\2\.\3"@@@@  Delete "$TEMP\\\2_\3.pat"@@@@/' | sed 's/@@@@/\n/g' > commands
+
+- Do not forget to update the registery, fix menus, etc.
+
+
+
+
+
+
+

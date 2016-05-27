@@ -1,0 +1,11 @@
+;
+; berniw2.def
+;
+
+LIBRARY
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	berniw2
+

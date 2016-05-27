@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : preferences.xml
+    created              : Mon Apr 10 18:04:38 CEST 2000
+    copyright            : (C) 2000 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: preferences.xml,v 1.16 2003/11/08 16:37:17 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+
+<params mode="mw" type="template" name="Player Pref">
+
+  <section name="joystick">
+    <attstr name="up shift"   val="BTN1-0"/>
+    <attstr name="down shift" val="BTN2-0"/>
+    <attstr name="ASR cmd" val="BTN6-0"/>
+    <attstr name="ABS cmd" val="BTN3-0"/>
+    <attstr name="reverse gear" val="BTN4-0"/>
+    <attstr name="neutral gear" val="BTN5-0"/>
+    <attstr name="1st gear" val=""/>
+    <attstr name="2nd gear" val=""/>
+    <attstr name="3rd gear" val=""/>
+    <attstr name="4th gear" val=""/>
+    <attstr name="5th gear" val=""/>
+    <attstr name="6th gear" val=""/>
+    <attstr name="release gear button goes neutral" in="yes,no" val="no"/>
+    <attstr name="sequential shifter allow neutral" in="yes,no" val="no"/>
+
+    <attnum name="steer sensitivity" val="0.8"/>
+    <attnum name="steer power" val="1.0"/>
+
+    <attstr name="left steer" val="AXIS0-0"/>
+    <attnum name="left steer min" val="1.0"/>
+    <attnum name="left steer max" val="-1.1"/>
+
+    <attstr name="right steer" val="AXIS0-0"/>
+    <attnum name="right steer min" val="1.0"/>
+    <attnum name="right steer max" val="-1.1"/>
+
+    <attstr name="throttle" val="AXIS1-0"/>
+    <attnum name="throttle min" val="1.0"/>
+    <attnum name="throttle max" val="-1.1"/>
+    <attnum name="throttle sensitivity" val="1.0"/>
+    <attnum name="throttle power" val="1.2"/>
+
+    <attstr name="brake" val="AXIS4-0"/>
+    <attnum name="brake min" val="1.0"/>
+    <attnum name="brake max" val="-1.1"/>
+    <attnum name="brake sensitivity" val="0.2"/>
+    <attnum name="brake power" val="1.2"/>
+
+    <attstr name="clutch" val="AXIS4-0"/>
+    <attnum name="clutch min" val="1.0"/>
+    <attnum name="clutch max" val="-1.1"/>
+    <attnum name="clutch sensitivity" val="0.2"/>
+    <attnum name="clutch power" val="1.2"/>
+  </section>
+
+  <section name="mouse">
+    <attstr name="up shift"   val=""/>
+    <attstr name="down shift" val=""/>
+    <attstr name="ASR cmd" val="z"/>
+    <attstr name="ABS cmd" val="a"/>
+    <attstr name="reverse gear" val=""/>
+    <attstr name="neutral gear" val=""/>
+    <attstr name="1st gear" val=""/>
+    <attstr name="2nd gear" val=""/>
+    <attstr name="3rd gear" val=""/>
+    <attstr name="4th gear" val=""/>
+    <attstr name="5th gear" val=""/>
+    <attstr name="6th gear" val=""/>
+    <attstr name="release gear button goes neutral" in="yes,no" val="yes"/>
+    <attstr name="sequential shifter allow neutral" in="yes,no" val="no"/>
+
+    <attnum name="steer sensitivity" val="0.8"/>
+    <attnum name="steer speed sensitivity" val="0.7"/>
+    <attnum name="steer dead zone" unit="%" val="4.0"/>
+
+    <attstr name="left steer" val="Left Arrow"/>
+    <attnum name="left steer min" val="0"/>
+    <attnum name="left steer max" val="300"/>
+    <attnum name="left steer power" val="0.0034"/>
+
+    <attstr name="right steer" val="Right Arrow"/>
+    <attnum name="right steer min" val="0"/>
+    <attnum name="right steer max" val="300"/>
+    <attnum name="right steer power" val="0.0034"/>
+
+    <attstr name="throttle" val="Up Arrow"/>
+    <attnum name="throttle min" val="0"/>
+    <attnum name="throttle max" val="1"/>
+    <attnum name="throttle sensitivity" val="1.0"/>
+    <attnum name="throttle power" val="0"/>
+
+    <attstr name="brake" val="Down Arrow"/>
+    <attnum name="brake min" val="0"/>
+    <attnum name="brake max" val="1"/>
+    <attnum name="brake sensitivity" val="1.0"/>
+    <attnum name="brake power" val="0"/>
+  </section>
+
+  <section name="Preferences">
+    <attstr name="control" in="mouse,joystick" val="mouse"/>
+
+    <section name="Drivers">
+
+      <section name="1">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<!-- Starting parameters -->
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>	
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="2">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="3">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+
+      </section>
+
+      <section name="4">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="5">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="6">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="7">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="8">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="9">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+      <section name="10">
+	<attstr name="transmission" in="auto,manual" val="auto"/>
+	<attstr name="ABS on" in="yes,no" val="yes"/>
+	<attstr name="ASR on" in="yes,no" val="yes"/>
+	<attnum name="programmed pit stops" val="0"/>
+      </section>
+
+    </section>
+  </section>
+
+  <section name="joystick analog">
+    <attstr name="up shift"    val="BTN1-0"/>
+    <attstr name="down shift"  val="BTN2-0"/>
+    <attstr name="ASR on/off"  val="BTN3-0"/>
+    <attstr name="ABS on/off"  val="BTN4-0"/>
+
+    <attstr name="steer" val="AXIS0-0"/>
+    <attnum name="steer sensitivity" val="0.5" min="0.1" max="2.0"/>
+    <attnum name="steer power" val="1.0" min="0.5" max="4.0"/>
+
+    <attstr name="throttle" val="AXIS1-0"/>
+    <attnum name="throttle min" val="0.0" min="-1.0" max="1.0"/>
+    <attnum name="throttle max" val="-1.0" min="-1.0" max="1.0"/>
+    <!-- Joystick sensitivity -->
+    <attnum name="throttle sensitivity" val="1.0" min="0.1" max="2.0"/>
+    <!-- Joystick multiplicator -->
+    <attnum name="throttle power" val="1.2" min="0.5" max="4.0"/>
+
+    <attstr name="brake" val="AXIS1-0"/>
+    <attnum name="brake min" val="0.0" min="-1.0" max="1.0"/>
+    <attnum name="brake max" val="1.2" min="-1.0" max="1.0"/>
+    <attnum name="brake sensitivity" val="1.0" min="0.1" max="2.0"/>
+    <attnum name="brake power" val="1.2" min="0.5" max="4.0"/>
+  </section>
+
+  <section name="joystick USB MsFFWheel">
+    <attstr name="up shift"    val="BTN8-0"/>
+    <attstr name="down shift"  val="BTN7-0"/>
+    <attstr name="ASR cmd"  val="BTN4-0"/>
+    <attstr name="ABS cmd"  val="BTN1-0"/>
+
+    <attstr name="steer" val="AXIS0-0"/>
+    <attnum name="steer sensitivity" val="0.5"/>
+    <attnum name="steer power" val="1.0"/>
+
+    <attstr name="throttle" val="AXIS1-0"/>
+    <attnum name="throttle min" val="1.0"/>
+    <attnum name="throttle max" val="-1.1"/>
+    <!-- Joystick sensitivity -->
+    <attnum name="throttle sensitivity" val="1.0"/>
+    <!-- Joystick multiplicator -->
+    <attnum name="throttle power" val="1.2"/>
+
+    <attstr name="brake" val="AXIS4-0"/>
+    <attnum name="brake min" val="1.0"/>
+    <attnum name="brake max" val="-1.1"/>
+    <attnum name="brake sensitivity" val="0.5"/>
+    <attnum name="brake power" val="0.8"/>
+  </section>
+
+  <section name="joystick digital (joypad)">
+    <attstr name="up shift" val="BTN3-0"/>
+    <attstr name="down shift" val="BTN4-0"/>
+    <attstr name="ASR cmd" val="BTN5-0"/>
+    <attstr name="ABS cmd" val="BTN6-0"/>
+    <attstr name="reverse gear" val=""/>
+    <attstr name="neutral gear" val=""/>
+    <attstr name="1st gear" val=""/>
+    <attstr name="2nd gear" val=""/>
+    <attstr name="3rd gear" val=""/>
+    <attstr name="4th gear" val=""/>
+    <attstr name="5th gear" val=""/>
+    <attstr name="6th gear" val=""/>
+    <attstr name="release gear button goes neutral" val="yes"/>
+    <attstr name="steer" val="AXIS0-0"/>
+    <attnum name="steer sensitivity" val="0.500000"/>
+    <attnum name="steer power" val="1.000000"/>
+    <attstr name="throttle" val="BTN1-0"/>
+    <attstr name="brake" val="BTN2-0"/>
+    <attnum name="steer min" val="-1.000000"/>
+    <attnum name="steer max" val="1.000000"/>
+    <attnum name="throttle min" val="0.000000"/>
+    <attnum name="throttle max" val="1.000000"/>
+    <attnum name="brake min" val="0.000000"/>
+    <attnum name="brake max" val="1.000000"/>
+    <attnum name="throttle sensitivity" val="1.0"/>
+    <attnum name="throttle power" val="1.2"/>
+    <attnum name="brake sensitivity" val="0.5"/>
+    <attnum name="brake power" val="1.2"/>
+  </section>
+
+</params>
+
+

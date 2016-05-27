@@ -1,0 +1,91 @@
+#!/bin/bash
+
+##############################################################################
+#
+#    file                 : torcs.in
+#    created              : Sat Sep 11 20:20:04 CEST 1999
+#    copyright            : (C) 1999 by Eric Espie
+#    email                : torcs@free.fr
+#    version              : $Id: torcs,v 1.1 2005/02/04 19:43:40 berniw Exp $
+#
+##############################################################################
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+##############################################################################
+
+prefix=@prefix@
+exec_prefix=${prefix}
+
+BINDIR=${exec_prefix}
+LIBDIR=${exec_prefix}/lib
+DATADIR=${prefix}/share
+VARDIR=${prefix}/var
+
+LOCAL_CONF=$HOME/.torcs
+
+if [ -d $DATADIR ]
+then
+	if [ ! -d $LOCAL_CONF ]
+	then
+		rm -rf $LOCAL_CONF
+		mkdir -p $LOCAL_CONF
+		echo "$LOCAL_CONF created, copying/linking game data"
+    fi
+
+	export LD_LIBRARY_PATH=$LIBDIR/lib:$LD_LIBRARY_PATH
+    cd $DATADIR
+    if [ -f $LIBDIR/setup_linux.sh ]
+    then
+		/bin/bash $LIBDIR/setup_linux.sh $LOCAL_CONF
+		if [ $? -ne 0 ]
+		then
+	    	exit 1
+		fi
+    else
+		echo "$LIBDIR/setup_linux.sh file does not exist, check your installation"
+		exit 1
+    fi
+
+    case $1 in
+	# List the library used
+	-l) shift
+	    ldd $LIBDIR/torcs-bin
+	    ;;
+
+	# Run under GDB
+	-d) shift
+	    gdb  $LIBDIR/torcs-bin <<EOF
+r -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*
+bt
+EOF
+	    ;;
+
+	-e) shift
+	    echo "cd $DATADIR"
+	    echo "export LD_LIBRARY_PATH=$LIBDIR/lib:$LD_LIBRARY_PATH"
+	    echo "gdb  $LIBDIR/torcs-bin"
+	    echo "r -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*"
+	    ;;
+
+	-h)
+	    echo "usage: torcs [-l|-d|-e]"
+	    echo "   -l  list the dynamically linked libraries"
+	    echo "   -d  run under gdb and print stack trace on exit"
+	    echo "   -e  display the commands to issue when you want to run under gdb"
+	    ;;
+
+	# Normal run
+	*) $LIBDIR/torcs-bin -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*
+	    ;;
+
+    esac
+    exit 0
+fi
+
+echo "TORCS location not found"
+
+

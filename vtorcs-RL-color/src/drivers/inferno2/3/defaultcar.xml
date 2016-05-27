@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file        : defaultcar.xml
+    created     : Fri Sep 26 20:06:44 CEST 2003
+    copyright   : (C) 2003 by Eric Espié                         
+    email       : Eric.Espie@torcs.org   
+    version     : $Id: defaultcar.xml,v 1.1 2003/10/19 19:28:22 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+
+<params name="car" type="params">
+
+</params>
+
+
+
+

@@ -1,0 +1,143 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: loading.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>loading custom car setups</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="straight class"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, car, setup, loading"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>5.2 Loading Custom Car Setups</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  First lets have a look on where the default settings for the cars are coming from. They
+		  are loaded automatically from the cars type default settings XML file. These files
+		  are located in the cars/* directories, e. g. for the
+		  cg-nascar-rwd it is the file cars/cg-nascar-rwd/cg-nascar-rwd.xml (relative to
+		  /usr/local/share/games/torcs). This happens always, so if we load no settings ourselves,
+		  the default settings are active. If we load a custom setup it just overwrites the
+		  default settings, if we don't specify a certain value the default value is active.
+		  To create a custom setup we make just a copy of the default setup, remove the stuff we
+		  don't want to change and edit the values.  
+		</p>
+		
+        <h3>Loading Setups</h3>
+        <p>
+		  The following implementation will first try to load a custom car setup for the
+		  current track. If there is no such setup available, it falls back to a default custom
+		  setup. If this fails also, the TORCS default setup stays active. Our custom
+		  setup files will
+		  be located e. g. for the driver with index 0 in the subdirectories 0, 0/practice,
+		  0/qualifying and 0/race (relative to the <span style="color:red;">bt</span> directory). 
+		  Put the following code into driver.cpp, method Driver::initTrack().
+		</p>
+		
+		<p>
+		  <pre class="lcolor">/* Called for every track change or new race. */
+void Driver::initTrack(tTrack* t, void *carHandle, void **carParmHandle, tSituation *s)
+{
+    track = t;</pre>
+		</p>
+		
+		<p>
+		  First we compute a pointer to the tracks filename from the whole path. The
+		  filename starts after the last "/", so we need to add 1 to the location found with
+		  strrchr. 
+		</p>
+		
+		<p><pre class="lcolor">    char buffer[256];
+    /* get a pointer to the first char of the track filename */
+    char* trackname = strrchr(track-&gt;filename, '/') + 1;</pre>
+		</p>
+
+		<p>
+		  Depending on the race type, we want to load the fitting setup. For that we assemble
+		  the required path to our setup file relative to the /usr/local/share/games/torcs
+		  directory. 
+		</p>
+		<p><pre class="lcolor">    switch (s-&gt;_raceType) {
+        case RM_TYPE_PRACTICE:
+            sprintf(buffer, "drivers/<span style="color:red;">bt</span>/%d/practice/%s", INDEX, trackname);
+            break;
+        case RM_TYPE_QUALIF:
+            sprintf(buffer, "drivers/<span style="color:red;">bt</span>/%d/qualifying/%s", INDEX, trackname);
+            break;
+        case RM_TYPE_RACE:
+            sprintf(buffer, "drivers/<span style="color:red;">bt</span>/%d/race/%s", INDEX, trackname);	
+            break;
+        default:
+            break;
+    }</pre>
+		</p>
+		
+		<p>
+		  Now we try to load the setup file. After that we check if the file has been loaded. If
+		  not we assemble the path to the default setup file and try to read it. If you are not
+		  sure about the setup file name you need for a certain track you can add a printf or
+		  cout to print the filename to the terminal.
+		</p>
+		
+		<p><pre class="lcolor">    *carParmHandle = GfParmReadFile(buffer, GFPARM_RMODE_STD);
+    if (*carParmHandle == NULL) {
+        sprintf(buffer, "drivers/<span style="color:red;">bt</span>/%d/default.xml", INDEX);
+        *carParmHandle = GfParmReadFile(buffer, GFPARM_RMODE_STD);
+    } 
+}</pre>
+		</p>
+		
+		<p>
+		  Because we haven't created any setups yet the loader will fail for now. In the next
+		  section we will create the directory structure for the setups.
+		</p>
+        
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know where the default setup files are located.</li>
+		   <li>You know how to create custom setup files.</li>
+		   <li>You have implemented the above setup loader.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./introduction.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./creating.html">
+          <p style="text-align:right;">Creating the directory structure.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

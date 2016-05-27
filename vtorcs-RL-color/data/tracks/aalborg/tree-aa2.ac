@@ -1,0 +1,51 @@
+AC3Db
+MATERIAL "" rgb 0.2 0.2 0.2  amb 0.8 0.8 0.8  emis 0.4 0.4 0.4  spec 0.1 0.1 0.1  shi 10  trans 0
+OBJECT world
+kids 1
+OBJECT group
+name "my_world"
+kids 2
+OBJECT poly
+name "tree_p149"
+texture "allborg-trees_n.rgb"
+numvert 4
+0.265807 -0.5 4.24907
+-0.265807 -0.5 -4.24907
+0.265807 18.15 4.24907
+-0.265807 18.15 -4.24907
+numsurf 2
+SURF 0x20
+mat 0
+refs 3
+2 0.213165 0.56218
+0 0.213165 0.000632763
+3 0.449185 0.56218
+SURF 0x20
+mat 0
+refs 3
+1 0.449185 0.000632763
+3 0.449185 0.56218
+0 0.213165 0.000632763
+kids 0
+OBJECT poly
+name "tree_p150"
+texture "allborg-trees_n.rgb"
+numvert 4
+3.816 -0.5 -0.167297
+-3.816 -0.5 0.167297
+3.816 18.15 -0.167297
+-3.816 18.15 0.167297
+numsurf 2
+SURF 0x20
+mat 0
+refs 3
+2 0.211359 0.562273
+0 0.211359 0.000742197
+3 0.450712 0.562273
+SURF 0x20
+mat 0
+refs 3
+1 0.450712 0.000742197
+3 0.450712 0.562273
+0 0.211359 0.000742197
+kids 0

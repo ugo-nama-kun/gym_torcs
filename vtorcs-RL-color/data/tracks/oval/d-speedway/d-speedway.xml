@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : d-speedway.xml
+    created              : Sun Mar 19 00:13:46 CET 2000
+    copyright            : (C) 2000 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: d-speedway.xml,v 1.2 2004/02/09 05:42:43 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../../../src/libs/tgf/params.dtd" [
+<!-- general definitions for tracks -->
+<!ENTITY default-surfaces SYSTEM "../../../data/tracks/surfaces.xml">
+<!ENTITY default-objects SYSTEM "../../../data/tracks/objects.xml">
+]>
+
+<params name="D-Speedway" type="trackdef" mode="mw">
+
+
+  <!-- Surfaces -->
+  <section name="Surfaces">
+      &default-surfaces;
+  </section>
+
+  <!-- Objects -->
+  <section name="Objects">
+      &default-objects;
+  </section>  <!-- Objects -->
+
+  <section name="Header">
+    <attstr name="name"        val="D-Speedway"/>
+    <attstr name="category"    val="oval"/>
+    <attnum name="version"     val="4"/>
+    <attstr name="author"      val="E.Espie"/>
+    <attstr name="description" val="D shaped SpeedWay"/>
+  </section>
+
+  <section name="Graphic">
+    <attstr name="3d description" val="d-speedway.ac"/>
+
+    <attstr name="background image" val="background.png"/>
+    <attnum name="background type" val="4"/>
+
+    <attnum name="background color R" val="0.5"/>
+    <attnum name="background color G" val="0.5"/>
+    <attnum name="background color B" val="0.55"/>
+
+    <attnum name="ambient color R" val="0.1"/>
+    <attnum name="ambient color G" val="0.1"/>
+    <attnum name="ambient color B" val="0.05"/>
+
+    <attnum name="diffuse color R" val="1"/>
+    <attnum name="diffuse color G" val="1"/>
+    <attnum name="diffuse color B" val="1"/>
+
+    <attnum name="specular color R" val="0.1"/>
+    <attnum name="specular color G" val="0.1"/>
+    <attnum name="specular color B" val="0.1"/>
+
+
+    <attnum name="light position x" val="-0"/>
+    <attnum name="light position y" val="1000"/>
+    <attnum name="light position z" val="300"/>
+
+    <section name="Environment Mapping">
+      <section name="1">
+	<attstr name="env map image" val="env.png"/>
+      </section>
+    </section>
+
+    <section name="Terrain Generation">
+      <attnum name="track step" unit="m" val="20"/>
+      <attnum name="border margin" unit="m" val="300"/>
+      <attnum name="border step" unit="m" val="50"/>
+      <attnum name="border height" unit="m" val="20"/>
+      <attstr name="surface" val="grass6"/>
+      <attstr name="relief file" val="d-speedway-relief.ac"/>
+    </section>
+
+  </section>
+
+
+  <section name="Main Track">
+
+    <attnum name="width" unit="m" val="30.0"/>
+    <attnum name="profil steps length" unit="m" val="10"/>
+
+    <!-- PITS -->
+    <section name="Pits">
+      <attstr name="type" val="track side"/>
+      <attstr name="side" val="left"/>
+      <attstr name="entry" val="pit entry"/>
+      <attstr name="start" val="last seg"/>
+      <attstr name="end" val="start lane"/>
+      <attstr name="exit" val="pit exit"/>
+      <attnum name="length" unit="m" val="15"/>
+      <attnum name="width" unit="m" val="6"/>
+    </section>  <!-- PITS -->
+
+    <section name="Track Segments">
+
+      <section name="start lane">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+	<attstr name="surface" val="concrete4"/>
+	<attnum name="banking start" unit="deg" val="-15"/>
+	<attnum name="banking end" unit="deg" val="-15"/>
+
+	<section name="Right Barrier">
+	  <attstr name="surface" val="wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="0.5"/>
+	  <attnum name="height" val="1.5"/>	  
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-concrete4-concrete-l1"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attnum name="start width" val="15"/>
+	  <attnum name="end width" val="15"/>
+	  <attstr name="surface" val="concrete-pits"/>
+	  <attstr name="type" in="level,tangent" val="level"/>
+	</section>
+      </section>
+
+      <section name="pit exit">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="b-concrete4-concrete-l1p"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="concrete"/>
+	  <attnum name="end width" val="8"/>
+	</section>
+      </section>
+
+      <!-- TURN 1 -->
+      <section name="turn1-1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="400"/>
+	<attnum name="arc" unit="deg" val="30"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="b-concrete4-concrete-l1"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn1-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="300"/>
+	<attnum name="arc" unit="deg" val="60"/>
+      </section>
+
+      <section name="turn1-3">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="400"/>
+	<attnum name="arc" unit="deg" val="60"/>
+      </section>
+
+      <!-- TURN 2 -->
+      <section name="turn2-1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="900"/>
+	<attnum name="arc" unit="deg" val="60"/>
+     </section>
+
+      <!-- TURN 3 -->
+      <section name="turn3-1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="400"/>
+	<attnum name="arc" unit="deg" val="60"/>
+      </section>
+
+      <section name="turn3-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="300"/>
+	<attnum name="arc" unit="deg" val="60"/>
+      </section>
+
+      <section name="turn3-3">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="400"/>
+	<attnum name="arc" unit="deg" val="30"/>
+      </section>
+
+      <section name="pit entry">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="b-concrete4-concrete-l1p"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="concrete"/>
+	  <attnum name="end width" val="15"/>
+	</section>
+      </section>
+
+
+      <section name="last seg">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-concrete4-concrete-l1"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attnum name="end width" val="15"/>
+	  <attstr name="surface" val="concrete-pits"/>
+	  <attstr name="type" in="level,tangent" val="level"/>
+	</section>
+      </section>
+
+
+    </section>
+  </section>
+
+  <!-- Cameras -->
+  <section name="Cameras">
+
+    <section name="cam 0">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment"  val="start lane"/>
+      <attnum name="to right" val="0"/>
+      <attnum name="to start" val="100"/>
+      <attnum name="height"   val="4"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="start lane"/> <!-- included  -->
+      <attstr name="fov end"   val="turn1-1"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 1">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment"  val="turn1-2"/>
+      <attnum name="to right" val="40"/>
+      <attnum name="to start" unit="deg" val="30"/>
+      <attnum name="height"   val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn1-1"/> <!-- included  -->
+      <attstr name="fov end"   val="line2-1"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 4">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment"  val="turn2-1"/>
+      <attnum name="to right" val="40"/>
+      <attnum name="to start" unit="deg" val="30"/>
+      <attnum name="height"   val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn2-1"/> <!-- included  -->
+      <attstr name="fov end"   val="turn3-1"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 7">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment"  val="turn3-2"/>
+      <attnum name="to right" val="40"/>
+      <attnum name="to start" unit="deg" val="30"/>
+      <attnum name="height"   val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn3-1"/> <!-- included  -->
+      <attstr name="fov end"   val="pit entry"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 8">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment"  val="last seg"/>
+      <attnum name="to right" val="0"/>
+      <attnum name="to start" val="100"/>
+      <attnum name="height"   val="4"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="pit entry"/> <!-- included  -->
+      <attstr name="fov end"   val="start lane"/> <!-- excluded -->
+    </section>
+
+  </section>
+
+
+</params>
+

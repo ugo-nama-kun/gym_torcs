@@ -1,0 +1,189 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: utility.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>pit utility functions</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="pit utility functions"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, pit, pit stop, utility"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>8.4 Pit Utility Functions</h1>
+
+		<h3>Introduction</h3>
+
+		<p>
+		  In this section I show you the utility functions of the pit class. The functions
+		  responsible for the strategy will follow in the next section. Put the following
+		  code into pit.cpp.
+		</p>
+
+		<h3>The toSplineCoord Method</h3>
+
+		<p>
+		  This method converts distances from the start line into distances from the
+		  pit entry.
+		</p>
+
+		<p><pre class="lcolor">/* Transforms track coordinates to spline parameter coordinates */
+float Pit::toSplineCoord(float x)
+{
+    x -= pitentry;
+    while (x &lt; 0.0) {
+        x += track-&gt;length;
+    }
+    return x;
+}</pre></p>
+
+		<p>
+		  First we subtract of the given value the distance of the pit entry from the start.
+		  Because the start line can lie between the pit entry and the pit exit, it is
+		  possible that the result becomes negative. In such a case we have to add a
+		  track length to correct that.
+		</p>
+
+		<h3>The getPitOffset Method</h3>
+
+		<p>
+		  This method computes the pit offset for the path into the pit which
+		  is added to the target point. The arguments given are a current offset and
+		  the distance of the target point from the start.
+		</p>
+
+		<p><pre class="lcolor">/* computes offset to track middle for trajectory */
+float Pit::getPitOffset(float offset, float fromstart)
+{
+    if (mypit != NULL) {
+        if (getInPit() || (getPitstop() &amp;&amp; isBetween(fromstart))) {
+            fromstart = toSplineCoord(fromstart);
+            return spline-&gt;evaluate(fromstart);
+        }
+    }
+    return offset;
+}</pre></p>
+
+		<p>
+		  First we check if there is a pit available. If we have a pit we check if we are
+		  already performing a pit stop with
+		  getInPit() or if we plan a pit stop and the target point falls onto the pit path.
+		  If the expression evaluates to true we want to follow the pit path, therefore we
+		  compute a new offset and return it. If one of the above expressions fails, we
+		  simply return the given offset.
+		</p>
+
+		<h3>The setPitstop Method</h3>
+
+		<p>
+		  This is the setter method for the pitstop variable. You should just access the
+		  pitstop variable through this method, because it makes sure that the variable
+		  is not set while we are on the track parallel to the pit lane. It is not allowed
+		  to set the variable to true in this range because we would start immediately to
+		  head to
+		  the pit path, which would lead to a crack in the path and probably cause an
+		  accident. Setting to false is allowed, because the inpit variable will indicate
+		  that we have to finish the pit stop.
+		</p>
+
+		<p><pre class="lcolor">/* Sets the pitstop flag if we are not in the pit range */
+void Pit::setPitstop(bool pitstop)
+{
+    if (mypit == NULL) return;
+    float fromstart = car-&gt;_distFromStartLine;
+
+    if (!isBetween(fromstart)) {
+        this-&gt;pitstop = pitstop;
+    } else if (!pitstop) {
+        this-&gt;pitstop = pitstop;
+    }
+}</pre></p>
+
+		<p>
+		  If we do not own a pit return. If we have a pit do the above explained checks
+		  and leave the pitstop variable in the correct state.
+		</p>
+		<h3>The isBetween Method</h3>
+
+		<p>
+		  Checks if the given argument (a distance from the startline) falls between the
+		  pit entry and the pit exit.
+		</p>
+
+<p><pre class="lcolor">/* Check if the argument fromstart is in the range of the pit */
+bool Pit::isBetween(float fromstart)
+{
+    if (pitentry &lt;= pitexit) {
+        if (fromstart &gt;= pitentry &amp;&amp; fromstart &lt;= pitexit) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        if ((fromstart &gt;= 0.0 &amp;&amp; fromstart &lt;= pitexit) ||
+            (fromstart &gt;= pitentry &amp;&amp; fromstart &lt;= track-&gt;length))
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}</pre></p>
+
+		<p>
+		  First we check if pitentry is smaller than pitexit. If that is the case the
+		  start line falls not into the pit range. So we can simply check if the given
+		  argument is greater than pitentry and smaller than pitexit.
+		</p>
+		<p>
+		  If pitentry is greater than pitexit, then the start line is in the pit range.
+		  The given argument falls in this case in the pit range if it is between zero
+		  and pitexit or between pitentry and the track end (equals the length).
+		</p>
+
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have understood and implemented the above methods.</li>
+        </ul>
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./pitclass.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./strategy.html">
+          <p style="text-align:right;">The pit strategy.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

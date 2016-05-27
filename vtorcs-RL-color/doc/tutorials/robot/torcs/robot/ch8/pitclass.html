@@ -1,0 +1,236 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: pitclass.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>the pit class</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="the pit class"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, pit, pit stop, class"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>8.3 The Pit Class</h1>
+
+		<h3>The Header File</h3>
+		<p>
+		  In this section we prepare the header file for the pit class. It contains the
+		  definition of the functionality to decide if we want to pit (strategy), to
+		  compute the pit path (offset) and some utility functions. Put the following
+		  code into a new file named pit.h.
+		</p>
+
+		<p><pre class="lcolor">/***************************************************************************
+
+    file                 : pit.h
+    created              : Thu Mai 15 2:41:00 CET 2003
+    copyright            : (C) 2003 by Bernhard Wymann
+    email                : berniw@bluewin.ch
+
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef _PIT_H_
+#define _PIT_H_
+
+#include "driver.h"
+#include "spline.h"
+
+#define NPOINTS 7</pre></p>
+
+		<p>
+		  First we define the number of points for the pit path spline.
+		</p>
+
+		<p><pre class="lcolor">class Driver;
+
+class Pit {
+    public:
+        Pit(tSituation *s, Driver *driver);
+        ~Pit();</pre></p>
+
+		<p>
+		  The constructor and destructor. We have already implemented them in the last section.
+		</p>
+
+<p><pre class="lcolor">        void setPitstop(bool pitstop);
+        bool getPitstop() { return pitstop; }</pre></p>
+
+		<p>
+		  Setter and getter for the pitstop variable.
+		</p>
+
+<p><pre class="lcolor">        void setInPit(bool inpitlane) { this->inpitlane = inpitlane; }
+        bool getInPit() { return inpitlane; }</pre></p>
+
+		<p>
+		  Setter and getter for the inpitlane variable.
+		</p>
+
+		<p><pre class="lcolor">        float getPitOffset(float offset, float fromstart);</pre></p>
+
+		<p>
+		  Computes for a given distance from the start line the offset of the path.
+		</p>
+
+<p><pre class="lcolor">        bool isBetween(float fromstart);</pre></p>
+
+		<p>
+		  Checks if the given distance from start is between pitentry and pitexit. Such
+		  a method is handy because the value wraps-around at the start line.
+		</p>
+
+<p><pre class="lcolor">        float getNPitStart() { return p[1].x; }
+        float getNPitLoc() { return p[3].x; }
+        float getNPitEnd() { return p[5].x; }</pre></p>
+
+		<p>
+		  Methods to get the spline "x" coordinates of the points 1,3 and 5. We need them to
+		  control the speed limit in the pit lane and to stop in the pit.
+		</p>
+
+
+<p><pre class="lcolor">        float toSplineCoord(float x);</pre></p>
+
+		<p>
+		  Converts the track (distance from start) "x" coordinates of the spline into
+		  spline "x" coordinates, starting from zero with no wrap-around in the "x" value.
+		</p>
+
+<p><pre class="lcolor">        float getSpeedlimitSqr() { return speedlimitsqr; }
+        float getSpeedlimit() { return speedlimit; }</pre></p>
+
+		<p>
+		  Methods to get the speed limit in the pits. The returned value already includes
+		  the security margin.
+		</p>
+
+<p><pre class="lcolor">        void update();
+        int getRepair();
+        float getFuel();</pre></p>
+
+		<p>
+		  The update() method does the housekeeping of the data used for the strategy and
+		  decides if we need to pit. The getRepair() and getFuel() methods decides
+		  how much damage gets repaired and how much fuel we get at the pit stop.
+		</p>
+
+<p><pre class="lcolor">    private:
+        tTrack *track;
+        tCarElt *car;
+        tTrackOwnPit *mypit;    /* pointer to my pit */
+        tTrackPitInfo *pitinfo; /* general pit info */</pre></p>
+
+		<p>
+		  Pointers to the track, car, the pit and the pitinfo structure. I use them to
+		  avoid too much indirection.
+		</p>
+
+
+<p><pre class="lcolor">        SplinePoint p[NPOINTS]; /* spline points */
+        Spline *spline;         /* spline */</pre></p>
+
+		<p>
+		  The spline point data and the spline instance.
+		</p>
+
+<p><pre class="lcolor">        bool pitstop;           /* pitstop planned */</pre></p>
+
+		<p>
+		  The pitstop variable indicates if we plan a pit stop. It will become set to
+		  false right after the stop, because we do not need to stop anymore.
+		</p>
+
+<p><pre class="lcolor">        bool inpitlane;         /* we are still in the pit lane */</pre></p>
+
+		<p>
+		  The inpitlane variable indicates if we are in the pit lane. It will become set
+		  to true if pitstop is true and we are in the pit lane (pitentry). It will become
+		  set to false if we passed pitexit. The variable is necessary to finish the pit stop
+		  correctly.
+		</p>
+
+<p><pre class="lcolor">        float pitentry;         /* distance to start line of the pit entry */
+        float pitexit;          /* distance to the start line of the pit exit */
+        float speedlimitsqr;    /* pit speed limit squared */
+        float speedlimit;       /* pit speed limit */</pre></p>
+
+		<p>
+		  Some static data needed by several functions.
+		</p>
+
+
+<p><pre class="lcolor">        bool fuelchecked;       /* fuel statistics updated */
+        float lastfuel;         /* the fuel available when we cross the start lane */
+        float lastpitfuel;      /* amount refueled, special case when we refuel */
+        float fuelperlap;       /* the maximum amount of fuel we needed for a lap */</pre></p>
+
+		<p>
+		  The data necessary to decide if we need to refuel or not. The fuelperlap variable
+		  contains the maximum amount of fuel we needed so far for a lap. The amount of
+		  fuel we request on the pit stop will be computed based on that value.
+		</p>
+
+<p><pre class="lcolor">        static const float SPEED_LIMIT_MARGIN;
+        static const int PIT_DAMMAGE;
+};
+
+#endif // _PIT_H_</pre></p>
+
+		<p>
+		  Finally the declaration of the constants. You already know them from the last section.
+		</p>
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented the header file pit.h.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./splines.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./utility.html">
+          <p style="text-align:right;">The pit utility functions.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

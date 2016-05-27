@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: basic-drive-1.html,v 1.2 2006/05/20 08:59:34 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Make the Robot Drive</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="make the robot drive"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, drive"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>1.3 Make it Drive</h1>
+
+        <h3>The Track</h3>
+        <p>
+          Before we can start implementing simple steering we need to discuss how the track looks for the
+          robot. The track is partitioned into segments of the following types: left turns, right turns and
+          straight segments. The segments are usually short, so a turn that looks like a big turn or a long
+          straight is most often split into much smaller segments. The segments are organized as linked list
+          in the memory. A straight segment has a width and a length, a turn has a width, a length and a radius,
+          everyting is measured in the middle of the track. All segments connect tangentially to the next and
+          previous segments, so the middle line is smooth. There is much more data available, the structure tTrack
+          is defined in $TORCS_BASE/export/include/track.h.
+        </p>
+
+        <h3>The Car</h3>
+        <p>
+          You can obtain car data by the tCarElt structure, which contains all you need. It is defined in
+          $TORCS_BASE/export/include/car.h. But now lets implement something.
+        </p>
+
+        <h3>Implementing Simple Steering</h3>
+        <p>
+          As first challenge we will implement a very simple steering function, that simply tries to follow
+          the middle line on the track. On a high level it could look like that:
+        </p>
+        <ul style="list-style-type:disk; color:black;">
+          <li>First steer the front wheels parallel to the track.</li>
+          <li>If we are not in the middle of the track add a correction to the steer value.</li>
+        </ul>
+
+        <p>
+          You can get the tangent angle of the track with the following function call (look up
+          $TORCS_BASE/export/include/robottools.h):
+        </p>
+        <p>
+          <tt>RtTrackSideTgAngleL(&(car-&gt;_trkPos))</tt>
+        </p>
+
+        <p>
+          The angle of the car is:
+        </p>
+        <p>
+          <tt>car-&gt;_yaw</tt>
+        </p>
+
+        <p>
+          The initial steering angle is then the difference:
+        </p>
+        <p>
+          <tt>
+            angle = RtTrackSideTgAngleL(&(car-&gt;_trkPos)) - car-&gt;_yaw;<br/>
+            NORM_PI_PI(angle);  // put the angle back in the range from -PI to PI<br/>
+          </tt>
+        </p>
+
+        <p>
+          The distance to the middle line is:
+        </p>
+        <p>
+          <tt>car-&gt;_trkPos.toMiddle (+ to left, - to right)</tt>
+        </p>
+
+        <p>
+          The distance to the middle is measured in meters, so the values are too big to add it directly to
+          the steering angle. So we divide it first through the width of the track and multiply it with a
+          "tuning" constant.
+          Now we put all the stuff together:
+        <p>
+        <p>
+          <tt>
+            float angle;<br/>
+            const float SC = 1.0;<br/>
+            angle = RtTrackSideTgAngleL(&(car-&gt;_trkPos)) - car-&gt;_yaw;<br/>
+            NORM_PI_PI(angle);  // put the angle back in the range from -PI to PI<br/>
+            angle -= SC*car-&gt;_trkPos.toMiddle/car-&gt;_trkPos.seg-&gt;width;<br/>
+          </tt>
+        </p>
+
+        <p>
+          We need also to change to the first gear and apply a bit of accelerator pedal. The accelerator and
+          brakes ranges from [0..1], the steer value from [-1.0..1.0]. Now this should raise a
+          question. In the upper code snippet I computed a steering angle, so how do we convert this to
+          [-1.0..1.0]? For that there is a constant in the tCarElt struct:
+        </p>
+        <p>
+          <tt>
+            car-&gt;_steerLock<br/>
+          </tt>
+        </p>
+        <p>
+          This value defines the angle of 100% steering (1.0), so we need to divide our steering angle by
+          car-&gt;_steerLock.
+        </p>
+
+        <p>
+          <tt>
+            car-&gt;ctrl.steer = angle / car-&gt;_steerLock;<br/>
+            car-&gt;ctrl.gear = 1;  // first gear<br/>
+            car-&gt;ctrl.accelCmd = 0.3;  // 30% accelerator pedal<br/>
+            car-&gt;ctrl.brakeCmd = 0.0;  // no brakes<br/>
+          </tt>
+        </p>
+
+        <p>
+          You can see that we return all our values in the car-&gt;ctrl structure to TORCS.
+          Insert this code in the <span style="color:red;">bt</span>.cpp file in your robots source
+          directory into the drive function. It should look like this after you changed it:
+        </p>
+        <p>
+          <pre class="lcolor">/* Drive during race. */
+static void
+drive(int index, tCarElt* car, tSituation *s)
+{
+    memset(&amp;car-&gt;ctrl, 0, sizeof(tCarCtrl));
+
+    float angle;
+    const float SC = 1.0;
+
+    angle = RtTrackSideTgAngleL(&(car-&gt;_trkPos)) - car-&gt;_yaw;
+    NORM_PI_PI(angle); // put the angle back in the range from -PI to PI
+    angle -= SC*car-&gt;_trkPos.toMiddle/car-&gt;_trkPos.seg-&gt;width;
+
+    // set up the values to return
+    car-&gt;ctrl.steer = angle / car-&gt;_steerLock;
+    car-&gt;ctrl.gear = 1; // first gear
+    car-&gt;ctrl.accelCmd = 0.3; // 30% accelerator pedal
+    car-&gt;ctrl.brakeCmd = 0.0; // no brakes
+}</pre>
+        </p>
+        <p>
+          Compile and install your robot, and play a bit with it. In case you don't understand the algorithm,
+          take a sheet of paper and a pencil and draw the situation with the track and the car, this will help.
+          You will discover some problems which you have to
+          solve later. Change some of the values, run it on different tracks, add better steering correction,
+          whatever you like. You don't need to restart TORCS every time you did "make install", because if you
+          start a new practice session, your robot module is reloaded. If you practice very often you should have
+          an xosview or something similar running, because TORCS has memory leaks, so you have to restart it
+          from time to time...
+        </p>
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt13.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know the drive function and the file <span style="color:red;">bt</span>.cpp.</li>
+           <li>You know how to access car data.</li>
+           <li>You know where to look up the structure of tCarElt and tTrack.</li>
+           <li>You know about the robottools.</li>
+           <li>You know how to return your data to TORCS.</li>
+           <li>You know about about dynamic loading of your robot.</li>
+           <li>You know about the memory leaks.</li>
+        </ul>
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./build.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./next.html">
+          <p style="text-align:right;">What's next?</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

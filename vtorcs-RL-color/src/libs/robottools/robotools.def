@@ -1,0 +1,21 @@
+;
+; robottools.def
+;
+
+LIBRARY
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	RtTrackGetWidth
+	RtTrackHeightL
+	RtTrackLocal2Global
+	RtTrackHeightG
+	RtTrackSideTgAngleL
+	RtTrackSideNormalG
+	RtTrackGlobal2Local
+	RtTrackSurfaceNormalL
+	RtGetDistFromStart
+	RtGetDistFromStart2
+	RtDistToPit
+	RtTrackGetSeg

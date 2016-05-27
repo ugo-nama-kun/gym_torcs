@@ -1,0 +1,284 @@
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: finish.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>finishing the pit stop implementation</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="finishing the pit stop implementation"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, pit, pit stop"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>8.7 Put it All Together</h1>
+
+		<h3>Introduction</h3>
+
+		<p>
+		  In this section we put all components we have built together. We have to
+		  instantiate the pit class, integrate the pit callback and to compute
+		  the target point with taking into account the pit offset.
+		</p>
+
+		<h3>Changes in driver.h</h3>
+
+		<p>
+		  We include pit.h and add a prototype of the pit class.
+		</p>
+
+<p><pre class="lcolor">#include "pit.h"</pre></p>
+<p><pre class="lcolor">class Pit;</pre></p>
+
+		<p>
+		  To remember our pit instance we need a variable. We also compute and remember the
+		  current speed square, because we need it in several places.
+		</p>
+
+<p><pre class="lcolor">        Pit *pit;
+        float currentspeedsqr;</pre></p>
+
+		<h3>Integration in driver.cpp</h3>
+
+		<h4>Creation and Destruction of the Pit Object</h4>
+
+		<p>
+		  Add the release of our pit object into the destructor Driver::~Driver().
+		</p>
+
+<p><pre class="lcolor">    delete pit;</pre></p>
+
+		<p>
+		  Add the creation of the pit object into Driver::newRace(tCarElt* car, tSituation *s).
+		</p>
+<p><pre class="lcolor">    /* create the pit object */
+    pit = new Pit(s, this);</pre></p>
+
+
+		<h4>Changes in Driver::drive(tSituation *s)</h4>
+
+		<p>
+		  Swap the following two statements, because the initialization to
+		  zero will overwrite the result of the pit update if it sets the pit race command.
+		  Change in Driver::drive(tSituation *s)
+		</p>
+
+<p><pre class="lbcolor">    update(s);
+    memset(&amp;car-&gt;ctrl, 0, sizeof(tCarCtrl));</pre></p>
+
+		<p>
+		  to
+		</p>
+
+<p><pre class="lcolor">    memset(&amp;car-&gt;ctrl, 0, sizeof(tCarCtrl));
+    update(s);</pre></p>
+
+		<p>
+		  Change the brake value computation such that it takes into account the pit
+		  brake filter. Change
+		</p>
+
+<p><pre class="lbcolor">        car-&gt;ctrl.brakeCmd = filterABS(filterBColl(getBrake()));</pre></p>
+
+		<p>
+		  to
+		</p>
+
+<p><pre class="lcolor">        car-&gt;ctrl.brakeCmd = filterABS(filterBColl(filterBPit(getBrake())));</pre></p>
+
+
+		<h4>The Pit Callback</h4>
+
+		<p>
+		  Now we integrate the pit getRepair and getFuel methods into the pit callback. We
+		  set pitstop to false. Now it should be finally clear how a pit stop works. Our
+		  car stops in the pit and if it is slow and near enough to the pit middle and
+		  we request a pit stop, TORCS calls this callback function (remember chapter 2
+		  where you registered it). We tell TORCS our wishes and set pitstop to false.
+		  TORCS holds our car captured during the repair and refueling time, so we can't
+		  drive away. After TORCS releases our car the drive function is called as usual
+		  and we leave the pit. Replace
+		</p>
+
+<p><pre class="lbcolor">/* Set pitstop commands. */
+int Driver::pitCommand(tSituation *s)
+{
+    return ROB_PIT_IM; /* return immediately */
+}</pre></p>
+
+		<p>
+		  with
+		</p>
+
+<p><pre class="lcolor">/* Set pitstop commands */
+int Driver::pitCommand(tSituation *s)
+{
+    car-&gt;_pitRepair = pit-&gt;getRepair();
+    car-&gt;_pitFuel = pit-&gt;getFuel();
+    pit-&gt;setPitstop(false);
+    return ROB_PIT_IM; /* return immediately */
+}</pre></p>
+
+		<h4>Change the Target Point Computation</h4>
+
+		<p>
+		  Now we have to modify the getTargetPoint method. That you know where to insert
+		  the code the unchanged code is in grey.
+		</p>
+
+<p><pre class="lbcolor">/* compute target point for steering */
+v2d Driver::getTargetPoint()
+{
+    tTrackSeg *seg = car-&gt;_trkPos.seg;
+    float lookahead = LOOKAHEAD_CONST + car-&gt;_speed_x*LOOKAHEAD_FACTOR;
+    float length = getDistToSegEnd();
+    float offset = getOvertakeOffset();</pre></p>
+
+		<p>
+		  If we are on the pit trajectory we switch to another computation of the
+		  lookahead value. If we are in the speed limit range we even take a shorter
+		  lookahead value. You could implement this also with one good formula.
+		</p>
+
+
+<p><pre class="lcolor">
+    if (pit-&gt;getInPit()) {
+        if (currentspeedsqr &gt; pit-&gt;getSpeedlimitSqr()) {
+            lookahead = PIT_LOOKAHEAD + car-&gt;_speed_x*LOOKAHEAD_FACTOR;
+        } else {
+            lookahead = PIT_LOOKAHEAD;
+        }
+    }</pre></p>
+
+<p><pre class="lbcolor">    while (length &lt; lookahead) {
+        seg = seg-&gt;next;
+        length += seg-&gt;length;
+    }
+
+    length = lookahead - length + seg-&gt;length;</pre></p>
+
+		<p>
+		  We have to pass the distance to the start line of the target point to
+		  getPitOffset, so we compute that first. After that we call the computation of
+		  the pit offset.
+		</p>
+
+<p><pre class="lcolor">    float fromstart = seg-&gt;lgfromstart;
+    fromstart += length;
+    offset = pit-&gt;getPitOffset(offset, fromstart);</pre></p>
+
+<p><pre class="lbcolor">    v2d s;
+    s.x = (seg-&gt;vertex[TR_SL].x + seg-&gt;vertex[TR_SR].x)/2.0;
+    s.y = (seg-&gt;vertex[TR_SL].y + seg-&gt;vertex[TR_SR].y)/2.0;</pre></p>
+
+		<h4>Change the Update</h4>
+
+		<p>
+		  The second last thing left is to update currentspeedsqr and to call the pit
+		  update
+		  method. Put this code at the end of Driver::update(tSituation *s).
+		</p>
+
+<p><pre class="lcolor">    currentspeedsqr = car-&gt;_speed_x*car-&gt;_speed_x;
+    pit-&gt;update();</pre></p>
+
+
+		<h4>Change the Track Filter</h4>
+
+		<p>
+		  Finally we need to modify Driver::filterTrk(float accel) that it does allow
+		  accelerator commands in the pits. Change
+		</p>
+
+<p><pre class="lbcolor">    if (car-&gt;_speed_x &lt; MAX_UNSTUCK_SPEED) return accel;</pre></p>
+
+		<p>
+		  to
+		</p>
+
+<p><pre class="lcolor">    if (car-&gt;_speed_x &lt; MAX_UNSTUCK_SPEED ||
+        pit-&gt;getInPit()) return accel;</pre></p>
+
+		<h3>Test Drive</h3>
+
+		<p>
+		  Now everything should compile and work fine. To test the pit stops you can
+		  insert the following line in the drive function to make the car stop on every lap.
+		  If it works you can get now your cold juice out of the fridge... Cheers;-)
+		</p>
+
+		<p><pre class="lcolor">    pit-&gt;setPitstop(true);</pre></p>
+
+		<h3>Final Remarks</h3>
+
+		<p>
+		  That finally was it, you got your TORCS driver license, congratulations.
+		  I ask myself if
+		  anybody will read till here, so in case you did, please let me know and tell
+		  me your impressions. The reason for me to write this tutorial was to make it
+		  easier for other people to build a robot and to understand the problem better.
+		  I tried to separate the different functionality of the robot into filters
+		  and classes, the goal was to keep them as independent as possible. In fact the
+		  structure is much better than on my berniw robot, but I'm still not really
+		  happy with it. Have fun and contribute to TORCS.<br/>
+		  </br>
+		  Bye, berniw.
+		</p>
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt87.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+		<h3>Feedback</h3>
+        <p>
+          <a href="mailto:berni4you@gmx.ch">Let me know</a>
+          if you read this chapter and your thoughts about it. Please
+          <a href="mailto:berni4you@gmx.ch">send me</a>
+          also spelling, grammar, math and code corrections. Thank you for the feedback.
+        </p>
+
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have understood a full featured robot and you are ready to improve it
+		   or build your own from scratch.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./brake.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+         <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../robot.html','content')">
+          <p style="text-align:right;">Up</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: brake.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>pit brake filter</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="pit brake filter"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, pit, pit stop, brake, filter"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+	#pic1 { border:0px; width:593px; height:128px; border-style:hidden; margin-bottom:5px; }
+    -->
+  </style>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>8.6 Pit Brake Filter</h1>
+
+		<h3>Introduction</h3>
+
+		<p>
+		  Remember first what we already have implemented to stop in the pit. We
+		  have a path into the pit and we have a strategy to decide if we want to stop
+		  in the pit. That is fine so far if we just want to drive through the pit, what
+		  is missing is a part for stopping in the pit and maintaining the speed limit.
+		  In this section you implement the brake filter which is responsible for those
+		  tasks.
+		</p>
+
+	  </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent" align="center">
+		<img id="pic1" src="images/pitpath.jpg" alt="path to the pit" border="0"></img>
+	  </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+		<h3>Changes in the Header File</h3>
+
+		<p>
+		  Add the following declarations into the header file driver.h.
+		</p>
+
+<p><pre class="lcolor">        float brakedist(float allowedspeed, float mu);</pre></p>
+
+		<p>
+		  Because we will use the calculation of the braking distance from the
+		  pit brake filter and other places, we encapsulate the formula finally
+		  into a method
+		  (at the moment we have it hardwired in the getBrake and filterBColl methods).
+		</p>
+
+<p><pre class="lcolor">        float filterBPit(float brake);</pre></p>
+
+		<p>
+		  The pit brake filter method.
+		</p>
+
+<p><pre class="lcolor">        static const float PIT_LOOKAHEAD;</pre></p>
+
+		<p>
+		  We need another (much shorter) lookahead value for the pit, because we have to
+		  make a very tough turn from the pit lane into the pit.
+		</p>
+
+<p><pre class="lcolor">        static const float PIT_BRAKE_AHEAD;
+        static const float PIT_MU;</pre></p>
+
+		<p>
+		  These constants are used as workaround for two problems. The pit has on much
+		  tracks another surface than the track itself, so it would be necessary to analyse
+		  the friction to brake early enough. Because we do not take care (of course you will
+		  implement that, don't you?) we simply multiply on all tracks the friction with
+		  PIT_MU for the pit stop.
+		</p>
+
+		<p>
+		  The PIT_BRAKE_AHEAD is used to workaround the problem of pitentry points which
+		  are very close to the first pit. On such tracks we will simply brake too late
+		  to get the turn into the pit right, so we have to brake earlier. If you have added
+		  better pitentry points (via XML or computed with a heuristic) you can remove that.
+		</p>
+
+		<h3>The Implementation</h3>
+
+		<p>
+		  Now let's have a look on the implementation. Apply all changes to the file
+		  driver.cpp.
+		</p>
+
+		<p><pre class="lcolor">const float Driver::PIT_LOOKAHEAD = 6.0;       /* [m] */
+const float Driver::PIT_BRAKE_AHEAD = 200.0;   /* [m] */
+const float Driver::PIT_MU = 0.4;              /* [-] */</pre></p>
+
+		<p>
+		  First define the constants at the beginning of the file.
+		</p>
+
+<p><pre class="lcolor">float Driver::brakedist(float allowedspeed, float mu)
+{
+    float allowedspeedsqr = allowedspeed*allowedspeed;
+    float cm = mu*G*mass;
+    float ca = CA*mu + CW;
+    return mass*(currentspeedsqr - allowedspeedsqr) / (2.0*(cm + allowedspeedsqr*ca));
+}</pre></p>
+
+		<p>
+		  Here we encapsulate the brake distance formula into its own method (remember
+		  chapter 3).
+		  Now everything is in place and we can start with the implementation of the
+		  brake filter.
+		</p>
+
+<p><pre class="lcolor">float Driver::filterBPit(float brake)
+{
+    if (pit-&gt;getPitstop() &amp;&amp; !pit->getInPit()) {
+        float dl, dw;
+        RtDistToPit(car, track, &amp;dl, &amp;dw);
+        if (dl &lt; PIT_BRAKE_AHEAD) {
+            float mu = car-&gt;_trkPos.seg-&gt;surface-&gt;kFriction*PIT_MU;
+            if (brakedist(0.0, mu) &gt; dl) return 1.0;
+        }
+    }</pre></p>
+
+		<p>
+		  The above code is responsible for braking early enough to make the turn into the
+		  pit lane. Like already mentioned in the discusson of PIT_BRAKE_AHEAD you can
+		  remove that code if you have better pitentry values. Now lets have a look on
+		  the nice part.
+		</p>
+
+<p><pre class="lcolor">    if (pit-&gt;getInPit()) {
+        float s = pit-&gt;toSplineCoord(car-&gt;_distFromStartLine);</pre></p>
+
+		<p>
+		  If we are on the pit trajectory, convert the position of our car into spline
+		  coordinates.
+		</p>
+
+<p><pre class="lcolor">        /* pit entry */
+        if (pit-&gt;getPitstop()) {</pre></p>
+
+		<p>
+		  If pitstop is true the pit is in front of us.
+		</p>
+
+<p><pre class="lcolor">            float mu = car-&gt;_trkPos.seg-&gt;surface-&gt;kFriction*PIT_MU;
+            if (s &lt; pit-&gt;getNPitStart()) {</pre></p>
+
+		<p>
+		  If we are not yet in the range of the speed limit we have to check if we need
+		  to brake to the speed limit.
+		</p>
+
+<p><pre class="lcolor">                /* brake to pit speed limit */
+                float dist = pit-&gt;getNPitStart() - s;
+                if (brakedist(pit-&gt;getSpeedlimit(), mu) &gt; dist) return 1.0;</pre></p>
+
+		<p>
+		  First compute the distance to the speed limit zone (p1). Then check if we need
+		  already to brake.
+		</p>
+
+<p><pre class="lcolor">            } else {
+                /* hold speed limit */
+                if (currentspeedsqr &gt; pit->getSpeedlimitSqr()) return 1.0;
+            }</pre></p>
+
+		<p>
+		  If we take the else we are already in the speed limit zone and have to
+		  maintain the speed limit. It is (like always in this
+		  tutorial) a very simple implementation.
+		</p>
+
+<p><pre class="lcolor">            /* brake into pit (speed limit 0.0 to stop ) */
+            float dist = pit-&gt;getNPitLoc() - s;
+            if (brakedist(0.0, mu) &gt; dist) return 1.0;</pre></p>
+
+		<p>
+		  If we did not brake till now we have to check if we need to brake to stop in the
+		  pit. We compute the distance to the pit and check the brake distance.
+		</p>
+
+
+<p><pre class="lcolor">            /* hold in the pit */
+            if (s &gt; pit-&gt;getNPitLoc()) return 1.0;</pre></p>
+
+		<p>
+		  Finally if we passed the pit center and still want to pit we have to brake full,
+		  else we will miss the pit.
+		</p>
+
+<p><pre class="lcolor">        } else {
+            /* pit exit */
+            if (s &lt; pit-&gt;getNPitEnd()) {
+                /* pit speed limit */
+                if (currentspeedsqr &gt; pit-&gt;getSpeedlimitSqr()) return 1.0;
+            }
+        }
+    }</pre></p>
+
+		<p>
+		  In this code section the pitstop variable is false, so we have just to check
+		  if we are in the speed limit zone and to maintain the speed limit in it.
+		</p>
+
+
+<p><pre class="lcolor">    return brake;
+}</pre></p>
+
+		<p>
+		  If none of the above expressions returned a brake value, we return the given
+		  value.
+		</p>
+
+		<h3>Conclusion</h3>
+
+		<p>
+		  You have implemented a simple brake filter to stop in the pit. If you analyse
+		  the code, you will discover some unpleasant things. Assume for example that
+		  an opponent hits us before we stop in the pit and pushes our car over the pit
+		  center. Our code will then apply full brakes, but if we got pushed too far away
+		  from the pit center TORCS will not capture our car. That means we stay there
+		  with full applied brakes forever. I did not fix that because it happens not
+		  often, my
+		  berniw robot has the same problem. You can solve that with kind of a timeout
+		  mechanism or distance measurement to the pit.
+		</p>
+		<p>
+		  I leave it up to you to replace the brake distance code from getBrake and
+		  filterBColl through the new brakedist call. In the next section we will put
+		  all the stuff together. If you want to celebrate the pit stops with a cold juice
+		  it is now time to put it into the fridge.
+		</p>
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented and understood the brake filter.</li>
+        </ul>
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./strategy.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./finish.html">
+          <p style="text-align:right;">Put it all together.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

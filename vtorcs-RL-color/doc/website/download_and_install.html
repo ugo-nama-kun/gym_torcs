@@ -1,0 +1,302 @@
+<!--
+	file        : download_and_install.html
+	created     : Fri Aug  12 13:39:11 CET 2005
+	copyright   : (C) 2005-2006 by Eric Espie, Bernhard Wymann
+	email       : berniw@bluewin.ch
+	version     : $Id: download_and_install.html,v 1.6.2.1 2008/11/11 23:08:24 berniw Exp $
+
+	Permission is granted to copy, distribute and/or modify this document
+	under the terms of the GNU Free Documentation License, Version 1.2
+	or any later version published by the Free Software Foundation;
+	with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+	Texts.  A copy of the license is available at http://www.gnu.org/copyleft.
+-->
+
+
+<h1>TORCS 1.3.1 Download &amp; Installation</h1>
+	<p><hr noshade="noshade" size="2" width="100%"></p>
+
+	<ul>
+		<li><a href="#win32-bin">Binary installer for Windows</a></li>
+		<li><a href="#linux-lokiinstaller">Linux binary with installer</a></li>
+		<li><a href="#mac">MacOS X Package (1.2.4)</a></li>
+		<li><a href="#linux-src-all">For Linux and FreeBSD from sources (all in one package)</a></li>
+		<li><a href="#linux-src-all-win">For Windows from sources (all in one package)</a></li>
+		<li><a href="#linux-src">For Linux from sources (separated packages)</a></li>
+		<li><a href="#linux-cvs">For Linux from CVS</a></li>
+		<li><a href="#linux-vendor">TORCS for your Linux distribution</a></li>
+	</ul>
+
+
+
+
+
+    <p><hr noshade="noshade" size="2" width="100%"></p>
+    <h2><a name="win32-bin"></a>Binary Installer Package For Windows</h2>
+    <ul>
+      <li>Download and run <a href="http://prdownloads.sourceforge.net/torcs/torcs_1_3_1_setup.exe?download">torcs_1_3_1_setup.exe</a>.
+	  It requires at least an i686 compatible CPU to run.
+      </li>
+    </ul>
+
+
+
+
+
+
+	<p><hr noshade="noshade" size="2" width="100%"></p>
+    <h2><a name="linux-lokiinstaller"></a>Linux Binary with Installer</h2>
+	<p>
+		This binary is dynamically linked, be aware that it is possible that this does not work on your system.
+		If you try it anyway please report any problems or as well successful installs, such that we can improve it
+		(without feedback this is not possible, of course the installer works on our systems). You can get it
+		<a href="http://prdownloads.sourceforge.net/torcs/torcs-1.3.1-linux-glibc-2.3-pIII.bz2.run?download">here</a>.
+		Install it with "torcs-1.3.1-linux-glibc-2.3-pIII.bz2.run". To resolve missing dynamic libraries you
+		can run "torcs -l" (have a look at <a href="#commandlineopts">the command line options</a>).
+		It requires at least a Pentium 3 compatible CPU to run.
+	</p>
+
+
+
+
+
+    <p><hr noshade="noshade" size="2" width="100%"></p>
+
+	<h2><a name="mac"></a>MacOS X Package (1.2.4)</h2>
+	<ul>
+		<li>Review the <a href="http://sourceforge.net/project/shownotes.php?release_id=422784&group_id=3777">release notes</a>.</li>	
+		<li>Download <a href="http://prdownloads.sourceforge.net/torcs/Torcs.dmg.gz?download">Torcs.dmg.gz</a>.</li>	
+	</ul>
+
+
+
+
+
+	<p><hr noshade="noshade" size="2" width="100%"></p>
+
+	<h2><a name="linux-src-all"></a>For Linux and FreeBSD from "all-in-one" Source Package</h2>
+
+	<ol>
+		<li>Check the <a href="#dependencies"><b>dependencies</b></a></li>
+		<li>Download the source package <a href="http://prdownloads.sourceforge.net/torcs/torcs-1.3.1.tar.bz2?download">torcs-1.3.1.tar.bz2</a>.</li>
+		<li>Unpack the package with "tar xfvj torcs-1.3.1.tar.bz2".</li>
+		<li>Run the following commands:
+		<p>
+		<pre>
+$ cd torcs-1.3.1
+$ ./configure        # --prefix="target dir", --enable-debug or --disable-xrandr might be of interest
+$ make
+$ make install
+$ make datainstall
+</pre>
+		</p>
+
+		<p>
+			Default installation directories:
+			<ul>
+				<li><tt>/usr/local/bin</tt> - TORCS command (directory should be in your PATH)</li>
+				<li><tt>/usr/local/lib/torcs</tt> - TORCS dynamic libs (directory MUST be in your LD_LIBRARY_PATH if you don't use the torcs shell)</li>
+				<li><tt>/usr/local/share/games/torcs</tt> - TORCS data files</li>
+			</ul>
+		</p>
+		<br>
+		</li>
+
+		<li>Run the "torcs" command (default location is /usr/local/bin/torcs), you can use <a href="#commandlineopts">those command line options</a>.
+		<br/>
+		All the configuration data, race results and players options will be saved below the <tt>$HOME/.torcs</tt> directory.
+		</li>
+	</ol>
+
+
+
+
+
+	<p><hr noshade="noshade" size="2" width="100%"></p>
+
+	<h2><a name="linux-src-all-win"></a>For Windows From "all-in-one" Source Package</h2>
+
+	<ol>
+		<li>Requires VC++ 6.0 (tested with sp6).</li>
+		<li>Download the source package <a href="http://prdownloads.sourceforge.net/torcs/torcs-1.3.1.tar.bz2?download">torcs-1.3.1.tar.bz2</a>.</li>
+		<li>Unpack the package with "tar xfvj torcs-1.3.1.tar.bz2" or any application you like, be careful to select a path without whitespaces and other special characters.</li>
+		<li>Hint: You can build a release and a debug version side by side, the required step for the debug version is showed in brackets "()".</li>
+		<li>Open a command prompt and cd into the torcs-1.3.1 directory.</li>
+		<li>Run setup_win32.bat (setup_win32_debug.bat).
+		<li>Run setup_win32-data-from-CVS.bat (setup_win32-data-from-CVS_debug.bat).
+		<li>Open the file TORCS.dsw with vc++ 6.0.</li>
+		<li>Select the TORCS project and the win32-Release (win32-Debug) version.</li>
+		<li>Compile the project (0 warnings).</li>
+		<li>cd into the "runtime" ("runtimed") directory.</li>
+		<li>Run "wtorcs.exe".</li>
+	</ol>
+
+
+
+
+
+    <p><hr noshade="noshade" size="2" width="100%"></p>
+
+
+	<h2><a name="linux-src"></a>For Linux From Separated Source Packages</h2>
+
+	<ol>
+		<li>Check the <a href="#dependencies"><b>dependencies</b></a></li>
+		<li>Download the following source packages:
+			<ul>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-src.tgz?download">TORCS-1.3.1-src.tgz</a> (<b>mandatory</b>)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-src-robots-base.tgz?download">TORCS-1.3.1-src-robots-base.tgz</a> (<b>mandatory</b>)</li>
+			</ul>
+		</li>
+
+		<li>Unpack the packages (tar xvfz filename.tgz)</li>
+		<li>Run the following commands:
+		<p>
+		<pre>
+$ cd torcs-1.3.1
+$ ./configure        # --prefix="target dir", --enable-debug or --disable-xrandr might be of interest
+$ make
+$ make install
+		</pre>
+		</p>
+
+			<p>
+				Default installation directories:
+				<ul>
+					<li><tt>/usr/local/bin</tt> - TORCS command (directory should be in your PATH)</li>
+					<li><tt>/usr/local/lib/torcs</tt> - TORCS dynamic libs (directory MUST be in your LD_LIBRARY_PATH if you don't use the torcs shell)</li>
+					<li><tt>/usr/local/share/games/torcs</tt> - TORCS data files</li>
+				</ul>
+			</p>
+			<br>
+		</li>
+
+		<li>Download the following data packages:
+			<ul>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data.tgz?download">TORCS-1.3.1-data.tgz</a> (<b>mandatory</b>, system data)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-tracks-road.tgz?download">TORCS-1.3.1-data-tracks-road.tgz</a> (<b>mandatory</b>, road-circuit tracks)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-cars-extra.tgz?download">TORCS-1.3.1-data-cars-extra.tgz</a> (<b>mandatory</b>, cars)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-tracks-oval.tgz?download">TORCS-1.3.1-data-tracks-oval.tgz</a> (<b>mandatory</b>, oval-like tracks)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-tracks-dirt.tgz?download">TORCS-1.3.1-data-tracks-dirt.tgz</a> (<b>mandatory</b>, dirt tracks)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-cars-Patwo-Design.tgz?download">TORCS-1.3.1-data-cars-Patwo-Design.tgz</a> (rally cars, optional)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-cars-kcendra-gt.tgz?download">TORCS-1.3.1-data-cars-kcendra-gt.tgz</a> (GT cars from the 60's, optional)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-cars-kcendra-roadsters.tgz?download">TORCS-1.3.1-data-cars-kcendra-roadsters.tgz</a> (roadsters from the 60's, optional)</li>
+				<li><a href="http://prdownloads.sourceforge.net/torcs/TORCS-1.3.1-data-cars-kcendra-sport.tgz?download">TORCS-1.3.1-data-cars-kcendra-sport.tgz</a> (sport cars from the 60's, optional) </li>
+			</ul>
+			</br>
+		</li>
+
+		<li>Go to the <tt>/usr/local/share/games/torcs</tt> or <tt>"target dir"/share/games/torcs</tt> directory.</li>
+		<li>Untar the data packages.</li>
+		<li>Run the "torcs" command (default location is /usr/local/bin/torcs), you can use <a href="#commandlineopts">those command line options</a>.
+		<br/>
+		All the configuration data, race results and players options will be saved below the <tt>$HOME/.torcs</tt> directory.
+		</li>
+	</ol>
+    For more detailed installation instructions have a look at <a href="http://www.berniw.org">Bernhard "Berniw" Wymann's site</a>.
+
+
+
+
+
+
+    <p><hr noshade="noshade" size="2" width="100%"></p>
+    <h2><a name="linux-cvs"></a>Linux From Sources CVS</h2>
+
+	<p>
+			You'll need those <a href="#dependencies"><b>dependencies</b></a>
+		</p>
+
+    <h3>Getting the sources</h3>
+    You have to run the following commands to get the sources (might sometimes not compile or crash):
+    <p>
+      <tt>cvs -d:pserver:anonymous@torcs.cvs.sourceforge.net:/cvsroot/torcs login</tt>
+      <br></br>The 1.3.1 trunk is:<br></br>
+      <tt>cvs -z3 -d:pserver:anonymous@torcs.cvs.sourceforge.net:/cvsroot/torcs co -r r1-3-1 -P torcs</tt>
+      <br></br>
+      <a href="http://sourceforge.net/cvs/?group_id=3777">Get more info on CVS</a>
+    </p>
+
+    <h3>Compiling</h3>
+
+    Run the following commands:
+    <p>
+      <pre>
+$ cd torcs/torcs
+$ ./configure        # --prefix="target dir", --enable-debug or --disable-xrandr might be of interest
+$ make
+$ make install
+$ make datainstall
+      </pre>
+    </p>
+
+			<p>
+				Default installation directories:
+				<ul>
+					<li><tt>/usr/local/bin</tt> - TORCS command (directory should be in your PATH)</li>
+					<li><tt>/usr/local/lib/torcs</tt> - TORCS dynamic libs (directory MUST be in your LD_LIBRARY_PATH if you don't use the torcs shell)</li>
+					<li><tt>/usr/local/share/games/torcs</tt> - TORCS data files</li>
+				</ul>
+			</p>
+			<br>
+		<p>
+		Run the "torcs" command (default location is /usr/local/bin/torcs), you can use <a href="#commandlineopts">those command line options</a>.
+		<br/>
+		All the configuration data, race results and players options will be saved below the <tt>$HOME/.torcs</tt> directory.
+
+
+
+
+
+
+    <p><hr noshade="noshade" size="2" width="100%"></p>
+    <h2><a name="dependencies"></a>Dependencies</h2>
+
+    <h3>Requisites for Linux</h3>
+
+    <blockquote>You will need:
+      <ul>
+	<li>Hardware accelerated OpenGL (usually provided by your distro).</li>
+	<li><a href="http://www.opengl.org/developers/documentation/glut/index.html?glut#first_hit" target="_top">GLUT 3.7</a>.</li>
+	<li>Or <a href="http://freeglut.sourceforge.net/" target="_top">FreeGlut</a> (better for full screen support than GLUT).</li>
+	<li><a href="http://plib.sourceforge.net/" target="_top">PLIB 1.8.5 version</a>.</li>
+	<li><a href="http://www.openal.org">OpenAL</a>.</li>
+	<li><a href="http://libpng.sourceforge.net" target="_top">libpng and zlib</a> (usually provided by your distro).</li>
+    </blockquote>
+
+	<p><hr noshade="noshade" size="2" width="100%"></p>
+    <h2><a name="commandlineopts"></a>TORCS Command Line Options</h2>
+
+	<ul>
+		<li>-l  list the dynamically linked libraries</li>
+		<li>-d  run under gdb and print stack trace on exit, makes most sense when compile with --enable-debug</li>
+		<li>-e  display the commands to issue when you want to run under gdb</li>
+		<li>-s  disable multitexturing, important for older graphics cards</li>
+		<li>-m  use X mouse cursor and do not hide it during races</li>
+	</ul>
+
+
+
+
+
+
+
+	<p><hr noshade="noshade" size="2" width="100%"></p>
+
+	<h2><a name="linux-vendor"></a>TORCS for your Linux distribution</h2>
+	<p>
+		TORCS has been adopted from a lot of distributions (e.g. SuSE, Debian, Fedora, Mandriva, Gentoo, ...), have a look at your installation CD's/DVD's or
+		online repositories. Be aware that some of these versions are quite old or have been stripped down to reduce the
+		package size.
+	</p>
+
+
+
+
+
+
+
+    <p><hr noshade="noshade" size="2" width="100%"></p>
+    <address>if you have problems or questions, send a mail to the <a href="http://lists.sourceforge.net/lists/listinfo/torcs-users">[torcs-users]</a> mailing list.</address>
+    <br></br>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : e-track-2.xml
+    created              : Thu May 10 20:19:12 /etc/localtime 2001
+    copyright            : (C) 2001 by Eric Espié                         
+    email                : Eric.Espie@torcs.org   
+    version              : $Id: default.xml,v 1.1 2003/10/19 19:28:22 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../../libs/tgf/params.dtd">
+
+<params name="" type="template">
+
+  <section name="Simulation Parameters">
+    <attnum name="PGain"     val="0.02"/>
+    <attnum name="AGain"     val="0.008"/>
+    <attnum name="PnGain"    val="0.02"/>
+    <attnum name="Advance"   val="5.0"/>
+    <attnum name="Advance2"  val="10.0"/>
+    <attnum name="AdvStep"   val="1.0"/>
+    <attnum name="VGain"     val="0.0005"/>
+    <attnum name="preDy"     val="0"/>
+    <attnum name="spdtgt"    val="100.0"/>
+    <attnum name="spdtgt2"   val="1.0"/>
+    <attnum name="steerMult" val="1.0"/>
+  </section>
+
+</params>
+
+

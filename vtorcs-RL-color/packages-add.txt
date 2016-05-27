@@ -1,0 +1,13 @@
+g++
+libglu-dev
+freeglut3-dev
+libplib-dev
+libopenal-dev
+libalut-dev
+libxi-dev
+libxmu-dev
+libxxf86vm-dev
+libxrender-dev
+libxrandr-dev
+zlib1g-dev
+libpng-dev

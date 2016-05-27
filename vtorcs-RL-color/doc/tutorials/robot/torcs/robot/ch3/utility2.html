@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: utility2.html,v 1.1 2004/11/30 14:02:10 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Advanced Utility Functions</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="advanced utility functions"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, utility, braking"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #pic1 { float:left; border:0px; width:390px; height:258px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    #pic2 { float:left; border:0px; width:391px; height:168px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    -->
+  </style>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>3.4 Advanced Utility Functions</h1>
+
+        <h3>Introduction</h3>
+        <p>
+          Here we have a look on aerodynamic downforce of cars and increase the speed
+          in the turns. Optionally you can slim down the interfaces of some methods.
+        </p>
+
+        <h3>Speed Limit with Aerodynamics</h3>
+        <p>
+          <img id="pic1" src="images/advanced1.jpg" alt="advanced speed formula" border="0"></img>
+          In the "utility 1" section I showed you the equation for the speed limit in turns without
+          aerodynamics. We now add on the right side a term for the contribution of the aerodynamic
+          downforce. You can see that the value of this term rises proportional to the square of the
+          speed (look up the Bernoulli-equation in a physics book). The coefficient "ca" depends
+          on properties like the density of air, the area,
+          shape and angle of attack of the spoilers (also called wings) and the distance from the
+          car bottom to the track (called "ride height"). The spoilers work like wings from an
+          airplane which are mounted upside down. The effect between the cars bottom and the track is
+          called "ground effect" and produces also downforce.<br/>
+          This doesn't apply to normal cars, because they don't have big spoilers nor specially for
+          downforce designed chassis. The sign of the rightmost term is then negative and
+          the force on the wheels is reduced proportional to the square of the speed... be careful!<br/>
+          We solve again the equation for the speed. There are now two unpleasant effects. First the
+          mass of the car doesn't cancel out anymore in the equation. Second, if r*ca*mu/m becomes
+          greater than one we get a complex number as result... is the above formula wrong? In fact it is
+          correct if we restrict the domain and range. Look at the formula as v=f(r). So v can range
+          from 0..infinity and the domain of r is 0 &le; r &le; m/(ca*mu), because if r is greater
+          we can drive trough the turn with any speed. We implement this restriction with the
+          MIN(1.0, r*ca*mu/m) term. Now modify in driver.cpp the
+          getAllowedSpeed(...) method. Change the line
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+        <p>
+          <pre class="lbcolor">    return sqrt(mu*G*segment-&gt;radius);</pre>
+        </p>
+        <p>
+          to
+        </p>
+        <p>
+          <pre class="lcolor">    return sqrt((mu*G*segment-&gt;radius)/(1.0 - MIN(1.0, segment-&gt;radius*CA*mu/mass)));</pre>
+        </p>
+        <p>
+          Next we have to implement the computation of CA and the mass of the car.
+        </p>
+
+        <h3>Downforce Coefficient CA</h3>
+        <p>
+          Here I show you how to compute the coefficient CA. I won't explain the formulas, look up a
+          book about fluid dynamics. Because CA includes just static properties, we need to compute it
+          just once. Put this method into driver.cpp.
+        </p>
+        <p>
+          <pre class="lcolor">/* Compute aerodynamic downforce coefficient CA */
+void Driver::initCa()
+{
+    char *WheelSect[4] = {SECT_FRNTRGTWHEEL, SECT_FRNTLFTWHEEL,
+                          SECT_REARRGTWHEEL, SECT_REARLFTWHEEL};
+    float rearwingarea = GfParmGetNum(car-&gt;_carHandle, SECT_REARWING,
+                                       PRM_WINGAREA, (char*) NULL, 0.0);
+    float rearwingangle = GfParmGetNum(car-&gt;_carHandle, SECT_REARWING,
+                                        PRM_WINGANGLE, (char*) NULL, 0.0);
+    float wingca = 1.23*rearwingarea*sin(rearwingangle);</pre>
+
+        </p>
+        <p>
+          First we declare an array with the wheel section names. These addresses sections in an XML file,
+          where all car properties are specified. All the possible sections and properties are defined
+          in car.h.
+          Next we read two numeric properties from the XML file, the area of the rear wing and the angle
+          of attack. Based on that and the density of air ([kg/m^3]) we compute the ca of the rear wing.
+          You could also compute and add the contribution of the front wing.
+        </p>
+        <p>
+          <pre class="lcolor">    float cl = GfParmGetNum(car-&gt;_carHandle, SECT_AERODYNAMICS,
+                             PRM_FCL, (char*) NULL, 0.0) +
+                GfParmGetNum(car-&gt;_carHandle, SECT_AERODYNAMICS,
+                             PRM_RCL, (char*) NULL, 0.0);
+    float h = 0.0;
+    int i;
+    for (i = 0; i &lt; 4; i++)
+        h += GfParmGetNum(car-&gt;_carHandle, WheelSect[i],
+                          PRM_RIDEHEIGHT, (char*) NULL, 0.20);
+    h*= 1.5; h = h*h; h = h*h; h = 2.0 * exp(-3.0*h);
+    CA = h*cl + 4.0*wingca;
+}</pre>
+        <p>
+          Next we read the "ground effect" coefficients for the car front and rear. We sum them up in cl.
+          Improvements are possible with considering front and rear separately and take into account just
+          the minimum. In the for loop we compute the effect of the distance of the cars floor to the
+          track (called "ride height"). Finally we compute CA and store it. For simplicity we assume
+          that the ride height is constant (it's obviously not because of the springs). The numerical
+          constants above appear just in this computation, so I don't assign nice names.
+        </p>
+        </p>
+
+        <h3>Mass</h3>
+        <p>
+          The total current mass of the car consists of the cars mass (constant) and the mass of the
+          fuel. Because we burn fuel, the current car mass changes over time and can differ up to 10%.
+          This is significant,
+          so we need to update it from time to time. For simplicity we implement update in every
+          timestep. In car-&gt;_fuel we find the remaining fuel (in [kg]), the car mass is specified
+          in the XML file.
+        </p>
+
+        <h3>Finishing Implementation</h3>
+        <p>
+          We put the initialization of CA and the car mass into newRace(...), file driver.cpp:
+        </p>
+        <p>
+          <pre class="lcolor">    this-&gt;car = car;
+    CARMASS = GfParmGetNum(car-&gt;_carHandle, SECT_CAR, PRM_MASS, NULL, 1000.0);
+    initCa();</pre>
+        </p>
+        <p>
+          You see that we store now the car pointer, so we don't need to pass it on successive calls.
+          Now we add the mass update to update(...) in driver.cpp:
+        </p>
+        <p>
+          <pre class="lcolor">    mass = CARMASS + car-&gt;_fuel;</pre></p>
+        <p>
+        <p>
+          Remove the car parameter from the following methods (in driver.cpp, driver.h) and fix all
+          calls (in driver.cpp, <span style="color:red;">bt</span>.cpp).
+        </p>
+        <p>
+          <pre>drive(tCarElt* car, tSituation *s) -&gt drive(tSituation *s)
+pitCommand(tCarElt* car, tSituation *s) -&gt pitCommand(tSituation *s)
+isStuck(tCarElt* car) -&gt isStuck()
+update(tCarElt* car, tSituation *s) -&gt update(tSituation *s)
+getBrake(tCarElt* car) -&gt getBrake()
+getAccel(tCarElt* car) -&gt getAccel()
+getDistToSegEnd(tCarElt* car) -&gt getDistToSegEnd()
+getGear(tCarElt *car) -&gt getGear()
+endRace(tCarElt *car, tSituation *s) -&gt; endRace(tSituation *s)</pre></p>
+        <p>
+        <p>
+          We have to define initCa() in driver.h:
+        </p>
+        <p>
+          <pre class="lcolor">    void initCa();</pre></p>
+        <p>
+        <p>
+          and also the new variables:
+        </p>
+        <p>
+          <pre class="lcolor">    float mass;        /* mass of car + fuel */
+    tCarElt *car;      /* pointer to tCarElt struct */
+    float CARMASS;     /* mass of the car only */
+    float CA;          /* aerodynamic downforce coefficient */</pre>
+        </p>
+
+        <h3>Lap Times</h3>
+        <p>
+          Implement the above stuff and do some test runs. Because we go more and more to the limit,
+          our robot is suffering from the very bad steering function and path on the
+          track. Just e-track-4 is completed well (from the tracks below) with a gain of ~14 seconds.
+        </p>
+        <p>
+        <ul style="list-style-type:disk; color:black;">
+          <li>mixed-2: 1:42:49, 4561 damage.</li>
+          <li>e-track-2: 2:17:73, 24284 damage.</li>
+          <li>e-track-4: 2:00:61, 4 damage.</li>
+        </ul>
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+        <h3>Comparison of the old and new Speed Limit</h3>
+        <p>
+          <img id="pic2" src="images/oldvsnew.jpg" alt="speed graphs" border="0"></img>
+          To estimate what we can expect from the new getAllowedSpeed(...) method I present you this plot. It is
+          for a cg-nascar-rwd with full fuel tank on the track wheel-1. The mass is 1250 [kg], mu is 1.2 [-],
+          CA is 2.61 [kg/m] and G is 9,81 [m/(s*s)]. The green curve is the new speed for a given radius,
+          the blue curve the old speed. One can see very nice that our new implementation has always
+          an advantage and that there are significant improvments. Especially on wide turns we can drive
+          up to ~130% of the previous speed.
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt34.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know about spoilers.</li>
+           <li>You know about the ground effect.</li>
+           <li>You know how to access car parameters.</li>
+           <li>You have implemented it.</li>
+           <li>You know about downforce loss with normal cars.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./gears.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./braking2.html">
+          <p style="text-align:right;">Brake harder!</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

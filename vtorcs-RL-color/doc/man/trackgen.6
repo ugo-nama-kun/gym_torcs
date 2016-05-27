@@ -1,0 +1,51 @@
+.TH "Terrain generator for tracks" "6" "1.2" "Rudy Godoy" "Games"
+.SH "NAME"
+.LP
+trackgen \- Terrain generator for tracks
+.SH "SYNTAX"
+.LP
+trackgen -c category -n name [-a] [-m] [-s] [-S] [-E <n> [-H <nb>]]
+.SH "DESCRIPTION"
+.TP
+This manual describes the Ac3d compiler application that is shipped with the game TORCS.
+.SH "OPTIONS"
+.TP
+.B -c \fIcategory\fP
+track category (road, oval, dirt...)
+.TP
+.B -n \fIname\fP
+track name
+.TP
+.B -b
+draw bump track
+.TP
+.B -B
+Don't use terrain border (relief supplied int clockwise, ext CC)
+.TP
+.B -a 
+draw all (default is track only)
+.TP
+.B -s
+split the track and the terrain
+.TP
+.B -S
+split all
+.TP
+.B -E \fI<n>\fP
+save elevation file n
+.RS 4
+.IP "0: all elevatation files" 4
+.IP "1: elevation file of terrain + track" 4
+.IP "2: elevation file of terrain with track white"
+.IP "3: track only"
+.IP "4: track elevations with height steps" 4
+.RE
+.TP
+.B -H \fI<nb>\fP
+nb of height steps for 4th elevation file [30]
+.SH "SEE ALSO"
+.BR torcs (6)
+.SH "AUTHOR"
+.LP
+This manual page was writen by Rudy Godoy <rudy@kernel-panik.org>,
+for the Debian GNU/Linux system (but may be used by others).

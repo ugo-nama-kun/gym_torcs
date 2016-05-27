@@ -1,0 +1,233 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: strategy.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>pit strategy functions</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="pit strategy functions"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, pit, pit stop, strategy"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>8.5 Pit Strategy Functions</h1>
+
+		<h3>Introduction</h3>
+
+		<p>
+		  In this section we will finish the pit class. What is still missing is the
+		  strategy functionality. I will show you a very simple implementation, which will
+		  work quite well for endurance races, but not for short ones. It works exactly the
+		  same way like in the berniw robot.
+		</p>
+
+		<h3>The update Method</h3>
+
+		<p>
+		  The update method is responsible for the housekeeping of some variables
+		  and to decide if we need a pit stop.
+		</p>
+
+<p><pre class="lcolor">/* update pit data and strategy */
+void Pit::update()
+{
+    if (mypit != NULL) {
+        if (isBetween(car-&gt;_distFromStartLine)) {
+            if (getPitstop()) {
+                setInPit(true);
+            }
+        } else {
+            setInPit(false);
+        }</pre></p>
+
+		<p>
+		  If we are between pitentry and pitexit and pitstop is set, set inpit to true.
+		  We need that to remember after the pit stop that we have to follow the pit
+		  path to leave the pit lane. That is necessary because the pitstop variable is
+		  set to false immediately after the pit stop, when we still need to drive out of
+		  the pit lane and back to the track. If we are not between pitentry and pitexit
+		  we set inpit to false.
+		</p>
+
+<p><pre class="lcolor">        /* check for damage */
+        if (car-&gt;_dammage &gt; PIT_DAMMAGE) {
+            setPitstop(true);
+        }</pre></p>
+
+		<p>
+		  The first very simple strategy rule. If the damage of the car is greater than
+		  PIT_DAMMAGE, we set pitstop to true. Here is very much room for improvement,
+		  you could make that dependent on the remaining laps and the situation in the race.
+		</p>
+
+<p><pre class="lcolor">        /* fuel update */
+        int id = car-&gt;_trkPos.seg->id;
+        if (id &gt;= 0 &amp;&amp; id &lt; 5 &amp;&amp; !fuelchecked) {</pre></p>
+
+		<p>
+		  We update the fuel values once per lap when we cross the track segment zero. We
+		  check the range of 5 segments that we catch it for sure.
+		</p>
+<p><pre class="lcolor">            if (car-&gt;race.laps &gt; 0) {
+                fuelperlap = MAX(fuelperlap, (lastfuel+lastpitfuel-car-&gt;priv.fuel));
+            }
+            lastfuel = car-&gt;priv.fuel;
+            lastpitfuel = 0.0;
+            fuelchecked = true;
+        } else if (id &gt; 5) {
+            fuelchecked = false;
+        }</pre></p>
+
+		<p>
+		  We compute the amount of fuel which the car has consumed till the check
+		  one lap before.
+		  The amount of the consumed fuel on the last lap is usually the difference
+		  between the available amount of fuel one lap ago (lastfuel) and the current
+		  amount of fuel available
+		  (car-&gt;priv.fuel). If we have performed a pit stop, this is not true. To make
+		  the computation work we have to add to the lastfuel value the amount of new fuel
+		  (lastpitfuel).
+		</p>
+		<p>
+		  We take the maximum because if we get some damage or have to brake and accelarate
+		  more than usual the car consumes more fuel. If you take the average you may
+		  run out of fuel.
+		</p>
+
+<p><pre class="lcolor">        int laps = car-&gt;_remainingLaps-car-&gt;_lapsBehindLeader;
+        if (!getPitstop() && laps &gt; 0) {
+            if (car-&gt;_fuel &lt; 1.5*fuelperlap &amp;&amp;
+                car-&gt;_fuel &lt; laps*fuelperlap) {
+                setPitstop(true);
+            }
+        }</pre></p>
+
+		<p>
+		  Here comes the second strategy rule, feel also free to improve that. If there
+		  are some laps remaining for our robot check if we have fuel for the
+		  next one and a half laps and if we need to refuel at all. If that is the case
+		  set pitstop to true.
+		</p>
+
+<p><pre class="lcolor">        if (getPitstop()) car-&gt;_raceCmd = RM_CMD_PIT_ASKED;
+    }
+}</pre></p>
+
+		<p>
+		  If pitstop is true set the race command accordingly (here we let TORCS know that
+		  we want to pit). Our car is captured by the pit if the car is slow enough, near
+		  enough to the center of our pit and if the race command is set to RM_CMD_PIT_ASKED.
+		</p>
+
+		<h3>The getFuel Method</h3>
+
+		<p>
+		  This method computes the amount of fuel we request on the pit stop. It is called
+		  from the drivers Driver::pitCommand callback function (I will show you that soon).
+		  It is also part of the strategy.
+		</p>
+
+
+<p><pre class="lcolor">/* Computes the amount of fuel */
+float Pit::getFuel()
+{
+    float fuel;
+    fuel = MAX(MIN((car-&gt;_remainingLaps+1.0)*fuelperlap - car-&gt;_fuel,
+                    car-&gt;_tank - car-&gt;_fuel),
+               0.0);
+    lastpitfuel = fuel;
+    return fuel;
+}</pre></p>
+
+		<p>
+		  The fuel we need to finish the race is the difference between the remaining
+		  laps
+		  times the fuel we need per lap and the fuel in the tank. To play safe we
+		  request fuel for an
+		  additional lap and take the remaining laps of our car (perhaps the leader will
+		  have an accident). If the amount of fuel we need is bigger than the tank, we
+		  cut the amount with the second expression in the MIN statement. Because we
+		  perhaps stopped in the pit to repair damage, the needed amount of fuel can
+		  become negative. For that is the surrounding MAX statement.
+		</p>
+
+		<h3>The getRepair Method</h3>
+
+		<p>
+		  Computes the damage points to repair. A the moment we simply repair the whole
+		  damage. This is on short races really braindead... so improve that.
+		</p>
+
+<p><pre class="lcolor">/* Computes how much damage to repair */
+int Pit::getRepair()
+{
+    return car-&gt;_dammage;
+}</pre></p>
+
+		<h3>The Makefile</h3>
+
+		<p>
+		  We have now finished pit.cpp. To check if everything is in place, we add it in
+		  the Makefile. Of course it will still do nothing, because we do not instantiate
+		  the pit in our driver yet. This will be the last step. Now change in the Makefile
+		  the line
+		</p>
+
+		<p><pre class="lbcolor">SOURCES     = ${ROBOT}.cpp driver.cpp opponent.cpp spline.cpp</pre></p>
+
+		<p>
+		  to
+		</p>
+		<p><pre class="lcolor">SOURCES     = ${ROBOT}.cpp driver.cpp opponent.cpp spline.cpp pit.cpp</pre></p>
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt85.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have understood and implemented the above methods.</li>
+		   <li>You know that you can improve the strategy a lot.</li>
+        </ul>
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./utility.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./brake.html">
+          <p style="text-align:right;">The pit brake filter.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

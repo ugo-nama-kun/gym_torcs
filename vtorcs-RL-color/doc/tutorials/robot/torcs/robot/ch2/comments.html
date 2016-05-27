@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: comments.html,v 1.1 2004/11/30 14:02:08 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Comments to the Code</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="comments to the code"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, stuck, unstuck, coding"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>2.2 Comments</h1>
+
+		<h3>Introduction</h3>
+		<p>
+			This section covers some selected topics related to coding for TORCS.
+		</p>
+
+		<h3>Performance</h3>
+        <p>
+          Because there are several robots in the simulation, we have to take care that our robot doesn't eat
+          up too much performance. Look at the previous listing, I call there 3 times RtTrackSideTgAngleL. That's
+          very bad, because there are very expensive utility functions, so you should keep the number of calls
+          minimal. So whereever you can recycle an expensive computation, do it (that's a bit oversimplified, I know).<br/>
+          There are perhaps also some pieces in the code which doesn't need to be evaluated on every simulation step,
+          so do it just every 10th or whatever is appropriate.
+        </p>
+
+        <h3>Boolean Expressions</h3>
+        <p>
+          If you need complicated boolean expressions, encapsulate them into a function or a method. This will
+          make the code easier to understand, because the name states what we want to ask (remember isStuck()).
+        </p>
+
+        <h3>Portability</h3>
+        <p>
+          You have seen that TORCS runs on Windows, Linux/x86 and Linux/ppc. So you have to take care for
+          portability. There are also some issues with Visual C++ 6.0.<br/>
+        </p>                                                              
+
+        <h4>For Loops</h4>
+        <p>
+          You can write (according to the standard) this for loops:
+        </p>
+        <p>
+          <tt>
+            for (int i=0; i &lt 100; i++) { ... }<br/>
+            for (int i=7; i &gt 0; i--) { ... }<br/>
+          </tt>
+        </p>
+        <p>
+          In fact the variable i should disappear after the for loop, but it doesn't in VC++. So to make VC++
+          happy, write
+        </p>
+        <p>
+          <tt>
+            int i;<br/>
+            for (i=0; i &lt 100; i++) { ... }<br/>
+            for (i=7; i &gt 0; i--) { ... }<br/>
+          </tt>
+        </p>
+        
+        <h4>Constants in Classes</h4>
+        <p>
+          Implement constants like I do in the next section, or use #define. If you need integer constants
+          you can also abuse enumerations for them. The following example won't work with VC++:
+        </p>
+        <p>
+          <tt>
+            class bla {<br/>
+              static const int someconst = 7;<br/>
+              static const float someotherconst = 6.5;<br/>
+            };<br/>
+          </tt>
+        </p>
+
+        <h3>Magic Numbers</h3>
+        <p>
+          What's also very bad on my bot till now are the numbers, which are spread all over the place. For
+          now we should define them on a central location as constants. Constants are superior over numbers, because
+          they have meaningful names and you need to change them just once. In a later chapter we will read some of
+          them from an XML file.
+        </p>
+
+		<h3>Numerical Problems</h3>
+		<p>
+			To implement your robot you will certainly need floating point numbers. Keep in mind that these
+			are not the same like the Real numbers from mathematics, they are discrete and there are gaps
+			between any two numbers. If you are interested in the details search the web for "IEEE 754
+			floating point numbers".
+		</p>
+
+		<h4>Adding up Numbers</h4>
+		<p>
+			If you add up values of very different magnitude, e. g. the float 20.000001 and 0.000001 the sum will
+			be still 20.000001 (and not 20.000002). The cause is the internal representation of
+			floating point numbers, be aware
+			of such problems. As example you can produce this way an endless while loop, when the guard
+			waits for the sum to grow to a certain limit.
+		</p>
+
+		<h4>Special Numbers</h4>
+		<p>
+			The IEEE 754 floating point numbers have some special numbers to signal a special state or
+			problems. The most interesting is the NaN (not a number) which results e. g. in the case when you
+			divide 0.0 with 0.0. Once you have a NaN stored in a variable all computed results based
+			on it are NaN as well. Sometimes you can avoid the danger with manipulating the expression.
+		</p>
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You keep an eye on performance.</li>
+           <li>You try to write code which is easy to understand.</li>
+           <lI>You try to write portable code.</li>
+           <li>Avoid meaningless numbers, use constants instead.</li>
+		   <li>Be aware of floating point numbers.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./unstuck1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./multiple1.html">
+          <p style="text-align:right;">Let's get more cars.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

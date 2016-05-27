@@ -1,0 +1,151 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: carpainting.html,v 1.1 2004/11/30 14:02:13 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>paint the car</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="paint the car"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, car, paint, skin, texture"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #shot1 { float:left; border:0px; width:128px; height:128px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    #shot2 { float:left; border:0px; width:640px; height:256px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+	-->
+  </style>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>6.3 Painting the Car</h1>
+
+        <h3>Overview</h3>
+        <p>
+		  To paint your car you have to do the following:
+		  <ul>
+			<li>Download a default texture from CVS.</li>
+			<li>Modify the default texture.</li>
+			<li>Save the texture in the SGI rgb format.</li>
+			<li>Deploy the texture.</li>
+		  </ul>
+		</p>
+
+		<h3>Download the Default Texture</h3>
+		<p>
+		  For some cars there is a default texture as multilayered xcf file available. If it's the
+		  case you should always download this file. You can download the files
+		  <a href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/torcs/torcs/torcs/data/cars/models/" target="_parent">
+		  here</a>. Go into the directory of your cars type, click on the xcf file (if available,
+		  else you have to take the rgb) in the first column, then
+		  right click the download link and choose "save link target as...".
+		</p>
+
+		<h3>Modify the Default Texture</h3>
+		<p>
+		  If you downloaded an rgb image I recommend you to convert it into an xcf. With xcf you
+		  can use layers, which simplifies later changes to the texture (e. g. you want to change the
+		  racing number, you have just to edit the racing number layer). Don't throw this xcf away,
+		  it is much more comfortable to work with that than with rgb images.
+		</p>
+
+		<h3>Save the Texture in the SGI rgb Format</h3>
+		<p>
+		  The texture is for a specific car, so you have to put it into the cars subdirectory. Say
+		  for <span style="color:red;">bt 1</span> you should save the image as SGI rgb file
+		  into the <span style="color:red;">bt/0</span> source directory.
+		</p>
+
+		<h3>Deploy the Texture</h3>
+		<p>
+		  To deploy the texture you have to modify the Makefile in the cars directory. If we want
+		  to deploy the texture of <span style="color:red;">bt 1</span> you have to modify the
+		  Makefile in <span style="color:red;">bt/0</span>. Change
+		</p>
+
+		<p><pre class="lbcolor">SHIP        = default.xml</pre></p>
+
+		<p>
+		  to
+		</p>
+
+		<p><pre class="lcolor">SHIP        = default.xml cg-nascar-rwd.rgb</pre></p>
+
+		<p>
+		  After you have deployed the texture with "make install" it should appear in the
+		  simulation.
+		</p>
+	  </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+	  	<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt63.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+		<h3>Feedback</h3>
+        <p>
+          <a href="mailto:berni4you@gmx.ch">Let me know</a>
+          if you read this chapter and your thoughts about it. Please
+          <a href="mailto:berni4you@gmx.ch">send me</a>
+          also spelling, grammar, math and code corrections. Thank you for the feedback.
+        </p>
+
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know where and how to get car textures.</li>
+		   <li>You know about xcf and rgb files.</li>
+		   <li>You know how to deploy your cars texture.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./pitlogo.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+         <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../robot.html','content')">
+          <p style="text-align:right;">Up</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : texmapper.xml
+    created              : Sun Nov 19 16:19:48 CET 2000
+    copyright            : (C) 2000 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: texmapper.xml,v 1.3 2003/06/24 21:01:22 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../../../src/libs/tgf/params.dtd">
+
+<params name="mapper" type="template">
+
+  <section name="image">
+    <attnum name="size" val="1024"/>
+  </section>
+
+  <section name="faces">
+
+    <section name="raw 0"> <!-- raw name is whatever you want provided it is unique -->
+      <attnum name="height" val="0"/> <!-- automatic height -->
+
+      <section name="col">
+
+	<section name="col 0">
+	  <attstr name="face name" val="right-retro"/> <!-- Mandatory to have at least one attr -->
+	  <attnum name="rotX" val="90"/>
+	  <attnum name="rotY" val="-90"/>
+	</section>
+
+	<section name="col 1"> 
+	  <attstr name="face name" val="right-side"/>
+	  <attnum name="width" val="0"/> <!-- automatic width -->
+	  <attstr name="align" in="X,Y,Z" val="X"/>
+	</section>
+
+	<section name="col 2">
+	  <attstr name="face name" val="right-mirror"/> <!-- Mandatory to have at least one attr -->
+	  <attnum name="rotX" val="90"/>
+	  <attnum name="rotY" val="90"/>
+	</section>
+
+      </section>
+
+    </section>
+
+    <section name="raw 1">
+      <section name="col">
+
+	<section name="col 0">
+	  <attstr name="face name" val="back"/>
+	  <attnum name="rotX" val="90"/>
+	  <attnum name="rotY" val="90"/>
+	</section>
+
+	<section name="col 1">
+	  <attstr name="face name" val="top"/>
+	  <attstr name="align" val="X"/>
+	  <attnum name="rotX" val="90"/>
+	</section>
+
+	<section name="col 2">
+	  <attstr name="face name" val="front"/>
+	  <attnum name="rotX" val="90"/>
+	  <attnum name="rotY" val="-90"/>
+	</section>
+
+      </section>
+    </section>
+
+    <section name="raw 2">
+      <section name="col">
+
+	<section name="col 0">
+	  <attstr name="face name" val="left-retro"/> <!-- Mandatory to have at least one attr -->
+	  <attnum name="rotX" val="90"/>
+	  <attnum name="rotY" val="-90"/>
+	</section>
+
+	<section name="col 1">
+	  <attstr name="face name" val="left-side"/>
+	  <attstr name="align" val="X"/>
+	  <attnum name="rotX" val="180"/>
+	</section>
+
+	<section name="col 2">
+	  <attstr name="face name" val="left-mirror"/> <!-- Mandatory to have at least one attr -->
+	  <attnum name="rotX" val="90"/>
+	  <attnum name="rotY" val="90"/>
+	</section>
+
+      </section>
+    </section>
+
+    <section name="raw 3">
+      <section name="col">
+
+	<section name="col 0">
+	  <attstr name="face name" val=""/> <!-- Mandatory to have at least one attr -->
+	  <attnum name="rotX" val="90"/>
+	</section>
+
+	<section name="col 1">
+	  <attstr name="face name" val="bottom"/>
+	  <attstr name="align" val="X"/>
+	  <attnum name="rotX" val="-90"/>
+	</section>
+
+      </section>
+    </section>
+
+
+  </section>
+
+</params>
+
+

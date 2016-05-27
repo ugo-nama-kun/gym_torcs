@@ -1,0 +1,231 @@
+##############################################################################
+#
+#    file                 : configure.in
+#    created              : Mon Dec 11 22:34:38 CET 2000
+#    copyright            : (C) 2000 by Eric Espi�#    email                : Eric.Espie@torcs.org
+#    version              : $Id: configure.in,v 1.57.2.3 2008/11/23 13:50:12 berniw Exp $
+#
+##############################################################################
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+##############################################################################
+
+AC_INIT(Make-config.in)
+AC_CONFIG_HEADERS(config.h)
+AM_INIT_AUTOMAKE(torcs, 1.3.1)
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_CPP
+
+AC_LANG_CPLUSPLUS
+
+AC_PROG_CXX
+AC_PROG_RANLIB
+AC_PROG_INSTALL
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_HEADER_TIME
+
+AC_CHECK_PROG(AR, ar, :, ar, /usr/bin/ar)
+AC_CHECK_PROG(LD, ld, :, ld, /usr/bin/gxx)
+
+AC_C_BIGENDIAN
+
+AC_PATH_X
+#CFLAGS="-ansi -Wall -Wstrict-prototypes -W"
+ADDCFLAGS="-Wall -fPIC -fno-strict-aliasing"
+AC_ARG_ENABLE(debug,
+	[  --enable-debug          set the debug mode],
+	ADDCFLAGS="$ADDCFLAGS -g -DDEBUG -DDEBUG_OUT",
+	ADDCFLAGS="$ADDCFLAGS -O2")
+
+AC_ARG_ENABLE(xrandr,
+	[  --disable-xrandr	   reset the XRANDR mode],
+	if test "$enableval" = "yes";
+	then ADDCFLAGS="$ADDCFLAGS -DUSE_RANDR_EXT"
+	fi,
+	ADDCFLAGS="$ADDCFLAGS -DUSE_RANDR_EXT")
+
+AC_ARG_ENABLE(ccmalloc,
+	[  --enable-ccmalloc       set the ccmalloc mode (beware path...)],
+	LDFLAGS="$LDFLAGS ccmalloc-g++.o -lccmalloc -ldl",
+	LDFLAGS="$LDFLAGS")
+
+AC_ARG_ENABLE(profiler,
+	[  --enable-profiler       set the profiler mode],
+	ADDCFLAGS="$ADDCFLAGS -DPROFILER",
+	ADDCFLAGS="$ADDCFLAGS")
+
+AC_ARG_ENABLE(glextprototypes,
+	[  --disable-glextprototypes       disable prototypes in glext.h],
+	if test "$enableval" = "yes";
+	then ADDCFLAGS="$ADDCFLAGS -DGL_GLEXT_PROTOTYPES"
+	fi,
+	ADDCFLAGS="$ADDCFLAGS -DGL_GLEXT_PROTOTYPES")
+
+
+CFLAGS="$CFLAGS $ADDCFLAGS"
+CXXFLAGS="$CXXFLAGS $ADDCFLAGS"
+
+dnl Checks for includes (devel part of packages)
+AC_CHECK_HEADER(GL/gl.h,, AC_MSG_ERROR([Can't find GL/gl.h. Look for Mesa devel packages for your distro.]))
+AC_CHECK_HEADER(GL/glut.h,, AC_MSG_ERROR([Can't find GL/glut.h. freeglut can be found on http://freeglut.sourceforge.net/]))
+AC_CHECK_HEADER(GL/glx.h,, AC_MSG_ERROR([Can't find GL/glx.h. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_HEADER(X11/Xlib.h,, AC_MSG_ERROR([Can't find X11/Xlib.h. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_HEADER(X11/Xatom.h,, AC_MSG_ERROR([Can't find X11/Xatom.h. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_HEADER(X11/keysym.h,, AC_MSG_ERROR([Can't find X11/keysym.h. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_HEADER(plib/ssg.h,, AC_MSG_ERROR([Can't find plib/ssg.h. PLIB can be found on http://plib.sourceforge.net/]))
+AC_CHECK_HEADER(AL/al.h,, AC_MSG_ERROR([Can't find AL/al.h. OpenAL and FreeALUT can be found on http://www.openal.org/]))
+AC_CHECK_HEADER(AL/alut.h,, AC_MSG_ERROR([Can't find AL/alut.h. OpenAL and FreeALUT can be found on http://www.openal.org/]))
+
+#AC_CHECK_HEADER(X11/Xfuncproto.h,, AC_MSG_ERROR([Can't find X11/Xfuncproto.h. Please check config.log and if you can't solve the problem send the file totorcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+#AC_CHECK_HEADER(X11/extensions/randr.h,, AC_MSG_ERROR([Can't find X11/extensions/randr.h. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+#AC_CHECK_HEADER(X11/extensions/Xrandr.h,, AC_MSG_ERROR([Can't find X11/extensions/Xrandr.h. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+
+dnl Checks for libraries.
+
+dnl Replace `main' with a function in -lm:
+AC_CHECK_LIB(m, sin,,AC_MSG_ERROR([Can't find libm. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+
+if test "$x_libraries" != ""; then
+	LDFLAGS="$LDFLAGS -L$x_libraries"
+fi
+
+dnl Replace `main' with a function in -lX11:
+AC_CHECK_LIB(X11, XOpenDisplay,,AC_MSG_ERROR([Can't find libX11. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+dnl Replace `main' with a function in -lXext:
+AC_CHECK_LIB(Xext, XShmCreateImage,,AC_MSG_ERROR([Can't find libXext. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+dnl Replace `main' with a function in -lICE:
+AC_CHECK_LIB(ICE, IceSetIOErrorHandler,,AC_MSG_ERROR([Can't find libICE. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+dnl Replace `main' with a function in -lSM:
+AC_CHECK_LIB(SM, SmsSetErrorHandler,,AC_MSG_ERROR([Can't find libSM. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+dnl Replace `main' with a function in -lXt:
+AC_CHECK_LIB(Xt, XtDisplay,,AC_MSG_ERROR([Can't find libXt. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+dnl Replace `main' with a function in -lXi:
+AC_CHECK_LIB(Xi, XOpenDevice,,AC_MSG_ERROR([Can't find libXi. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+dnl Replace `main' with a function in -lXmu:
+AC_CHECK_LIB(Xmu, XmuSimpleErrorHandler,,AC_MSG_ERROR([Can't find libXmu. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_LIB(Xxf86vm, XF86VidModeSetViewPort,,AC_MSG_ERROR([Can't find libXxf86vm. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_LIB(Xrender, XRenderSetSubpixelOrder,,AC_MSG_ERROR([Can't find libXrender. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_LIB(Xrandr, XRRQueryVersion,,AC_MSG_ERROR([Can't find libXrandr. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_LIB(openal, alEnable,, AC_MSG_ERROR([Can't find AL/al.h. OpenAL can be found on http://www.openal.org/]))
+AC_CHECK_LIB(alut, alutLoadWAVFile,
+	LDFLAGS="$LDFLAGS -lalut",
+	LDFLAGS="$LDFLAGS")
+
+AC_CHECK_LIB(dl, dlopen)
+AC_CHECK_FUNC(dlopen,,AC_MSG_ERROR([Can't find dlopen function. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+
+AC_CHECK_FUNCS(strndup,,)
+
+dnl Replace `main' with a function in -lz:
+AC_CHECK_LIB(z, crc32,,AC_MSG_ERROR([Can't find libz. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+dnl Replace `main' with a function in -lpng:
+AC_CHECK_LIB(png, png_init_io,,AC_MSG_ERROR([Can't find libpng. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+
+AC_CHECK_LIB(GL, glGetString,,AC_MSG_ERROR([Can't find libGL. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_LIB(GLU, gluOrtho2D,,AC_MSG_ERROR([Can't find libGLU. Please check config.log and if you can't solve the problem send the file to torcs-users@lists.sourceforge.net with the subject \"torcs compilation problem\"]))
+AC_CHECK_LIB(glut, glutSwapBuffers,,AC_MSG_ERROR([Can't find libglut. freeglut can be found on http://freeglut.sourceforge.net/]))
+
+dnl Checks for plib libraries.
+AC_CHECK_LIB(plibul, main,,AC_MSG_ERROR([Can't find libplibul. PLIB can be found on http://plib.sourceforge.net/]))
+AC_CHECK_LIB(plibsg, main,,AC_MSG_ERROR([Can't find libplibsg. PLIB can be found on http://plib.sourceforge.net/]))
+AC_CHECK_LIB(plibsl, main,,AC_MSG_ERROR([Can't find libplibsl. PLIB can be found on http://plib.sourceforge.net/]))
+AC_CHECK_LIB(plibsm, main,,AC_MSG_ERROR([Can't find libplibsm. PLIB can be found on http://plib.sourceforge.net/]))
+AC_CHECK_LIB(plibssg, main,,AC_MSG_ERROR([Can't find libplibssg. PLIB can be found on http://plib.sourceforge.net/]))
+AC_CHECK_LIB(plibssgaux, main,,AC_MSG_ERROR([Can't find libplibssgaux. PLIB can be found on http://plib.sourceforge.net/]))
+
+
+
+dnl Taken from FlightGear
+AC_MSG_CHECKING([for plib 1.8.3 or newer])
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <unistd.h>
+#include <plib/ul.h>
+#define MIN_PLIB_VERSION 183
+int main() {
+    if ( PLIB_VERSION < MIN_PLIB_VERSION ) {
+	 return -1;
+    }
+    return 0;
+}
+]])],
+  AC_MSG_RESULT(yes),
+  [AC_MSG_RESULT([PLIB 1.8.3 was not detected. TORCS can run only with PLIB 1.8.3, so verify that the PLIB 1.8.3 is really the version installed on your system.])],
+  AC_MSG_RESULT(yes)
+)
+
+
+
+AC_MSG_CHECKING([for GL_VERSION_1_3])
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <GL/gl.h>
+int main() {
+#ifdef GL_VERSION_1_3
+	return 0;
+#else
+	return -1;
+#endif
+}
+]])],
+  AC_MSG_RESULT(yes),
+  [AC_MSG_ERROR([GL_VERSION_1_3 not defined via gl.h. Please get the GL header files from mesa3d.org.])],
+  AC_MSG_RESULT(yes)
+)
+
+
+
+AC_MSG_CHECKING([for GL_ARB_texture_compression])
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <GL/gl.h>
+int main() {
+#ifdef GL_ARB_texture_compression
+	return 0;
+#else
+	return -1;
+#endif
+}
+]])],
+  AC_MSG_RESULT(yes),
+  [AC_MSG_ERROR([GL_ARB_texture_compression not defined via gl.h. Please get the GL header files from mesa3d.org.])],
+  AC_MSG_RESULT(yes)
+)
+
+
+
+CFLAGS="$CFLAGS $ADDCFLAGS"
+CXXFLAGS="$CXXFLAGS $ADDCFLAGS"
+
+
+AC_SUBST(TORCS_BASE)
+TORCS_BASE=$PWD
+
+AC_OUTPUT(Make-config \
+	src/linux/torcs \
+	src/tools/accc/accc \
+	src/tools/nfs2ac/nfs2ac \
+	src/tools/nfsperf/nfsperf \
+	src/tools/texmapper/texmapper \
+	src/tools/trackgen/trackgen \
+	src/doc/torcsdoc.conf \
+	src/tools/package/specfiles/torcs-data.spec \
+	src/tools/package/specfiles/torcs-data-cars-Patwo-Design.spec \
+	src/tools/package/specfiles/torcs-data-cars-kcendra-gt.spec \
+	src/tools/package/specfiles/torcs-data-cars-kcendra-sport.spec \
+	src/tools/package/specfiles/torcs-data-cars-kcendra-roadsters.spec \
+	src/tools/package/specfiles/torcs-data-cars-extra.spec \
+	src/tools/package/specfiles/torcs-data-tracks-base.spec \
+	src/tools/package/specfiles/torcs-robot-K1999.spec \
+	src/tools/package/specfiles/torcs-robot-base.spec \
+	src/tools/package/specfiles/torcs.spec \
+)

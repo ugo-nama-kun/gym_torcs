@@ -1,0 +1,27 @@
+#Default parameters for MrRacer2011, driving behaviour from F:\Quad\Experiments\SCRC2011-Gecco\DirtOptimization\run03-2011-06-30\Torcs-Dirt-Noisy_0001inds.log indID 71, fitness: Dirt-6=315.72599, recovery behaviour from F:\Quad\Experiments\SCRC2011-Gecco\RecoveryOptimization\run03-2011-06-24\Torcs-Noisy-Recovery_0001inds.log indID 591, fitness: Wheel2=490.72601
+#Thu Jun 30 10:47:38 CEST 2011
+-MrRacer2011.Plan--PLAN.BCC-=0.89491
+-MrRacer2011.Recovery--DFBB.offTrack--OTRB.backwardMinAcc-=0.80406
+-MrRacer2011.Recovery--DFBB.offTrack--OTRB.fowardAngleD-=31.131899999999998
+-MrRacer2011.Recovery--DFBB.offTrack--OTRB.backwardMaxAcc-=0.87262
+-MrRacer2011.Acc--DAB.dos-=true
+-MrRacer2011.Acc--DAB.accDamp--GLF.M-=0.2638
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.M-=0.62977
+-MrRacer2011.Acc--DAB.accDamp--GLF.V-=0.27988
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.M-=0.6118
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.V-=0.38624
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.V-=0.48742
+-MrRacer2011.Acc--DAB.accDamp--GLF.B-=1.3123207626621545
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.B-=2.136043043832253
+-MrRacer2011.Recovery--DFBB.offTrack--OTRB.backwardAngleD-=-44.5059
+-MrRacer2011.Acc--DAB.accDamp--GLF.Q-=0.42433
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.B-=5.511375483457534
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.Q-=0.61809
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.Q-=0.34547
+-MrRacer2011.Recovery--DFBB.offTrack--OTRB.forwardMinAcc-=0.23373
+-MrRacer2011.Recovery--DFBB.offTrack--OTRB.forwardMaxAcc-=0.69922
+-MrRacer2011.Clutch--Clutch.f--GLF.B-=1.943
+-MrRacer2011.Clutch--Clutch.f--GLF.M-=0.31373
+-MrRacer2011.Clutch--Clutch.f--GLF.V-=0.42029
+-MrRacer2011.Clutch--Clutch.f--GLF.Q-=0.46793
+-MrRacer2011.Clutch--Clutch.maxSpeed-=177.142

@@ -1,0 +1,73 @@
+Changes since 1.2.2
+-------------------
+- Better sound (Christos).
+- New track (Christos).
+- New and updated robots (Christos, Bernhard).
+- New car (SpeedyChonChon).
+- Lots of bugfixes (Eric, Bernhard).
+- Option to disable sound (Bernhard).
+- Optional "Compatibility" video init for broken GLUT/GLX/OpenGL drivers
+  (Bernhard).
+- Added -fPIC, are AMD64 builds now working out of the box (Bernhard)?
+- ...
+
+
+Changes since 1.2.3-bw-unofficial-test1
+---------------------------------------
+- Reintroduced gear switching flames (Bernhard).
+- Fix/Retest track selection crash (Bernhard).
+- Hunting lost open filehandles (done, all I have found so far and are caused
+  by TORCS) (Bernhard).
+- Updated open wheel car (Speedychonchon, Bernhard).
+- Fixed championship saving bug (Bernhard, SF report by Eugen).
+- Fixed mouse-scrolling crash (Bernhard, SF report by Frieder).
+- Collision (wall of death), not perfect, but good enough for now (Bernhard).
+- Timelimit in qualification (for robots only) (Bernhard).
+- Remove too slow cars from races (for robots only) (Bernhard).
+
+
+Changes since 1.2.3-bw-unofficial-test2
+---------------------------------------
+- Disabled outdated barrier normal computation in collide.cpp (Bernhard).
+- Replaced glCopyTexImage2D with glCopyTexSubImage2D for mirror cam (suggested
+  in NVidia's performance slides) (Bernhard).
+- Fixed broken env map animation (caused by experimental changes in
+  grvtxtable.cpp 1.12) (Bernhard, report by Eric).
+- Add resolutions for windowed mode, so 320x240, 640x480 and 800x600 are always
+  in the list if you have enabled xrandr (Bernhard).
+- Set default optimization to -O2, was -O3 before (Bernhard).
+- Updated Windows plib to 1.8.3 without multithreading (replaced /MT with /ML)
+  (Bernhard).
+- Fixed all warnings (level W2) for the windows build (please add "f" to
+  constants if you mean float) (Bernhard).
+- Update Windows project files/make it work in Windows (Bernhard).
+- Backported a fix from berniw_2004 to berniw's (Bernhard).
+- Fixed broken P406 counters (Bernhard).
+- nfs2ac: Catched segfault if no argument is given (Bernhard).
+- Added nfsperf project, fixes (Bernhard).
+- Update windows bat files (add sounds, track, car, etc) (Bernhard).
+- Compressed all RGB's to RLE compressed RGB's (disk usage -90MB!) with
+  "find . -name "*.rgb" -exec convert -compress RLE {} {} \;"
+- Reduced the resolution of a few textures (Bernhard).
+- Fixed Formula 1 camera (Reported by Speedychonchon, Bernhard).
+
+Changes since 1.2.3-bw-unofficial-test3
+---------------------------------------
+- Removed ssggraph_old dir (Bernhard).
+- Preselect valid drivers for practice, non championship race, endurance race,
+  etc (Bernhard).
+- remove Olethros and grsound printf's (Bernhard).
+- sorted out currently unneeded textures (Bernhard).
+- removed corvette for now (would need major rework) (Bernhard).
+- changed suspension and weight distribution settings of p406 (Bernhard).
+- Fixed some "first time uninitialized values" for inferno 2-10 (Bernhard).
+- Reviewed Inferno/Inferno 2004, no crash bug found (Bernhard).
+- sorted out unneeded sounds (Bernhard).
+
+Changes since 1.2.3-bw-unofficial-test4
+---------------------------------------
+- Disabled Olethros track_* file writing (Bernhard).
+- Reworked Viper (new bottom, 1 sided polygons, fixed holes) (Bernhard).
+- Some changes in Makefiles etc (Bernhard).
+- Fixed crash bug in human.cpp (Bernhard).
+- released as 1.2.3.

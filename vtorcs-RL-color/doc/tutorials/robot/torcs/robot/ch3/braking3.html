@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: braking3.html,v 1.1 2004/11/30 14:02:10 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Optimal Braking Distance</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="optimal breaking"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, braking, optimal"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #pic1 { border:0px; width:640px; height:411px; border-style:hidden; margin-bottom:5px; }
+    #pic3 { border:0px; width:607px; height:407px; border-style:hidden; margin-bottom:5px; }
+    -->
+  </style>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>3.5.S Optimal Braking Distance</h1>
+
+        <h3>Introduction</h3>
+        <p>
+          This section shows how I computed the optimal solution. It was quite a hassle, I needed to
+          play with different approaches and to fight with maple... But after a day of thinking and
+          playing, here it is. So I finally provide you a better solution than my robot berniw
+          currently contains.
+        </p>
+
+        <h3>Braking Distance</h3>
+        <p>
+          <img id="pic1" src="images/optimal.jpg" alt="brake distance formulas" border="0"></img>
+          First I developed a differential equation for v(s). Then I solved it with maple and got
+          a function for v(s) with initial condition v(0)=v1. Finally I solved the function with v(s)=v2 for s, and that's it. I
+          also compared and checked the result with the numerical approach.
+        </p>
+        
+        <h3>Discussion</h3>
+        <img id="pic3" src="images/optimal3d.jpg" alt="brake distance formulas" border="0"></img>
+        <p>
+          The plot shows the braking distance s as a function of the current speed v1 and the
+          desired speed v2 (for cg-nascar-rwd). In fact I was a bit surprised of the shape of the surface. Why? Because
+          the kinetic energy of the car grows proportional to the square of the velocity. What makes
+          now the surface that flat?<br/>
+          Have a look at the forces: In the formulas with aerodynamics we have additional
+          terms for the aerodynamic forces which also grow proportional to the square
+          of the velocity. At high speeds they dominate, so we can also burn energy at
+          "squared rate". Keep in mind that we neglect a lot of effects like:
+        </p>
+        <p>
+        <ul style="list-style-type:disk; color:black;">
+          <li>Load transfer caused by the negative acceleration during braking.</li>
+          <li>Braking balance.</li>
+          <li>Aerodynamic load changes differently at front and rear.</li>
+          <li>Rotational kinetic energy of the wheels.</li>
+        </ul>
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h3>Implementation</h3>
+
+        <p>
+          If you want to implement it, replace the following line in getBrake(), driver.cpp
+        </p>
+        <p><pre  class="lbcolor">    float brakedist = (currentspeedsqr - allowedspeedsqr) / (2.0*mu*G);</pre>
+        </p>
+        <p>
+          or
+        </p>
+        <p><pre class="lbcolor">    float brakedist = mass*(currentspeedsqr - allowedspeedsqr) /
+                      (2.0*(mu*G*mass + allowedspeedsqr*(CA*mu + CW)));</pre>
+        </p>
+        <p>
+          with
+        </p>
+
+        <p><pre  class="lcolor">    float c = mu*G;
+    float d = (CA*mu + CW)/mass;
+    float v1sqr = currentspeedsqr;
+    float v2sqr = allowedspeedsqr;
+    float brakedist = -log((c + v2sqr*d)/(c + v1sqr*d))/(2.0*d);</pre>
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know the latest top secret formula from my lab;-)</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./braking2.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./advanced.html">
+          <p style="text-align:right;">Traction control, anti wheel locking, ...</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: build.html,v 1.2 2006/05/20 09:00:07 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Compile and Install your Robot</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="compile and install robot"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, compile, install"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>1.2 Build the Robot</h1>
+
+        <h3>Introduction</h3>
+        <p>
+          So, you want to build your robot? Ok, here is some basic information about that. As you know
+          from the installation section, everything is already set up fine (remember the test compilation
+          of tanhoj). The directory where your robots sources are is $TORCS_BASE/src/drivers/<span style="color:red;">bt</span>. To build
+          your robot you will use "make". Make is a powerful tool which will track dependencies for you and
+          much more. But don't worry, everything is already set up.<br/>
+          You will recognise that we have to do stuff in more than one directory, so it makes sense to use
+          more than one shell. I use the Konsole from KDE and have one shell for every directory.
+        </p>
+          <ul style="list-style-type:disk; color:black;">
+           <li>/usr/local/share/games/torcs to run TORCS and look up if the installation worked.</li>
+           <li>$TORCS_BASE/src/drivers/<span style="color:red;">bt</span> to work on the robot.</li>
+           <li>$TORCS_BASE/export/include/ to search in the header files.</li>
+        </ul>
+        <p>
+          I would suggest using an editor which supports at least syntax highlighting, easy to use are nedit
+          and kate (choose C++ mode). I prefer kate.
+        </p>
+
+        <h3>Compile and Install Your Robot</h3>
+        <p>
+          <tt>
+            $ cd $TORCS_BASE/src/drivers/<span style="color:red;">bt</span><br/>
+            $ make<br/>
+          </tt>
+        </p>
+
+        <p>
+          It should now be compiled. If you get errors, check the installation and the environment variables.
+          If everything worked fine install your robot with
+        </p>
+        <p>
+          <tt>
+            $ make install<br/>
+          </tt>
+        </p>
+        <p>
+          In case you get errors here check if the compilation worked and if the permissions are correct
+          in /usr/local/share/games/torcs. If everything worked fine, start TORCS and choose practice, choose your robot
+          and start a practice session. Here it is and stays and stays and... Cool!<br/>
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know where your robots sources are located.</li>
+           <li>You know how to compile and install your robot.</li>
+           <li>You know how to start TORCS and run a practice session.</li>
+           <li>The build environment is set up properly.</li>
+           <li>You decided which editor you want to use.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./files.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./basic-drive-1.html">
+          <p style="text-align:right;">Now let's make it drive.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

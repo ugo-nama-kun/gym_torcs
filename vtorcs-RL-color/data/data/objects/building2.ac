@@ -1,0 +1,324 @@
+AC3Db
+MATERIAL "ac3dmat1" rgb 1 1 1  amb 0.2 0.2 0.2  emis 0 0 0  spec 0.5 0.5 0.5  shi 10  trans 0
+OBJECT world
+kids 13
+OBJECT poly
+name "poly"
+loc 1.79968 1 -0.897
+numvert 3
+11.6435 14 -4.103
+13.2003 14 -3.07851
+13.1926 -1 -3.07851
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc 1.79668 1 -0.897
+numvert 3
+11.631 -1 -4.103
+11.6465 14 -4.103
+13.1956 -1 -3.07851
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc -1.80068 1 -0.8985
+numvert 3
+-13.1993 -1 -3.12003
+-11.6193 14 -4.09148
+-11.6272 -1 -4.09148
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc -1.80068 1 -0.8985
+numvert 3
+-13.1914 14 -3.12003
+-11.6193 14 -4.09148
+-13.1993 -1 -3.12003
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc -1.79868 1 0.8975
+numvert 3
+-11.6292 -1 4.1025
+-13.1697 14 3.08097
+-13.1776 -1 3.08097
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc -1.79668 1 0.8975
+numvert 3
+-11.6233 14 4.1025
+-13.1717 14 3.08097
+-11.6312 -1 4.1025
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc 1.79568 1 0.9
+numvert 3
+13.1966 -1 3.09548
+11.632 14 4.08998
+11.6243 -1 4.08998
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc 1.79768 1 0.9
+numvert 3
+13.1946 -1 3.09548
+13.2023 14 3.09548
+11.63 14 4.08998
+numsurf 1
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+kids 0
+OBJECT poly
+name "poly"
+loc -0.00199968 1 -0.997
+texture "building2.rgb"
+texrep 6 1
+numvert 5
+-13.4181 14 -3.99298
+13.4452 14 -4.003
+13.4297 -1 -4.003
+-13.426 -1 -3.99298
+-13.4181 14 -3.98798
+numsurf 3
+SURF 0x20
+mat 0
+refs 3
+0 0.800014 1
+1 7.15214e-05 1
+2 0 0
+SURF 0x20
+mat 0
+refs 3
+3 0.799955 0
+0 0.800014 1
+2 0 0
+SURF 0x20
+mat 0
+refs 3
+4 1 1
+1 7.15214e-05 1
+0 0.800014 1
+kids 0
+OBJECT poly
+name "poly"
+loc -1.99564 1 -0.00300011
+texture "building1.rgb"
+numvert 6
+-12.9965 14 -4.01052
+-12.9965 14 -4.01553
+-13.0044 -0.999999 -4.01553
+-12.9807 -1 3.98147
+-12.9728 14 3.98147
+-12.9649 14 3.98147
+numsurf 4
+SURF 0x20
+mat 0
+refs 3
+0 0.00062639 1
+1 2.23937e-07 1
+2 0 5.9754e-08
+SURF 0x20
+mat 0
+refs 3
+3 1 0
+0 0.00062639 1
+2 0 5.9754e-08
+SURF 0x20
+mat 0
+refs 3
+4 1 1
+0 0.00062639 1
+3 1 0
+SURF 0x20
+mat 0
+refs 3
+5 1 1
+0 0.00062639 1
+4 1 1
+kids 0
+OBJECT poly
+name "poly"
+loc -0.00399941 1 0.9995
+texture "building2.rgb"
+texrep 5 1
+numvert 5
+13.424 -1 3.99048
+-13.4161 14 4.0005
+-13.424 -1 4.0005
+13.424 14 3.99049
+13.4317 14 3.99049
+numsurf 3
+SURF 0x20
+mat 0
+refs 3
+0 0.999375 0
+1 0.000625383 1
+2 0 0
+SURF 0x20
+mat 0
+refs 3
+3 0.999375 1
+1 0.000625383 1
+0 0.999375 0
+SURF 0x20
+mat 0
+refs 3
+4 1 1
+3 0.999375 1
+0 0.999375 0
+kids 0
+OBJECT poly
+name "poly"
+loc 1.99964 1 0.00299999
+texture "building1.rgb"
+numvert 4
+13.0004 14 -3.97851
+12.9926 -1 3.99248
+12.9926 -0.999999 -3.97851
+13.0004 14 3.99248
+numsurf 2
+SURF 0x20
+mat 0
+refs 3
+0 2.24218e-07 1
+1 1 0
+2 0 5.9754e-08
+SURF 0x20
+mat 0
+refs 3
+1 1 0
+0 2.24218e-07 1
+3 1 1
+kids 0
+OBJECT poly
+name "poly"
+loc 0.000999749 2 2.08616e-07
+numvert 12
+14.999 13 -3.97551
+-13.4211 13 5
+13.419 13 4.98998
+-14.993 13 -4.01853
+-13.4211 13 -4.98498
+-13.4211 13 -4.98998
+-14.993 13 -4.01352
+-14.9614 13 3.97847
+-14.9693 13 3.97847
+14.999 13 3.99548
+13.4267 13 4.98998
+13.4422 13 -5
+numsurf 10
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+1 0 0
+2 0 0
+SURF 0x20
+mat 0
+refs 3
+3 0 0
+4 0 0
+5 0 0
+SURF 0x20
+mat 0
+refs 3
+6 0 0
+4 0 0
+3 0 0
+SURF 0x20
+mat 0
+refs 3
+1 0 0
+7 0 0
+8 0 0
+SURF 0x20
+mat 0
+refs 3
+9 0 0
+2 0 0
+10 0 0
+SURF 0x20
+mat 0
+refs 3
+0 0 0
+2 0 0
+9 0 0
+SURF 0x20
+mat 0
+refs 3
+4 0 0
+0 0 0
+11 0 0
+SURF 0x20
+mat 0
+refs 3
+6 0 0
+0 0 0
+4 0 0
+SURF 0x20
+mat 0
+refs 3
+7 0 0
+0 0 0
+6 0 0
+SURF 0x20
+mat 0
+refs 3
+1 0 0
+0 0 0
+7 0 0
+kids 0

@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : dirt-2.xml
+    created              : Sun Mar 12 22:03:27 CET 2000
+    copyright            : (C) 2000 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: dirt-2.xml,v 1.8.2.1 2008/08/19 21:06:00 berniw Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+
+<!DOCTYPE params SYSTEM "../../../src/libs/tgf/params.dtd" [
+<!-- general definitions for tracks -->
+<!ENTITY default-surfaces SYSTEM "../../../data/tracks/surfaces.xml">
+]>
+
+<params name="dirt-2" type="template" mode="mw">
+
+  <section name="Surfaces">
+    <section name="List">
+      &default-surfaces;
+    </section>
+  </section>
+
+  <section name="Header">
+    <attstr name="name"        val="Dirt 2"/>
+    <attstr name="category"    val="dirt"/>
+    <attnum name="version"     val="3"/>
+    <attstr name="author"      val="E. Espie"/>
+    <attstr name="description" val="Track with high jumps and woops"/>
+  </section>
+
+  <section name="Graphic">
+    <attstr name="3d description" val="dirt-2.ac"/>
+    <attstr name="background image" val="background.png"/>
+    <attnum name="background color R" val="0.28125"/>
+    <attnum name="background color G" val="0.4375"/>
+    <attnum name="background color B" val="0.75"/>
+
+    <attnum name="ambient color R" val="0.1"/>
+    <attnum name="ambient color G" val="0.1"/>
+    <attnum name="ambient color B" val="0.05"/>
+
+    <attnum name="diffuse color R" val="1"/>
+    <attnum name="diffuse color G" val="1"/>
+    <attnum name="diffuse color B" val="1"/>
+
+    <attnum name="specular color R" val="0.1"/>
+    <attnum name="specular color G" val="0.1"/>
+    <attnum name="specular color B" val="0.1"/>
+
+
+    <attnum name="light position x" val="-0"/>
+    <attnum name="light position y" val="1000"/>
+    <attnum name="light position z" val="300"/>
+
+    <section name="Environment Mapping">
+      <section name="general">
+	<attstr name="env map image" val="env.png"/>
+      </section>
+    </section>
+
+    <section name="Terrain Generation">
+      <attnum name="track step" unit="m" val="5"/>
+      <attnum name="border margin" unit="m" val="100"/>
+      <attnum name="border step" unit="m" val="30"/>
+      <attnum name="border height" unit="m" val="5"/>
+      <attstr name="orientation" val="counter-clockwise"/>
+    </section>
+
+  </section>
+
+
+  <section name="Main Track">
+
+    <attnum name="width" unit="m" val="10"/>
+    <attstr name="surface" in="asphalt,concrete,grass,sand,dirt" val="dirt"/>
+    <attnum name="rside width" val="4"/>
+    <attstr name="rside surface"  val="dirt-b"/>
+    <attstr name="rside type" in="level,tangent" val="level"/>
+    <attnum name="lside width" val="4"/>
+    <attstr name="lside surface"  val="dirt-b"/>
+    <attstr name="lside type" in="level,tangent" val="level"/>
+
+    <section name="segments">
+
+      <section name="s1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="-8" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="t1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="10"/>
+	<attnum name="arc" unit="deg" val="90"/>
+      </section>
+
+      <section name="t1-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="10"/>
+	<attnum name="arc" unit="deg" val="90"/>
+      </section>
+
+      <section name="s2-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="-1"/>
+      </section>
+
+      <section name="s2-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="s2-3">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="t2">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="20"/>
+	<attnum name="arc" unit="deg" val="90"/>
+      </section>
+
+      <section name="s3-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="1.5"/>
+	<attnum name="profil end tangent" val="10" unit="%"/>
+      </section>
+
+      <section name="s3-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="3"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s3-3">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="10"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="2"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s3-4">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="30"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="6"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="5"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s3-5">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="10"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="3"/>
+	<attnum name="profil end tangent" val="-10" unit="%"/>
+      </section>
+
+      <section name="s3-6">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="8" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="1"/>
+	<attnum name="profil end tangent" val="-5" unit="%"/>
+      </section>
+
+      <section name="t3">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="10"/>
+	<attnum name="arc" unit="deg" val="180"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s4-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="1"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s4-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="s4-3">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0.5"/>
+      </section>
+
+      <section name="s4-4">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="s4-5">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0.5"/>
+      </section>
+
+      <section name="s4-6">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="s4-7">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0.5"/>
+      </section>
+
+      <section name="s4-8">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="s4-9">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0.5"/>
+      </section>
+
+      <section name="s4-10">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="s4-11">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0.5"/>
+      </section>
+
+      <section name="s4-12">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="s4-13">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0.5"/>
+      </section>
+
+      <section name="s4-14">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="10"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="-10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="t4">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="20"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="1"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+      </section>
+
+      <section name="s5">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="40"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="-8" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="t5">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="10"/>
+	<attnum name="arc" unit="deg" val="180"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s6">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="30"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="8" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="2"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="t6">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="10"/>
+	<attnum name="arc" unit="deg" val="180"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="2"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s7">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="30"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="-8" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="1"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="t7">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="10"/>
+	<attnum name="arc" unit="deg" val="180"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="1"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s8">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="1"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="t8">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="20"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="2"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s9">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="40"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="-10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="t9">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="20"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="2"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s10">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+      </section>
+
+      <section name="t10">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="20"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="1"/>
+	<attnum name="profil end tangent" val="5" unit="%"/>
+      </section>
+
+      <section name="s11-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="5"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-3">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="10"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="3"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-4">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="10"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="4"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-5">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-6">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="10"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-7">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="15"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="2"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-8">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="15"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s11-9">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="-10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="t11">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="20"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="z end" unit="m" val="2"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s12-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="20"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="5"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="4"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+      <section name="s12-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="40"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+	<attnum name="profil steps" val="10"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attnum name="profil end tangent" val="0" unit="%"/>
+      </section>
+
+    </section>
+
+  </section>
+
+  <section name="Cameras">
+    <section name="list">
+
+      <section name="c1">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t1"/>
+	<attnum name="to right"  val="-4.0"/>
+	<attnum name="to start"  val="90" unit="deg"/>
+	<attnum name="height"    val="2"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="s12-2"/>
+	<attstr name="fov end"   val="s2-1"/>	
+      </section>
+
+      <section name="c2">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t2"/>
+	<attnum name="to right"  val="9.0"/>
+	<attnum name="to start"  val="45" unit="deg"/>
+	<attnum name="height"    val="2"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="s2-1"/>
+	<attstr name="fov end"   val="s3-6"/>	
+      </section>
+
+      <section name="c3">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t3"/>
+	<attnum name="to right"  val="9.0"/>
+	<attnum name="to start"  val="90" unit="deg"/>
+	<attnum name="height"    val="2"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="s3-6"/>
+	<attstr name="fov end"   val="s4-5"/>	
+      </section>
+
+      <section name="c4">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t4"/>
+	<attnum name="to right"  val="-4.0"/>
+	<attnum name="to start"  val="75" unit="deg"/>
+	<attnum name="height"    val="2"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="s4-5"/>
+	<attstr name="fov end"   val="t5"/>	
+      </section>
+
+      <section name="c5">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t6"/>
+	<attnum name="to right"  val="9.0"/>
+	<attnum name="to start"  val="90" unit="deg"/>
+	<attnum name="height"    val="2"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="t5"/>
+	<attstr name="fov end"   val="t7"/>	
+      </section>
+
+      <section name="c6">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t8"/>
+	<attnum name="to right"  val="-4.0"/>
+	<attnum name="to start"  val="75" unit="deg"/>
+	<attnum name="height"    val="2"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="t7"/>
+	<attstr name="fov end"   val="t9"/>	
+      </section>
+
+      <section name="c7">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t10"/>
+	<attnum name="to right"  val="-4.0"/>
+	<attnum name="to start"  val="60" unit="deg"/>
+	<attnum name="height"    val="2"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="t9"/>
+	<attstr name="fov end"   val="s11-2"/>	
+      </section>
+
+      <section name="c8">
+	<!-- Camera's position relative to a segment -->
+	<attstr name="segment"   val="t11"/>
+	<attnum name="to right"  val="-4.0"/>
+	<attnum name="to start"  val="60" unit="deg"/>
+	<attnum name="height"    val="10"/>
+	<!-- Camera field of view, indicates the first and last segment viewed -->
+	<attstr name="fov start" val="s11-2"/>
+	<attstr name="fov end"   val="s12-2"/>	
+      </section>
+
+    </section>
+  </section>
+
+</params>
+
+
+

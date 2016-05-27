@@ -1,0 +1,887 @@
+<!--
+        file        : nfs_car_import.html
+        created     : Fri Aug  12 13:39:11 CET 2005
+        copyright   : (C) 2005 by Eric Espie
+        email       : torcs@free.fr
+        version     : $Id: nfs_car_import.html,v 1.1 2005/08/17 20:58:37 berniw Exp $
+
+        Permission is granted to copy, distribute and/or modify this document
+        under the terms of the GNU Free Documentation License, Version 1.2
+        or any later version published by the Free Software Foundation;
+        with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+        Texts.  A copy of the license is available at http://www.gnu.org/copyleft.
+-->
+
+<h1>NFS 3-4 Cars import for TORCS</h1>
+<br>
+<hr><br>
+This tutorial explain how to import a car from <span
+ style="font-weight: bold;">EA Need For Speed</span> (<span
+ style="font-weight: bold;">NFS</span>) file format cars into <span
+ style="font-weight: bold;">TORCS</span>.<br>
+<br>
+First important point: <br>
+<br>
+<table
+ style="color: rgb(255, 0, 0); font-weight: bold; text-align: left; background-color: rgb(0, 0, 0);"
+ border="0" cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td><big><big>PLEASE DO NOT PORT AND PUBLISH CARS WITHOUT THE
+AUTHORIZATION OF THE AUTHOR</big></big></td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-weight: bold;"><span style="color: rgb(255, 0, 0);"></span></span><span
+ style="font-weight: bold;"><span style="color: rgb(255, 0, 0);"></span><br>
+</span>This tutorial is based on the <span style="font-weight: bold;">Jaguar
+E lightweight </span>of <span style="font-weight: bold;">Butch</span>
+(<a href="http://www.kcendra.com">K/Cendra</a>)<br>
+<br>
+You will need the following tools to make the conversion:<br>
+<ul>
+  <li><span style="font-weight: bold;">NFS Wizard</span> - a Win32 tool
+to extract the files from the car.viv (Can be found on many NFS related
+sites)</li>
+  <li><a href="http://www.ac3d.org"><span style="font-weight: bold;">AC3D</span></a>
+- a 3D modeler shareware</li>
+  <li><a href="http://www.gimp.org"><span style="font-weight: bold;">The
+Gimp</span></a> - The GNU Image Manipulation Program</li>
+</ul>
+<span style="font-weight: bold;"></span>
+<h2>Extracting the files<br>
+</h2>
+Ok now let's start with a <code>car.viv</code> file, the first step
+will be to extract the files with <span style="font-weight: bold;">NFS
+Wizard</span> under win32.<br>
+<br>
+the files extracted look like:<br>
+<br>
+<table
+ style="background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td><code><span
+ style="font-family: courier new,courier,monospace; color: rgb(255, 0, 0);"></span><span
+ style="color: rgb(255, 0, 0);">-rw-r--r--    1
+torcs    torcs     1049115 Aug 
+4  2003 car00.tga</span><br>
+-rw-r--r--    1 torcs   
+torcs      825624 Aug  4  2003
+careng.bnk<br>
+-rw-r--r--    1 torcs   
+torcs        7528 Aug  4 
+2003 careng.ctb<br>
+-rw-r--r--    1 torcs   
+torcs        7528 Aug  4 
+2003 careng.ltb<br>
+      <span style="color: rgb(255, 0, 0);">-rw-r--r--   
+1 torcs    torcs     1179040
+Aug  4  2003 car.fce</span><br style="color: rgb(255, 0, 0);">
+      <span style="color: rgb(255, 0, 0);">-rw-r--r--   
+1 torcs   
+torcs        4823 Aug  4 
+2003 carp.txt</span><br style="color: rgb(255, 0, 0);">
+-rw-r--r--    1 torcs   
+torcs     5643159 Aug  4  2003 car.viv<br>
+-rw-r--r--    1 torcs   
+torcs     1049115 Aug  4  2003 dash00.tga<br>
+-rw-r--r--    1 torcs   
+torcs      675680 Aug  4  2003
+dash.fce<br>
+-rw-r--r--    1 torcs   
+torcs       66616 Aug  4  2003
+dash.fsh<br>
+-rw-r--r--    1 torcs   
+torcs        1557 Aug  4 
+2003 fedata.bri<br>
+-rw-r--r--    1 torcs   
+torcs        1557 Aug  4 
+2003 fedata.eng<br>
+-rw-r--r--    1 torcs   
+torcs        1553 Aug  4 
+2003 fedata.fre<br>
+-rw-r--r--    1 torcs   
+torcs      131112 Aug  4  2003
+fedata.fsh<br>
+-rw-r--r--    1 torcs   
+torcs        1562 Aug  4 
+2003 fedata.ger<br>
+-rw-r--r--    1 torcs   
+torcs        1577 Aug  4 
+2003 fedata.ita<br>
+-rw-r--r--    1 torcs   
+torcs        1557 Aug  4 
+2003 fedata.spa<br>
+-rw-r--r--    1 torcs   
+torcs        1566 Aug  4 
+2003 fedata.swe<br>
+-rw-r--r--    1 torcs   
+torcs       90981 Aug  4  2003
+jgel.qfs<br>
+-rw-r--r--    1 torcs   
+torcs       81976 Aug  4  2003
+ocareng.bnk<br>
+      <span style="color: rgb(255, 0, 0);">-rw-r--r--   
+1 torcs   
+torcs         257 Aug 
+4  2003 readme.txt</span><br>
+-rw-r--r--    1 torcs   
+torcs      553704 Aug  4  2003
+scareng.bnk</code><br
+ style="font-family: courier new,courier,monospace;">
+      </td>
+    </tr>
+  </tbody>
+</table>
+<span
+ style="font-family: courier new,courier,monospace; color: rgb(255, 0, 0);"></span><code><span
+ style="font-family: courier new,courier,monospace; color: rgb(255, 0, 0);"></span><br>
+</code>In <span style="color: rgb(255, 0, 0);">red</span> you can see
+the important files.<br>
+<br>
+We'll continue the tutorial under Linux.<br>
+<h2>Converting the files<br>
+</h2>
+Make a directory to store the car in the runtime directory :<br>
+<br>
+<table style="background-color: rgb(192, 192, 192); width: 800px;" border="0"
+ cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td><code>$ cd /usr/share/games/torcs/cars<br>
+$ mkdir kc-lightweight</code> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Copy the files in this directory :<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><code>-rw-r--r-- 1 torcs torcs
+1049115 Mar 17 22:04 car00.tga<br>
+-rw-r--r-- 1 torcs torcs 1179040 Mar 17 22:04 car.fce<br>
+-rw-r--r-- 1 torcs torcs    4823 Mar 17 22:04
+carp.txt<br>
+-rw-r--r-- 1 torcs torcs     257 Mar 17 22:04
+readme.txt</code></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<code></code>Use <span style="font-weight: bold;">The Gimp</span> to
+convert the
+texture in <span style="font-weight: bold;">rgb</span> format:<br>
+<br>
+<img style="width: 306px; height: 354px;" alt=""
+ src="images/howtonfs/gimp1.jpg"><br>
+<br>
+<img style="width: 433px; height: 482px;" alt=""
+ src="images/howtonfs/gimp2.jpg"><br>
+<br>
+<img style="width: 191px; height: 209px;" alt=""
+ src="images/howtonfs/gimp3.jpg"><br>
+<br>
+We'll see the necessary modifications of the texture later.<br>
+<br>
+<h2>3D Mesh conversion</h2>
+The tool used to convert the 3D model is called <span
+ style="font-weight: bold;">nfs2ac</span> written by Christophe
+Guionneau.<br>
+The usage is:<br>
+<br>
+<table style="background-color: rgb(192, 192, 192); width: 800px;" border="0"
+ cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td><code>$ nfs2ac car.fce > kc-lightweight.ac</code></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Now we have the 3D model in <span style="font-weight: bold;">AC3D</span>
+format, we can edit it to change the texture name from <code>car00.tga
+to </code><code>kc-lightweight.rgb<br>
+</code>and open it with <span style="font-weight: bold;">AC3D</span>:<br>
+<br>
+<img style="width: 797px; height: 585px;" alt=""
+ src="images/howtonfs/ac3d1.jpg"><br>
+<br>
+First remove the wheels as TORCS provides its own wheels:<br>
+<br>
+Select the <span style="font-style: italic;">object</span> mode:<br>
+<br>
+<code></code><img style="width: 211px; height: 101px;" alt=""
+ src="images/howtonfs/ac3d2.jpg"><br>
+<br>
+The select the wheels:<br>
+<br>
+<img style="width: 670px; height: 434px;" alt=""
+ src="images/howtonfs/ac3d3.jpg"><br>
+<br>
+and remove them:<br>
+<br>
+<img style="width: 664px; height: 340px;" alt=""
+ src="images/howtonfs/ac3d4.jpg"><br>
+<br>
+Set the vertical origin of the car at the bottom:<br>
+<br>
+<img style="width: 894px; height: 574px;" alt=""
+ src="images/howtonfs/ac3d5.jpg"><br>
+<br>
+First select all (<code style="color: rgb(204, 51, 204);">Ctrl-a</code>) 
+then use the arrow to get the size, set the y value to half the height
+of the car and click on the <code style="color: rgb(204, 51, 204);">Move
+to</code> button.<br>
+<br>
+Now make the transparent parts a separate object.<br>
+<br>
+Select only the body (:HB) with the <code
+ style="color: rgb(204, 51, 204);">Hierarchy View</code> tool:<br>
+<br>
+<img style="width: 328px; height: 280px;" alt=""
+ src="images/howtonfs/ac3d6.jpg"><br>
+<br>
+Then hide the other parts of the car:<br>
+<br>
+<img style="width: 232px; height: 224px;" alt=""
+ src="images/howtonfs/ac3d7.jpg"><br>
+<br>
+Now switch in <span style="font-style: italic;">surface</span> mode
+and select all the glasses:<br>
+<br>
+<img style="width: 1195px; height: 878px;" alt=""
+ src="images/howtonfs/ac3d8.jpg"><br>
+<br>
+With the menu <code style="color: rgb(204, 51, 204);">Surface ->
+Cut-away object...</code> (<code style="color: rgb(204, 51, 204);">Ctrl
++ Shift + X</code>)  make a new object from the windows,<br>
+switch back to the <span style="font-style: italic;">Object</span>
+mode and name the new object <code>:WI</code> <br>
+<br>
+<img style="width: 228px; height: 230px;" alt=""
+ src="images/howtonfs/ac3d9.jpg"><br>
+<br>
+Locate the windows location on the texture with the <code
+ style="color: rgb(204, 51, 204);">Tool -> Texture Coordinate Editor</code>
+(<code style="color: rgb(204, 51, 204);">F10</code>)<br>
+then use <span style="font-weight: bold;">The Gimp</span> to make it
+transparent in the texture (along with the steering wheel border).<br>
+<br>
+<img style="width: 542px; height: 440px;" alt=""
+ src="images/howtonfs/ac3d10.jpg"><br>
+<br>
+Now use the menu <code style="color: rgb(204, 51, 204);">Object ->
+Optimize surfaces...</code> to remove degenerated surfaces.<br>
+Save this first version into <code>kc-lightweight.ac</code> and remove
+the <code>"crease"<br>
+</code>lines from the file.<br>
+<h2>Generating the wheel texture</h2>
+We will use the wheel in the car texture:<br>
+<br>
+First extract it with <span style="font-weight: bold;">The Gimp</span>:<br>
+<br>
+<img style="width: 306px; height: 354px;" alt=""
+ src="images/howtonfs/ac3d11.jpg"><br>
+<br>
+Then add the tire around:<br>
+<br>
+<img style="width: 386px; height: 434px;" alt=""
+ src="images/howtonfs/ac3d12.jpg"><br>
+<br>
+Use the <code style="color: rgb(204, 51, 204);">Filter -> Blur
+-> Motion Blur</code> filter in radial mode with the following
+values for <span style="font-style: italic;">Length</span> and <span
+ style="font-style: italic;">Angle:</span><br>
+<ul>
+  <li>10, 10</li>
+  <li>20, 20</li>
+  <li>40, 40</li>
+</ul>
+<img style="width: 306px; height: 268px;" alt=""
+ src="images/howtonfs/ac3d13.jpg"><br>
+<br>
+to compose the following image:<br>
+<br>
+<img style="width: 386px; height: 434px;" alt=""
+ src="images/howtonfs/ac3d14.jpg"><br>
+<br>
+Resize it to <code>128x128</code> and save it as <code>tex-wheel.rgb</code><br>
+<br>
+Now create a white image of 128x128 called <code>shadow.rgb<br>
+</code><br>
+The files so far should be:<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><code>-rw-r--r--   
+1 torcs   
+torcs     1049115 Mar 17 22:04 car00.tga<br>
+-rw-r--r--    1 torcs   
+torcs     1179040 Mar 17 22:04 car.fce<br>
+-rw-r--r--    1 torcs   
+torcs        4823 Mar 17 22:04
+carp.txt<br>
+-rw-r--r--    1 torcs   
+torcs      401487 Mar 17 23:14
+kc-lightweight.ac<br>
+-rw-rw-r--    1 torcs   
+torcs     1049088 Mar 17 23:09 kc-lightweight.rgb<br>
+-rw-r--r--    1 torcs   
+torcs         257 Mar 17 22:04
+readme.txt<br>
+-rw-rw-r--    1 torcs   
+torcs       66048 Mar 17 23:39 shadow.rgb<br>
+-rw-rw-r--    1 torcs   
+torcs       66048 Mar 17 23:38
+tex-wheel.rgb<br>
+      </code></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<code></code>
+<h2>Creating the XML file with the car's settings</h2>
+First check that the carp.txt file do not end with a coma ',' (remove
+it if necessary)<br>
+the use the <span style="font-weight: bold;">nfsperf</span> tool to
+convert the settings from the NFS description to TORCS description.<br>
+<br>
+<table
+ style="background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td><code>$ nfsperf -c ../../categories/Historic/Historic.xml -o
+kc-lightweight.xml</code></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Now edit the <code>kc-lightweight.xml</code> file.<br>
+<br>
+First you have to fix the beginning of the file. Replace the header by:<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><code><?xml version="1.0"
+encoding="UTF-8"?><br>
+<!-- <br>
+    file        :
+kc-lightweight.xml<br>
+    created     : Thu Mar 18
+22:27:40 CET 2004<br>
+    copyright   : (C) 2004 by Eric
+Espié                        
+      <br>
+    email       :
+Eric.Espie@torcs.org   <br>
+    version     :
+$Id: nfs_car_import.html,v 1.1 2005/08/17 20:58:37 berniw Exp $                                 
+      <br>
+--><br>
+      </code><code><br>
+<!--    This program is free software; you can
+redistribute it and/or modify  --><br>
+<!--    it under the terms of the GNU General Public
+License as published by  --><br>
+<!--    the Free Software Foundation; either version
+2 of the License, or     --><br>
+<!--    (at your option) any later
+version.                                  
+--><br>
+      <br>
+<!DOCTYPE params SYSTEM "../../../../src/libs/tgf/params.dtd"><br>
+      <br>
+<!-- 3D Model copyright by Butch (K/cendra) (see readme.txt) --><br>
+      <br>
+<params name="Jaguar E lightweight" type="template" mode="mw"><br>
+      </code><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+Then add the following sections:<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"></span><code>  <section
+name="Driver"><br>
+    <span style="color: rgb(255, 0, 0);"><!--
+Position of the driver --></span><br>
+    <attnum name="xpos" unit="m" val="0.10"/><br>
+    <attnum name="ypos" unit="m" val="0.0"/><br>
+    <attnum name="zpos" unit="m" val="0.89"/><br>
+  </section><br>
+      <br>
+  <section name="Graphic Objects"><br>
+      <br>
+    <attstr name="wheel texture"
+val="tex-wheel.rgb"/><br>
+    <attstr name="shadow texture"
+val="shadow.rgb"/><br>
+      <br>
+    <attstr name="tachometer texture"
+val="rpm7000.rgb"/><br>
+    <attnum name="tachometer min value" unit="rpm"
+val="0"/><br>
+    <attnum name="tachometer max value" unit="rpm"
+val="8000"/><br>
+      <br>
+    <attstr name="speedometer texture"
+val="speed240.rgb"/><br>
+    <attnum name="speedometer min value" unit="km/h"
+val="0"/><br>
+    <attnum name="speedometer max value" unit="km/h"
+val="240"/><br>
+      <br>
+    <section name="Ranges"><br>
+      <section name="1"><br>
+        <attnum name="threshold"
+val="0"/><br>
+        <attstr name="car"
+val="kc-lightweight.ac"/><br>
+        <attstr name="wheels"
+val="yes"/><br>
+      </section><br>
+    </section><br>
+      <br>
+    <section name="Light"><br>
+      <section name="1"><br>
+        <attstr name="type"
+val="head1"/><br>
+        <attnum name="xpos"
+val="1.89"/><br>
+        <attnum name="ypos"
+val="0.62"/><br>
+        <attnum name="zpos"
+val="0.44"/><br>
+        <attnum name="size"
+val="0.2"/><br>
+      </section><br>
+      <section name="2"><br>
+        <attstr name="type"
+val="head1"/><br>
+        <attnum name="xpos"
+val="1.89"/><br>
+        <attnum name="ypos"
+val="-0.62"/><br>
+        <attnum name="zpos"
+val="0.44"/><br>
+        <attnum name="size"
+val="0.2"/><br>
+      </section><br>
+      <section name="3"><br>
+        <attstr name="type"
+val="head2"/><br>
+        <attnum name="xpos"
+val="2.08"/><br>
+        <attnum name="ypos"
+val="0.4"/><br>
+        <attnum name="zpos"
+val="0.29"/><br>
+        <attnum name="size"
+val="0.2"/><br>
+      </section><br>
+      <section name="4"><br>
+        <attstr name="type"
+val="head2"/><br>
+        <attnum name="xpos"
+val="2.08"/><br>
+        <attnum name="ypos"
+val="-0.4"/><br>
+        <attnum name="zpos"
+val="0.29"/><br>
+        <attnum name="size"
+val="0.2"/><br>
+      </section><br>
+      <section name="5"><br>
+       <attstr name="type"
+val="rear"/><br>
+       <attnum name="xpos"
+val="-2.12"/><br>
+       <attnum name="ypos"
+val="0.51"/><br>
+       <attnum name="zpos"
+val="0.41"/><br>
+       <attnum name="size"
+val="0.13"/><br>
+      </section><br>
+      <section name="6"><br>
+       <attstr name="type"
+val="rear"/><br>
+       <attnum name="xpos"
+val="-2.12"/><br>
+       <attnum name="ypos"
+val="-0.51"/><br>
+       <attnum name="zpos"
+val="0.41"/><br>
+       <attnum name="size"
+val="0.13"/><br>
+      </section><br>
+      <section name="7"><br>
+       <attstr name="type"
+val="brake"/><br>
+       <attnum name="xpos"
+val="-2.16"/><br>
+       <attnum name="ypos"
+val="0.42"/><br>
+       <attnum name="zpos"
+val="0.41"/><br>
+       <attnum name="size"
+val="0.2"/><br>
+      </section><br>
+      <section name="8"><br>
+       <attstr name="type"
+val="brake"/><br>
+       <attnum name="xpos"
+val="-2.16"/><br>
+       <attnum name="ypos"
+val="-0.42"/><br>
+       <attnum name="zpos"
+val="0.41"/><br>
+       <attnum name="size"
+val="0.2"/><br>
+      </section><br>
+    </section><br>
+      <br>
+  </section><br>
+      </code></td>
+    </tr>
+  </tbody>
+</table>
+<code><br>
+</code>The position of the driver have to be just before the
+wind-shield and the lights are optional.<br>
+The position are taken within <span style="font-weight: bold;">AC3D</span>.<br>
+<br>
+Update the <code>Car</code> section with the values measured within <span
+ style="font-weight: bold;">AC3D</span>.<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"> <code> <section
+name="Car"><br>
+    <attstr name="category" val="Historic"/><br>
+    <attnum name="body length" unit="m"
+val="4.341"/><br>
+    <attnum name="body width" unit="m" val="1.80"/><br>
+    <attnum name="body height" unit="m"
+val="1.028"/><br>
+    <attnum name="overall length" unit="m"
+val="4.341"/><br>
+    <attnum name="overall width" unit="m"
+val="1.8"/><br>
+    <attnum name="mass" unit="kg" val="880"/><br>
+    <attnum name="GC height" unit="m" val="0.3"/><br>
+    <attnum name="front-rear weight repartition"
+val="0.55"/><br>
+    <attnum name="front right-left weight
+repartition" val="0.5"/><br>
+    <attnum name="rear right-left weight repartition"
+val="0.5"/><br>
+    <attnum name="mass repartition coefficient"
+min="0.1" max="3" val="0.6"/><br>
+    <attnum name="fuel tank" min="20" max="300"
+unit="l" val="50"/><br>
+    <attnum name="initial fuel" min="1" max="300"
+unit="l" val="50"/><br>
+  </section></code><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Use <span style="font-weight: bold;">AC3D</span>  to  set
+the axles positions:<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><code>  <section
+name="Front Axle"><br>
+    <attnum name="xpos" val="1.31"/><br>
+    <attnum name="inertia" unit="kg.m2"
+val="0.0056"/><br>
+    <attnum name="roll center height" min="-1"
+max="5" unit="m" val="0.2"/><br>
+  </section><br>
+      <br>
+  <section name="Rear Axle"><br>
+    <attnum name="xpos" val="-1.15"/><br>
+    <attnum name="inertia" unit="kg.m2"
+val="0.008"/><br>
+    <attnum name="roll center height" unit="m"
+val="0.2"/><br>
+  </section></code><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Set up the wheels too:<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><code>  <section
+name="Front Right Wheel"><br>
+    <attnum name="ypos" min="-2" max="-0.1" unit="m"
+val="-0.62"/><br>
+    <attnum name="rim diameter" unit="in"
+val="16"/><br>
+    <attnum name="tire width" unit="mm" val="185"/><br>
+    <attnum name="tire height-width ratio" unit="%"
+val="65"/><br>
+    <attnum name="inertia" unit="kg.m2"
+val="1.22"/><br>
+    <attnum name="ride height" min="100" max="2000"
+unit="mm" val="150"/><br>
+    <attnum name="toe" min="-5" max="5" unit="deg"
+val="0"/><br>
+    <attnum name="camber" min="-5" max="0" unit="deg"
+val="0"/><br>
+    <attnum name="stiffness" min="1" max="30"
+val="20"/><br>
+    <attnum name="dynamic friction" min="50"
+max="100" unit="%" val="80"/><br>
+    <attnum name="rolling resistance" val="0.02"/><br>
+    <attnum name="mu" val="1.35"/><br>
+  </section><br>
+      <br>
+  <section name="Front Left Wheel"><br>
+    <attnum name="ypos" min="0.1" max="2" unit="m"
+val="0.62"/><br>
+    <attnum name="rim diameter" unit="in"
+val="16"/><br>
+    <attnum name="tire width" unit="mm" val="185"/><br>
+    <attnum name="tire height-width ratio" unit="%"
+val="65"/><br>
+    <attnum name="inertia" unit="kg.m2"
+val="1.22"/><br>
+    <attnum name="ride height" min="50" max="2000"
+unit="mm" val="150"/><br>
+    <attnum name="toe" min="-5" max="5" unit="deg"
+val="0"/><br>
+    <attnum name="camber" min="-5" max="0" unit="deg"
+val="0"/><br>
+    <attnum name="stiffness" min="1" max="30"
+val="30"/><br>
+    <attnum name="dynamic friction" min="50"
+max="100" unit="%" val="80"/><br>
+    <attnum name="rolling resistance" val="0.02"/><br>
+    <attnum name="mu" val="1.35"/><br>
+  </section><br>
+      <br>
+  <section name="Rear Right Wheel"><br>
+    <attnum name="ypos" min="-2" max="-0.1" unit="m"
+val="-0.72"/><br>
+    <attnum name="rim diameter" unit="in"
+val="16"/><br>
+    <attnum name="tire width" unit="mm" val="205"/><br>
+    <attnum name="tire height-width ratio" unit="%"
+val="50"/><br>
+    <attnum name="inertia" unit="kg.m2"
+val="1.22"/><br>
+    <attnum name="ride height" min="50" max="2000"
+unit="mm" val="150"/><br>
+    <attnum name="toe" min="-5" max="5" unit="deg"
+val="0"/><br>
+    <attnum name="camber" min="-5" max="0" unit="deg"
+val="0"/><br>
+    <attnum name="stiffness" min="1" max="30"
+val="30"/><br>
+    <attnum name="dynamic friction" min="50"
+max="100" unit="%" val="80"/><br>
+    <attnum name="rolling resistance" val="0.02"/><br>
+    <attnum name="mu" val="1.65"/><br>
+  </section><br>
+      <br>
+  <section name="Rear Left Wheel"><br>
+    <attnum name="ypos" min="0.1" max="2" unit="m"
+val="0.72"/><br>
+    <attnum name="rim diameter" unit="in"
+val="16"/><br>
+    <attnum name="tire width" unit="mm" val="205"/><br>
+    <attnum name="tire height-width ratio" unit="%"
+val="50"/><br>
+    <attnum name="inertia" unit="kg.m2"
+val="1.22"/><br>
+    <attnum name="ride height" min="50" max="2000"
+unit="mm" val="150"/><br>
+    <attnum name="toe" min="-5" max="5" unit="deg"
+val="0"/><br>
+    <attnum name="camber" min="-5" max="0" unit="deg"
+val="0"/><br>
+    <attnum name="stiffness" min="1" max="30"
+val="30"/><br>
+    <attnum name="dynamic friction" min="50"
+max="100" unit="%" val="80"/><br>
+    <attnum name="rolling resistance" val="0.02"/><br>
+    <attnum name="mu" val="1.65"/><br>
+  </section></code><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+Now the car should be driveable, the result so far is:<br>
+<br>
+<img style="width: 681px; height: 416px;" alt=""
+ src="images/howtonfs/torcs1.jpg"><br>
+<br>
+To make the shadow texture <a
+ href="http://torcs.sourceforge.net/sections.php?op=viewarticle&amp;artid=27">follow
+the tutorial</a>.<br>
+<br>
+It looks better now:<br>
+<br>
+<img style="width: 613px; height: 320px;" alt=""
+ src="images/howtonfs/torcs2.jpg"><br>
+<br>
+<h2>Additional Steps - Smoothing and Level of Details</h2>
+To have reflections on the car, you'll need to run a tool called <span
+ style="font-weight: bold;">accc</span> written by Christophe Guionneau.<br>
+<br>
+<table border="0"
+ style="background-color: rgb(192, 192, 192); width: width: 800px;"
+ cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td><code>$ kc-lightweight]$ accc +es 0 kc-lightweight.ac
+kc-lightweight.acc</code></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+This will generate an <span style="font-weight: bold;">.acc</span>
+file that will be referenced in the <code>kc-lightweight.xml</code>
+file instead of <code>kc-lightweight.ac<br>
+<br>
+</code>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><code><section
+name="Ranges"><br>
+   <section name="1"><br>
+     <attnum name="threshold" val="0"/><br>
+     <attstr name="car" val="<span
+ style="color: rgb(255, 0, 0);">kc-lightweight.acc</span>"/><br>
+     <attstr name="wheels" val="yes"/><br>
+   </section><br>
+</section><br>
+      </code></td>
+    </tr>
+  </tbody>
+</table>
+<code><br>
+</code>Now it looks much better:<br>
+<br>
+<img style="width: 652px; height: 322px;" alt=""
+ src="images/howtonfs/torcs3.jpg"><br>
+<br>
+<h2>Generating the LOD (Level of details)</h2>
+This can be done with <span style="font-weight: bold;">AC3D</span>:<br>
+<br>
+First load the <code>kc-lightweight.ac</code> file in <span
+ style="font-weight: bold;">AC3D</span>, then switch to <span
+ style="font-style: italic;">object</span> mode and select all then use
+the menu:<br>
+<code style="color: rgb(204, 51, 204);">Object -> Reduce...</code>
+function with 80% as value:<br>
+<br>
+<img style="width: 713px; height: 503px;" alt=""
+ src="images/howtonfs/ac3d15.jpg"><br>
+<br>
+Save the model as <code>kc-lightweight-lod1.ac</code> and uses <span
+ style="font-weight: bold;">accc</span> to smooth it:<br>
+<br>
+<table border="0"
+ style="background-color: rgb(192, 192, 192); width: 800px;"
+ cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td><code>$ accc +es 30 kc-lightweight-lod1.ac
+kc-lightweight-lod1.acc</code></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+you can do the same to generate <code>kc-lightweight-lod2.acc</code> 
+<code>kc-</code><code>kc-lightweight-lod3.acc</code> <code>lightweight-lod4.acc</code>
+<br>
+with respectively 60%, 40% and 20% of reduction factor.<br>
+<br>
+Change <code>kc-lightweight.xml</code> accordingly:<br>
+<br>
+<table
+ style="text-align: left; background-color: rgb(192, 192, 192); width: 800px;"
+ border="0" cellspacing="5" cellpadding="5">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><code><section
+name="Ranges"><br>
+  <section name="1"><br>
+    <attnum name="threshold" val="20"/><br>
+    <attstr name="car" val="kc-lightweight.acc"/><br>
+    <attstr name="wheels" val="yes"/><br>
+  </section><br>
+  <section name="2"><br>
+    <attnum name="threshold" val="15"/><br>
+    <attstr name="car"
+val="kc-lightweight-lod1.acc"/><br>
+    <attstr name="wheels" val="yes"/><br>
+  </section><br>
+  <section name="3"><br>
+    <attnum name="threshold" val="10"/><br>
+    <attstr name="car"
+val="kc-lightweight-lod2.acc"/><br>
+    <attstr name="wheels" val="no"/><br>
+  </section><br>
+  <section name="4"><br>
+    <attnum name="threshold" val="5"/><br>
+    <attstr name="car"
+val="kc-lightweight-lod3.acc"/><br>
+    <attstr name="wheels" val="no"/><br>
+  </section><br>
+  <section name="5"><br>
+    <attnum name="threshold" val="0"/><br>
+    <attstr name="car"
+val="kc-lightweight-lod4.acc"/><br>
+    <attstr name="wheels" val="no"/><br>
+  </section><br>
+</section></code><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Now, it's done you can play with it.<br>

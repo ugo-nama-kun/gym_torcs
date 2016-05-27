@@ -1,0 +1,103 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: introduction.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>introduction into pit stops</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="introduction into pit stops"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, pit, pit stop, strategy"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>8.1 Pit Stops</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  In this chapter we enable our driver to perform pit stops. First let us discuss
+		  what they are good for and which steps we need to stop in the pit.
+		  You already know that your car can get damage during
+		  the race and consumes fuel. To reach the finish line in longer races we need to be
+		  able to repair and refuel our car (tire wearing and changing is currently
+		  not implemented in TORCS).
+		  Damage is modelled as damage "points", if you reach 10000 you are not able
+		  to drive further. A pit stop consists of the following steps:
+		</p>
+
+		<p>
+		  <ul style="list-style-type:disk; color:black;">
+			<li>Decide that we want to stop in the pit (strategy).</li>
+			<li>Drive into the pit lane with respect to the pit speed limit.</li>
+			<li>Drive to our pit and stop here, request the pit stop in TORCS.</li>
+			<li>When the car is slow enough and in the pit the simulation "captures" our car
+				and asks us for the damage to repair (in damage "points") and how much fuel we need.</li>
+			<li>TORCS repairs and refuels our car.</li>
+			<li>The car becomes released, we drive to the pit exit with respect to the speed limit.</li>
+			<li>Back to business, race further.</li>
+		  </ul>
+		</p>
+
+		<p>
+		  You might have recognized that we do not ask if our pit is free, that is because
+		  TORCS provides currently one pit per car (not per team). From the above list we can derive the
+		  items we need to implement:
+		</p>
+
+		<p>
+		  <ul>
+			<li>A path to the pit and back to the track. We will use a spline to
+				compute an offset to the middle of the track (do you remember the overtake offset?).</li>
+			<li>A strategy part which decides if we need a pit stop.</li>
+			<li>The callback which tells TORCS how much repair and fuel we need.</li>
+			<li>An additional filter for the brake value to stop in the pit.</li>
+			<li>Some helper methods.</li>
+		  </ul>
+		</p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know what pit stops are good for.</li>
+		   <li>You know about repairing, damage "points" and refueling.</li>
+		   <li>You have an idea what we need to implement.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./ch8.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./splines.html">
+          <p style="text-align:right;">The way to the pit.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

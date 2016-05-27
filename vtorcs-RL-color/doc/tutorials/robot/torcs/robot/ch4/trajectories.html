@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: trajectories.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Trajectories</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="trajectories"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, steer, path, trajectories"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>4.6 Trajectories</h1>
+
+		<h3>The Optimal Trajectory?</h3>
+		<p>
+		  In case you know how to compute the optimal trajectory very fast (optimal means minimal lap time)
+		  please let me know... I skimmed quite a lot of
+		  papers about that subject (the robotics community deals with similiar problems) but from there
+		  I didn't get much useful information. If I remember right there has been proved that
+		  finding the optimal trajectory in three dimensions is in NP. But because our tracks are
+		  quite flat a two dimensional approximation would be sufficient. There have been written
+		  some papers about that subject and if I remember right there are also solutions
+		  available, but just for a mass point robot (no aerodynamics involved) and quite expensive
+		  to compute (or should I say simply "slow"). If you are
+		  interested the papers are available in the ACM online library.
+		</p>
+
+		<h3>Heuristic Trajectories</h3>
+        <p>
+		  Like you have seen heuristic means to find a trajectory with some reasonable ideas.
+		  So we improve our trajectory with adding this and that, improvement x causes problem y
+		  and so forth... The problem with heuristics is that they may work great on some tracks
+		  but also horribly fail on some other tracks or dislike certain features. I think you
+		  can build quite a good driver with this method, but there will be always problems with
+		  some track features.  
+		</p>
+
+        <h3>Geometric Trajectories</h3>
+        <p>
+          I call a trajectory geometric when it just takes the track geometry into account, but
+		  doesn't consider the car setup and aerodynamics. A nice implementation is in K1999 
+		  from Rémi Coulom. It does linearize the curvature of the path in a quite efficient and
+		  clever way. But it doesn't deliver optimal paths especially with high downforce car setups
+		  in fast turns.</br>
+		  What else did I try so far? My first approach was to find a few initial "good" points on
+		  the track and then to put a cubic spline trough it. Now the spline leaves the track on
+		  many sections of the track. So I find the place where the spline leaves the track first
+		  and insert an additional point on the track. You repeat that till the whole path
+		  is on the track. That works quite well (never hit the public).</br>
+		  The next try was to wrap clothoids trough the turns. There is still an implementation
+		  of that available in berniw, but not very well refined.</br>
+		  Another experiment (for that tutorial) was to work with the biggest arcs you can fit into
+		  the turns. It is not yet refined enough for public release and too complicated for the
+		  tutorial.
+		</p>
+		  
+        <h3>Machine Learning Approaches</h3>
+		<p>  
+		  I think TORCS would also be a nice playground for machine learning techniques. So
+		  if you are a professor let your students write some robots for TORCS.  
+		</p>
+        
+		<h3>Feedback</h3>
+        <p>
+          <a href="mailto:berni4you@gmx.ch">Let me know</a>
+          if you read this chapter and your thoughts about it. Please
+          <a href="mailto:berni4you@gmx.ch">send me</a>
+          also spelling, grammar, math and code corrections. Thank you for the feedback.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know about other approaches.</li>
+           <li>You have an almost competitive car.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./stability.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+         <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../robot.html','content')">
+          <p style="text-align:right;">Up</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

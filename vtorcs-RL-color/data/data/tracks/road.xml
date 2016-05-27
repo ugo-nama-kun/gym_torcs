@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : road.xml
+    created              : Thu Apr 25 21:52:06 CEST 2002
+    copyright            : (C) 2001 by Eric Espié                         
+    email                : Eric.Espie@torcs.org   
+    version              : $Id: road.xml,v 1.2 2002/11/16 07:20:23 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+
+<!DOCTYPE params SYSTEM "../../../src/libs/tgf/params.dtd">
+
+<params name="Road" type="parameter">
+  <section name="Header">
+    <attstr name="name" val="Road Tracks"/>
+  </section>
+</params>
+

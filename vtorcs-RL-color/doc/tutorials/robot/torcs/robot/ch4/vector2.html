@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN
+		"http://www.w3.org/TR/html4/loose.dtd"">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: vector2.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>straight class</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="straight class"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, steer, straight"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>4.2 The Straight Class</h1>
+
+        <h3>Overview</h3>
+        <p>
+		  Like you will see later it is also nice to have a straight class. It's purpose is to compute
+		  intersection points of straights and distances between points and straights. 
+		</p>
+		
+        <h3>Implementation</h3>
+        <p>
+		  Put the following code also into linalg.h. Like you can see the straights are described with
+		  two 2D-vectors. One holds a point on the straight and the other the direction. Because we
+		  normalize the direction in the constructor we can simplify the computation of the distance
+		  to a point.
+		</p>
+
+        <p>
+		<pre class="lcolor">class Straight {
+    public:
+        /* constructors */
+        Straight() {}
+        Straight(float x, float y, float dx, float dy)
+            {  p.x = x; p.y = y; d.x = dx; d.y = dy; d.normalize(); }
+        Straight(const v2d &anchor, const v2d &dir)
+            { p = anchor; d = dir; d.normalize(); }
+
+        /* methods */
+        v2d intersect(const Straight &s) const;
+        float dist(const v2d &p) const; 
+
+        /* data */
+        v2d p;          /* point on the straight */
+        v2d d;          /* direction of the straight */
+};</pre>
+		</p>
+
+		<p><pre class="lcolor">/* intersection point of *this and s */
+inline v2d Straight::intersect(const Straight &s) const
+{
+    float t = -(d.x*(s.p.y-p.y)+d.y*(p.x-s.p.x))/(d.x*s.d.y-d.y*s.d.x);
+    return s.p + s.d*t;  
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* distance of point s from straight *this */
+inline float Straight::dist(const v2d &s) const
+{
+    v2d d1 = s - p;
+    v2d d3 = d1 - d*d1*d;
+    return d3.len();
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">#endif // _LINALG_H_</pre>
+		</p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know how to deal with straights.</li>
+           <li>You implemented the above stuff in linalg.h.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./vector1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./steer.html">
+          <p style="text-align:right;">Improve steering.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

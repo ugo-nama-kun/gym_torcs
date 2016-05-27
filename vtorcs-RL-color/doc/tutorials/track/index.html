@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2005 Christos Dimitrakakis
+email       : dimitrak@idiap.ch
+version     : $Id: index.html,v 1.2 2005/12/12 13:31:09 olethros Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+-->
+  <head>
+    <title>TORCS Track Tutorial</title>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+	<meta name="description" content="TORCS Track Tutorial"/>
+	<meta name="author" content="Christos Dimitrakakis"/>
+	<meta name="keywords" content="torcs, berniw, bernhard wymann, robot, steer, path, trajectories, braking, gears"/>
+  </head>
+
+  <body>
+    <h1>TORCS Track Tutorial</h1>
+
+
+	Copyright (C) 2005 Christos Dimitrakakis
+	<A HREF="./license.html">(See License)</A>
+	<HR>
+
+This document describes how to create a track for use in
+TORCS. Currently it outlines: necessary software, creating a basic
+track, adding shadows, controlling the mesh generation and adding a
+terrain relief file. More information, such as the meaning of fields
+in the xml track description will be added over time.
+
+<H2>Necessary software</h2>
+
+<P>For basic track generation the <code>trackgen</code> utility in torcs is sufficient.</p>
+
+<P>The included <code>accc</code> utility is used to combine various track elements in the final track description.</p>
+
+<P>To use <code>accc</code> you will also need the <code><a href="http://www.cs.sunysb.edu/~stripe/">stripe</a></code> utility in your path.</p>
+
+<H2>The .xml file</h2>
+
+<P>Firstly, create a directory <code>tracks/category/name</code> where <code>category</code> is one of <i>dirt, oval, road</i> and <code>name</code> is the name of your track.</p>
+
+<P>Create the track .xml file. You can take one of the available tracks to start with. The file shall contain one entry for the 3d description, which should be <code>name.ac</code></p>
+
+<h2>Creating the basic .ac file</h2>
+<P>For initial testing of your track, issue the command <code>trackgen -n name -c category</code>. See that the track is OK by loading it with torcs.
+</p>
+
+<h2>Creating shading</h2>
+<P>To test shading, issue the command <code>trackgen -a -E 1 -n name
+-c category</code> from the top level directory. The track step and
+border step parameters in the Terrain Generation section of the xml
+file define the complexity of the terrain generation. If it takes too
+long, make them larger. This will create an elevation file,
+<code>name-elv.png</code></P>
+
+<P>It is possible to create a simple shading scheme with the gimp. Open the image, select <i>Filter &rarr Distorts &rarr Emboss</i>. Select the parameters and apply the filter. Save the file as <code>shadow2.rgb</code>. If it is not a power of 2 in size, you have to resize it so that it has dimensions (x,y)=(2<sup>a</sup>, 2<sup>b</sup>)</p>
+
+<P>However this scheme is not very good. It does produce soft shadows, but it is not much different than the light produced by the light source in the .xml file. A possibility is to do the following. After you <i>Emboss</i> the image, select <i>Filters &rarr Blur &rarr Motion Blur</i>. Select an angle that is <i>360 - a</i>, where <i>a</i> is the angle that you have chosen for <i>Emboss</i>, if in the latter your elevation degrees was smaller than 90. If it was larger than 90, set angle to <i>a</i>. Select the appropriate length (between 10 and 50 is OK) and copy the image into a new buffer. Reopen the old image and place the new image as a layer on top of it. Now select either <i>Multiply</i>, or <i>Darken Only</i> and adjust the opacity to around 50. This should result in some shadows appearing to be cast from the sharper edges of your massif. Replace the previous shadows image with this one.
+
+<P>Now do <code>cd tracks/category/name</code> and issue the command
+<pre>cp name.ac name-bak.ac</pre> to have a backup of the original
+track description. This can then be used to generate a shading file
+that will use <code>shadow2.rgb</code> as a texture, with the following command:<pre>
+ accc +shad name-bak.ac name-shade.ac
+</pre>
+</p>
+<P>Now you can combine the two descriptions into one using
+<pre>
+ accc -g name.ac -l0 name-bak.ac -l1 name-shade.ac -d3 1000 -d2 500 -d1 300 -S 300 -es
+</pre>
+If the output is too much for your terminal you can always redirect it to /dev/null
+</p>
+<P>Test your new track with torcs.
+</p>
+<h2>Creating elevation files</h2>
+<P>It is possible to create elevation files by issuing the command
+<code>trackgen -a -E x -n name -c category</code>, where <code>x</code> selects which elevation file should be generated.
+<pre>
+         0: all elevatation files
+         1: elevation file of terrain + track
+         2: elevation file of terrain with track white
+         3: track only
+         4: track elevations with height steps
+</pre>
+Each one of those will be useful for some purpose. I personally use 1 and 3. Number 3 can also be used to create a track preview. It can also be used to get an idea of where the track is so you can take this into account when changing the elevation map. The procedure is as follows:
+
+<p>Using either the track or terrain+track map as a template create a black and white image. The whiter a pixel is, the higher. Then save the images as <code>elevation-map.png</code>. You will then need to insert the following lines in the Terrain Geneartion section of <code>name.xml</code>
+<pre>
+ &lt;section name="Terrain Generation"/&gt
+....
+      &lt;attstr name="elevation map" val="elevation-map.png"/&gt
+      &lt;attnum name="maximum altitude" val="30"/&gt
+      &lt;attnum name="minimum altitude" val="-30"/&gt
+...
+</pre>
+The maximum and mimimum altitude specify what the altitude corresponding to the brightest and darkest pixel in the image, respectively. You might need to fiddle around with that a bit until you get it right.
+
+<P>Of course, as seen in the previous section you can use the elevation map that you have created to generate shadows.
+
+
+<H2>Other .xml attrributes</h2>
+	<H3>group size</h3>
+	
+	<P>The group size is used to split the terrain in smaller objects to help
+	  the scene graph make his job. If all the terrain is done in one object,
+	  it will never be culled and performance will be awful. This is done
+	  after the mesh generation, so it's not related to the mesh geometry.
+	</P>
+
+	<H3>relief file</H3>
+	<pre>&lt;attstr name="relief file" val="track-relief.ac"/&gt</pre>
+
+	<P>You can use additional ac3d files initially for setting altitude on
+	  the terrain. However the same points are also used in the generated
+	  mesh, thus possibly resulting in a better mesh.  If a
+	  &lt;track&gt;-relief.ac file exists in the directory it will be used for the
+	  terrain generation by trackgen.
+	  
+	<P>You can use additional ac3d files (see e-track-6-relief.ac in the sources)
+	  initially for setting altitude on the terrain but as the points
+	  are used in the generated mesh, it can be useful to give better mesh.
+                                                                                
+	<P>If a &lt;track&gt;-relief.ac file exists in the directory it
+	  will be used for the terrain generation by trackgen.
+	  
+	<P>The mesh generator stops on closed polys, so if you want a hole in the mesh,
+	  you can draw closed polys, else you draw lines and they participate to the
+	  mesh.
+                                                                                
+	<P>If you supply the external border in the "relief" file, you can used
+	  the trackgen option "-B" to use it as external border instead of generating
+	  the default rectangular border.
+                                                                                
+	<P>Lastly, you have to set properties to your lines and polys in the
+	  "relief" files : "internal" for the inner mesh and "external" for outer
+	  mesh.
+
+<H2>Editing the .ac file</H2>
+
+	  There are currently two ways to edit this file. One is to use
+	  AC3D, and the other is to use Blender which has an AC3D
+	  import/export filter. In either case, it might be necessary to
+	  remove things that TORCS does not recognise, from the ac3d
+	  output file. One such thing is surfaces with 2 vertices (refs 2
+	  data blocks in the .ac file), and other unsupported ac3d
+	  features. These can be removed with a simple script if need be.
+
+    <hr>
+    <address>Christos Dimitrakakis, Eric Espie, Bernhard Wymann</address>
+<!-- Created: Sun Sep 11 12:08:53 CEST 2005 -->
+<!-- hhmts start -->
+Last modified: Sun Sep 11 12:09:27 CEST 2005
+<!-- hhmts end -->
+  </body>
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE params SYSTEM "params.dtd">
+
+
+<params name="Graph">
+  <section name="Graphic">
+    <attnum name="smoke value" val="300"/>
+    <attnum name="smoke interval" val="0.01"/>
+    <attnum name="smoke duration" val="2"/>
+    <attnum name="skid value" val="20"/>
+    <attnum name="skid length" val="300"/>
+    <attnum name="skid interval" val="0.05"/>
+    <attnum name="fov factor" val="1"/>
+  </section>
+
+  <section name="Playable Cameras Distance of Views">
+    <attnum name="Front Level Group Global" val="600"/>
+    <attnum name="Front Level Group 1" val="400"/>
+    <attnum name="Front Level Group 2" val="300"/>
+    <attnum name="Front Level Group 3" val="200"/>
+    <attnum name="Rear Level Group Global" val="700"/>
+    <attnum name="Rear Level Group 1" val="500"/>
+    <attnum name="Rear Level Group 2" val="300"/>
+    <attnum name="Rear Level Group 3" val="150"/>
+    <attnum name="Front Level Map 1" val="300"/>
+    <attnum name="Front Level Map 2" val="200"/>
+    <attnum name="Front Level Map 3" val="100"/>
+    <attnum name="Rear Level Map 1" val="300"/>
+    <attnum name="Rear Level Map 2" val="200"/>
+    <attnum name="Rear Level Map 3" val="100"/>
+    <attnum name="Level Factor" val="1"/>
+    <attnum name="Map Factor" val="1"/>
+  </section>
+
+  <section name="UnPlayable Cameras Distance of Views">
+    <attnum name="Front Level Group Global" val="400"/>
+    <attnum name="Front Level Group 1" val="350"/>
+    <attnum name="Front Level Group 2" val="300"/>
+    <attnum name="Front Level Group 3" val="200"/>
+    <attnum name="Rear Level Group Global" val="400"/>
+    <attnum name="Rear Level Group 1" val="350"/>
+    <attnum name="Rear Level Group 2" val="300"/>
+    <attnum name="Rear Level Group 3" val="200"/>
+    <attnum name="Front Level Map 1" val="300"/>
+    <attnum name="Front Level Map 2" val="250"/>
+    <attnum name="Front Level Map 3" val="200"/>
+    <attnum name="Rear Level Map 1" val="300"/>
+    <attnum name="Rear Level Map 2" val="250"/>
+    <attnum name="Rear Level Map 3" val="200"/>
+    <attnum name="Level Factor" val="1"/>
+    <attnum name="Map Factor" val="1"/>
+  </section>
+
+  <section name="TV Director View">
+    <attnum name="change camera interval" val="30"/>
+    <attnum name="event interval" val="5"/>
+    <attnum name="proximity threshold" val="25"/>
+  </section>
+
+  <section name="Display Mode">
+    <section name="Player">
+      <attnum name="camera" val="0"/>
+      <attnum name="camera head list" val="0"/>
+    </section>
+
+    <section name="0">
+      <attnum name="fovy-9-0" val="9"/>
+      <attstr name="current driver" val="berniw 3"/>
+      <attnum name="camera" val="4"/>
+      <attnum name="camera head list" val="0"/>
+      <attnum name="driver board" val="0"/>
+      <attnum name="driver counter" val="0"/>
+      <attnum name="leader board" val="0"/>
+      <attnum name="G graph" val="0"/>
+      <attnum name="debug info" val="0"/>
+      <attnum name="enable mirror" val="0"/>
+      <attnum name="map mode" val="1"/>
+      <attnum name="fovy-0-4" val="67.5"/>
+    </section>
+
+  </section>
+
+  <section name="OpenGL Features">
+    <attstr name="texture compression ARB" val="disabled"/>
+    <attnum name="user texture sizelimit" val="128"/>
+  </section>
+
+</params>

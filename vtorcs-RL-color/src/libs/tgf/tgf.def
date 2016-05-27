@@ -1,0 +1,82 @@
+;
+; tgf.def
+;
+
+LIBRARY
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	GfInit
+	GfModLoad
+	GfModLoadDir
+	GfModUnloadList
+	GfModInfo
+	GfModInfoDir
+	GfModFreeInfoList
+	GfDirGetList
+	GfDirGetListFiltered
+	GfDirFreeList
+	GfParmReadFile
+	GfParmSetDTD
+	GfParmWriteFile
+	GfParmGetName
+	GfParmGetStr
+	GetDataDir
+	GfParmGetCurStr
+	GfParmSetStr
+	GfParmSetCurStr
+	GfParmGetNum
+	GfParmGetCurNum
+	GfParmSetNum
+	GfParmSetCurNum
+	GfParmClean
+	GfParmReleaseHandle
+	GfParmUnit2SI
+	GfParmSI2Unit
+	GfParmCheckHandle
+	GfParmMergeHandles
+	GfParmGetNumBoundaries
+	GfParmGetEltNb
+	GfParmListSeekFirst
+	GfParmListSeekNext
+	GfParmListGetCurEltName
+	GfParmListClean
+	GfParmGetFileName
+	GfTime2Str
+	GfTimeClock
+	gfMean
+	gfMeanReset
+	_tgf_win_malloc
+	_tgf_win_calloc
+	_tgf_win_realloc
+	_tgf_win_free
+	_tgf_win_strdup
+	GetLocalDir
+	SetLocalDir
+	GetDataDir
+	SetDataDir
+	GfHashRelease
+	GfHashAddStr
+	GfHashGetStr
+	GfHashCreate
+	GetLibDir
+	SetLibDir
+	SetSingleTextureMode
+	GetSingleTextureMode
+	GfNearestPow2
+	GfCreateDir
+	setDamageLimit
+	getDamageLimit
+	setFuelConsumption
+	getFuelConsumption
+	setLaptimeLimit
+	getLaptimeLimit
+	setTimeout
+	getTimeout
+	setTextOnly
+	getTextOnly
+	setNoisy
+	getNoisy
+	setVersion
+	getVersion

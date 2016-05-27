@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : sound.xml
+    created              : Thu Dec 12 15:11:55 CET 2004
+    copyright            : (C) 2004 Bernhard Wymann
+    email                : Berniw@bluewin.ch
+    version              : $Id: sound.xml,v 1.2 2005/07/20 17:56:08 berniw Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../../libs/tgf/params.dtd">
+
+<params name="sound" type="param" mode="mw">
+	<section name="Sound Settings">
+		<attstr name="state" val="openal"/>
+		<attnum name="volume" unit="%" val="100"/>
+	</section>
+</params>

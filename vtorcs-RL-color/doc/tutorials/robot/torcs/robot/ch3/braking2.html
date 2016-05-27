@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: braking2.html,v 1.1 2004/11/30 14:02:10 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Advanced Braking</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="advanced breaking"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, braking"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #pic1 { border:0px; width:640px; height:148px; border-style:hidden; margin-bottom:5px; }
+    #pic2 { float:left; border:0px; width:271px; height:163px; border-style:hidden; margin-top:5px; margin-bottom:5px; margin-right:10px; }
+    #pic3 { border:0px; width:500px; height:108px; border-style:hidden; margin-bottom:5px; }
+    #pic4 { float:left; border:0px; width:200px; height:190px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    -->
+  </style>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>3.5 Advanced Braking</h1>
+
+        <h3>Introduction</h3>
+        <p>
+          This section is about braking with aerodynamic forces. Because we have aerodynamic
+          downforce and drag we will be able to brake later. That was also the reason of the brake
+          "flickering" on high speeds. Because more energy is absorbed than we expect, we reach the
+          goal speed too early, so we stop braking. A moment later we are again too fast, and need to
+          brake again, and so on... Don't run away because of the scary
+          formulas, they are not too hard to understand.
+        </p>
+
+        <h3>Braking Distance</h3>
+        <p>
+          <img id="pic1" src="images/advanced2.jpg" alt="brake distance formulas" border="0"></img>
+          Let's have a look at this funny equation. You already know the first three terms on the
+          left from section 3.2 ("brakes 1"). We still have to burn the energy difference in the
+          brakes. The second term from the right describes the additional energy we can "burn" in
+          the brakes caused by the downforce which acts on the wheels.
+          Because the speed changes over the braking distance I formulate it with an integral.
+
+          <img id="pic2" src="images/advanced3.jpg" alt="brake distance formulas" border="0"></img>
+          The rightmost term describes the
+          energy which is used by the drag. The drag is like the downforce a function of the squared
+          speed, so we also need an integral.
+          Because I had no idea how to solve this equation for
+          s (=s2-s1, so one could also put the first term on the right into an integral), I will present
+          an approximation. Meanwhile I found the <a href="./braking3.html">optimal solution</a>.<br/>
+          Like you can see on the left sketch, I make a bad guess for the area
+          of the integral. I simply take the rectangle with the size v2^2*s, which will be always too
+          small. That's exactly how it works in the berniw robot. You can improve that by inserting
+          some velocities and integrate numerically over more steps.
+          Now we put this easy expression into the top formula. We will find an upper bound
+          for the braking distance s. Doesn't look dangerous anymore, doesn't it?
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="maincontent" align="center">
+        <img id="pic3" src="images/advanced4.jpg" alt="brake distance formulas" border="0"></img>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h3>Computing Drag Coefficient CW</h3>
+        <p>
+          You can see that we need to compute an additional coefficient. It's quite similar to the
+          computation of the wingca in initCa(...), so here it is, put it in driver.cpp:
+        </p>
+        <p><pre class="lcolor">/* Compute aerodynamic drag coefficient CW */
+void Driver::initCw()
+{
+    float cx = GfParmGetNum(car-&gt;_carHandle, SECT_AERODYNAMICS,
+                            PRM_CX, (char*) NULL, 0.0);
+    float frontarea = GfParmGetNum(car-&gt;_carHandle, SECT_AERODYNAMICS,
+                                   PRM_FRNTAREA, (char*) NULL, 0.0);
+    CW = 0.645*cx*frontarea;
+}</pre></p>
+
+        <p>
+          You need to define initCw() and CW also in driver.h:
+        </p>
+        <p><pre class="lcolor">    void initCw();
+    float CW;      /* aerodynamic drag coefficient */</pre>
+        </p>
+
+        <p>
+          Add the call of initCw() at the end of newRace(...) in driver.cpp:
+        </p>
+        <p><pre class="lcolor">    initCw();</pre>
+        </p>
+
+        <h3>Implementing the new Formula</h3>
+        <p>
+          Replace the following line in getBrake(), driver.cpp
+        </p>
+        <p><pre  class="lbcolor">    float brakedist = (currentspeedsqr - allowedspeedsqr) / (2.0*mu*G);</pre></p>
+        <p>
+          with
+        </p>
+        <p><pre class="lcolor">    float brakedist = mass*(currentspeedsqr - allowedspeedsqr) /
+                      (2.0*(mu*G*mass + allowedspeedsqr*(CA*mu + CW)));</pre></p>
+
+        <h3>Take a Ride</h3>
+        <p>
+          <img id="pic4" src="images/advanced5.jpg" alt="brake distance analysis" border="0"></img>
+          This time the improvement is small, on e-track-4 we win around one second. It's because
+          our formula works only well for small speed differences at high speeds. If you want better
+          results you need to split the range of [v1..v2] into more intervals or implement the
+          <a href="./braking3.html">analytic solution</a>. The left picture shows braking from 80 [m/s] down to
+          40 [m/s] and the braking distances computed with the old method (black), the new method
+          (green) and an
+          almost perfect integrated solution (blue). You can get good results already with 5 intervals.
+          You could also try to implement Romberg integration.<br/>
+          The "perfect" curve looks like a straight line in this plot. If we would brake from 30 [m/s]
+          to 5 [m/s] this wouldn't be the case anymore.
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h3>Good News</h3>
+        <p>
+          I finally found an analytic solution. Look it up <a href="./braking3.html">here</a>.
+        </p>
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt35.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know how braking works.</li>
+           <li>You have implemented it.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./utility2.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./advanced.html">
+          <p style="text-align:right;">Traction control, anti wheel locking, ...</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

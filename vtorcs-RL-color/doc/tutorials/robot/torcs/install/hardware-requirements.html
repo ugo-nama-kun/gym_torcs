@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: hardware-requirements.html,v 1.1 2004/11/30 14:02:05 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>TORCS Hardware Requirements</title>
+  <link rel="stylesheet" type="text/css" href="../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="requirements"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, requirements, berniw, bernhard wymann"/>
+  <script src="../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+        
+        <h1>TORCS Requirements</h1>
+        
+        <h2>Hardware</h2>
+        
+        <h3>Introduction</h3>
+        <p>
+          You need a 3D-accelerator with OpenGL support for your platform. I recommend a CPU with 800
+          MHz or more, 256MB RAM and e.g. a Nvidia GeForce 2MX AGP or better (or similar ATI, Kyro,...).
+          Below I comment some systems where I tested TORCS so that you can get
+          a feeling what works well and what does not. Your z-buffer should have a depth of 24 bits or more to avoid glitches.
+        </p>
+
+        <h3>K6-III-400</h3>
+        <p>
+          K6-III-400MHz (66MHz memory bus) with 256MB RAM, motherboard Asus TX-97E, graphics card Nvidia Riva TNT with 16MB RAM
+          (PCI). I ran it with 16 bit color depth and came to the following conclusions: This system is ok to practice
+          without opponents (8-45 frames per second). Running races with robots alone is possible, but driving manually is difficult 
+          because the 6-20
+          frames per second (with 4 opponents) are not enough for a smooth ride. So the system is the bare minimum
+          sufficient for developing your driver (robot).
+        </p>
+
+        <h3>SMP-PIII-550MHz</h3>
+        <p>
+          Two PIII-550MHz (100MHz memory bus) with 512 MB RAM, motherboard Asus P2B-DS, graphics tested with GeForce DDR, GeForce 2 GTS,
+          GeForce 3. I ran it with 32 bit color depth. TORCS runs almost as good on the GeForce DDR like on the
+          GeForce 3, so you don't need the latest and greatest graphics card. What is more important is working AGP,
+          recent drivers and a "fast" CPU. TORCS runs just a single process (no threads), so it doesn't take advantage of
+          SMP systems. In practice mode, I get more than 100 frames per second and in races with 20 cars 10-50 frames
+          per second. This system works very well for developing a driver (robot) and to drive manual races with up to
+          10 opponents.
+        </p>
+
+        <h3>PIII-800MHz</h3>
+        <p>
+          PIII-800MHz (100MHz memory bus) with 512 MB RAM, motherboard Asus P2B, GeForce 2 GTS, 32 Bit color depth.
+          Runs almost always smooth above 20 frames per second, so with 800MHz or more you should be able to
+          enjoy racing.<br/><br/>
+        </p>
+
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./install.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./software-requirements.html">
+          <p style="text-align:right;">Quite old hardware, eh? So what are the software requirements?</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

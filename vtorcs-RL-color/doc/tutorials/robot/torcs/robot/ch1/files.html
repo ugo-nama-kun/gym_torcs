@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: files.html,v 1.2 2006/05/20 09:06:01 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Robot Skeleton</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="robot skeleton"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, skeleton"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>1.1 Robot Skeleton</h1>
+
+        <h3>Generate the Robot Skeleton</h3>
+        <p>
+		  Before you start make sure that you have installed TORCS according to the
+		  <a href="javascript:changetwoframes('../../install/navigation/navigation.html','navigation','../../install/install.html','content')">installation</a>
+		  section, because that is where it is explained how to set up some required environment variables and
+		  permissions. If you do not have a proper setup you will not be able to compile or install your robot.
+		  To generate the initial set of files for your robot you have to <a href="../download/robotgen.gz">download</a>
+          the robotgen script (you need exactly this version to follow the tutorial). Put it in your TORCS
+          source directory and make it executable.
+        </p>
+        <p>
+          <tt>
+            $ cd $TORCS_BASE<br/>
+            $ cp /path_to_downloaded_files/robotgen.gz .<br/>
+            $ gzip -d robotgen.gz<br/>
+            $ chmod 755 robotgen<br/>
+          </tt>
+        </p>
+        <p>
+          You have to tell the script the robots name, your name, the car you
+          choose, and optional a description and if you want GPL headers. You can look up the available
+          cars with
+        </p>
+        <p>
+          <tt>
+            $ ls /usr/local/share/games/torcs/cars<br/>
+          </tt>
+        </p>
+        <p>
+          <pre>155-DTM     CORW61    acura-nsx-sz   cg-nascar-rwd  lotus-gt1    porsche-gt3rs
+206W10      EVOWRC61  baja-bug       clkdtm         mclaren-f1   torcs
+306W61      FOCW61    buggy          corvette       p406         viper-gts-r
+360-modena  SWRC62    cg-nascar-fwd  gt40           porsche-gt1  xj-220</pre>
+        </p>
+
+        <p>
+          The result depends on what TORCS car packages you have installed. To follow the tutorial you should
+          choose cg-nascar-rwd for the car. It is very easy to change that later to your favourite car, so
+          don't worry. I would run now the robotgen script with
+        </p>
+        <p>
+          <tt>
+            $ cd $TORCS_BASE<br/>
+            $ ./robotgen -n "bt" -a "Bernhard Wymann" -c "cg-nascar-rwd" --gpl<br/>
+          </tt>
+        </p>
+        <p>
+          <pre>
+Generation of robot bt author Bernhard Wymann
+Generating src/drivers/bt/Makefile ... done
+Generating src/drivers/bt/bt.xml ... done
+Generating src/drivers/bt/bt.cpp ... done
+Generating src/drivers/bt/bt.def ... done
+Generating src/drivers/bt/bt.dsp ... done</pre>
+        </p>
+        <p>
+          You should run the script with your name and a fancy name for your robot. Keep in mind on further
+          instructions to replace <span style="color:red;">bt</span> by your robots name. To check if everything worked we compile and
+          install now your driver. Don't worry about the files, I'll explain them on demand.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have generated the files.</li>
+           <li>You are aware to replace <span style="color:red;">bt</span> with your robots name.</li>
+        </ul>
+        <br/>
+
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./ch1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./build.html">
+          <p style="text-align:right;">Follow me.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

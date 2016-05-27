@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: vector1.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>vector class</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="vector class"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, steer, vector"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>4.1 The Vector Class</h1>
+
+        <h3>Introduction</h3>
+        <p>
+          In this chapter we will first develop a class for 2D-vectors. It will make our life easier when
+          we try to compute the steer angle or distances and angles to other cars in the later chapters.
+		  After that we improve the steering of the car and reduce the lap times. We will do it this time
+		  with a more heuristic approach, because the other methods are not that easy to implement. At the
+		  end of this chapter we will discuss some other methods for finding a path around the track.   
+		</p>
+		
+        <h3>Implementation</h3>
+        <p>
+		  I will simply show you the vector class "v2d" here. Look up the implementation for
+		  details. We implement operators for vector addition, subtraction, negation, multiplication
+		  with a scalar and the dot product. Further we want also be able to normalize the vector, to
+		  rotate it around a center and to get it's length. Put the following code in a new file called
+		  linalg.h.  
+		</p>
+
+        <p>
+		<pre class="lcolor">/***************************************************************************
+
+    file                 : linalg.h
+    created              : Wed Feb 18 01:20:19 CET 2003
+    copyright            : (C) 2003 Bernhard Wymann
+
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef _LINALG_H_
+#define _LINALG_H_
+
+class v2d {
+    public:
+        /* constructors */
+        v2d() {}
+        v2d(const v2d &src) { this->x = src.x; this->y = src.y; }
+        v2d(float x, float y) { this->x = x; this->y = y; }
+
+        /* operators */
+        v2d& operator=(const v2d &src);         /* assignment */
+        v2d operator+(const v2d &src) const;    /* addition */
+        v2d operator-(void) const;              /* negation */
+        v2d operator-(const v2d &src) const;    /* subtraction */
+        v2d operator*(const float s) const;     /* multiply with scalar */
+        float operator*(const v2d &src) const;  /* dot product */
+        friend v2d operator*(const float s, const v2d & src);
+
+        /* methods */
+        float len(void) const;
+        void normalize(void);
+        float dist(const v2d &p) const;
+        float cosalpha(const v2d &p2, const v2d &amp;center) const;
+        v2d rotate(const v2d &c, float arc) const;
+
+        /* data */
+        float x;
+        float y;
+};</pre>
+		</p>
+
+		<p><pre class="lcolor">/* assignment */
+inline v2d& v2d::operator=(const v2d &src)
+{
+    x = src.x; y = src.y; return *this;
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* add *this + src (vector addition) */
+inline v2d v2d::operator+(const v2d &src) const
+{
+    return v2d(x + src.x, y + src.y);
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* negation of *this */
+inline v2d v2d::operator-(void) const
+{
+    return v2d(-x, -y);
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* compute *this - src (vector subtraction) */
+inline v2d v2d::operator-(const v2d &src) const
+{
+    return v2d(x - src.x, y - src.y);
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* scalar product */
+inline float v2d::operator*(const v2d &src) const
+{
+    return src.x*x + src.y*y;
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* multiply vector with scalar (v2d*float) */
+inline v2d v2d::operator*(const float s) const
+{
+    return v2d(s*x, s*y);
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* multiply scalar with vector (float*v2d) */
+inline v2d operator*(const float s, const v2d & src)
+{
+    return v2d(s*src.x, s*src.y);
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* compute cosine of the angle between vectors *this-c and p2-c */
+inline float v2d::cosalpha(const v2d &p2, const v2d &amp;c) const
+{
+    v2d l1 = *this-c;
+    v2d l2 = p2 - c;
+    return (l1*l2)/(l1.len()*l2.len());
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* rotate vector arc radians around center c */
+inline v2d v2d::rotate(const v2d &c, float arc) const
+{
+    v2d d = *this-c;
+    float sina = sin(arc), cosa = cos(arc);
+    return c + v2d(d.x*cosa-d.y*sina, d.x*sina+d.y*cosa);
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* compute the length of the vector */
+inline float v2d::len(void) const
+{
+    return sqrt(x*x+y*y);
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* distance between *this and p */
+inline float v2d::dist(const v2d &p) const
+{
+    return sqrt((p.x-x)*(p.x-x)+(p.y-y)*(p.y-y));
+}</pre>
+		</p>
+
+		<p><pre class="lcolor">/* normalize the vector */
+inline void v2d::normalize(void)
+{
+    float l = this->len();
+    x /= l; y /= l;
+}</pre>
+		</p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know how to deal with vectors.</li>
+           <li>You implemented the above stuff in linalg.h.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./ch4.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./vector2.html">
+          <p style="text-align:right;">The straight.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    file                 : berniw.xml
+    created              : Mon Apr 17 13:51:00 CET 2000
+    copyright            : (C) 2000 by Bernhard Wymann
+    email                : berniw@bluewin.ch
+    version              : $Id: berniw.xml,v 1.9.6.1 2008/05/20 18:50:09 berniw Exp $
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+
+<params name="berniw" type="robotdef">
+  <section name="Robots">
+    <section name="index">
+
+	  <section name="1">
+		<!-- Driver's name (short please) -->
+		<attstr name="name" val="berniw 1"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 1"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="cg-nascar-rwd"/>
+		<attstr name="category" val="Track-RWD-GrA"/>
+		<attnum name="race number" val="138"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="2">
+		<attstr name="name" val="berniw 2"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 2"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="cg-nascar-rwd"/>
+		<attnum name="race number" val="139"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="3">
+		<attstr name="name" val="berniw 3"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 3"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car1-trb1"/>
+		<attnum name="race number" val="140"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="4">
+		<attstr name="name" val="berniw 4"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 4"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car2-trb1"/>
+		<attnum name="race number" val="141"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="5">
+		<attstr name="name" val="berniw 5"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 5"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car3-trb1"/>
+		<attnum name="race number" val="142"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="6">
+		<attstr name="name" val="berniw 6"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 6"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car4-trb1"/>
+		<attnum name="race number" val="143"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="7">
+		<attstr name="name" val="berniw 7"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 7"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car5-trb1"/>
+		<attnum name="race number" val="144"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="8">
+		<attstr name="name" val="berniw 8"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 8"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car6-trb1"/>
+		<attnum name="race number" val="145"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="9">
+		<attstr name="name" val="berniw 9"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 9"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car7-trb1"/>
+		<attnum name="race number" val="146"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	  <section name="10">
+		<attstr name="name" val="berniw 10"/>
+		<attstr name="team" val="berniw"/>
+		<attstr name="desc" val="Berni's first Bot 10"/>
+		<attstr name="author" val="Bernhard Wymann"/>
+		<attstr name="car name" val="car1-trb3"/>
+		<attnum name="race number" val="147"/>
+		<attnum name="red" val="0.0"/>
+		<attnum name="green" val="1.0"/>
+		<attnum name="blue" val="1.0"/>
+      </section>
+
+	</section>
+  </section>
+</params>
+
+
+
+
+
+
+

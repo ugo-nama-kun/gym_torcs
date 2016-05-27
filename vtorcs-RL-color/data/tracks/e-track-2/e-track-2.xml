@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : e-track-2.xml
+    created              : Sun Mar 19 00:16:29 CET 2000
+    copyright            : (C) 2000 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: e-track-2.xml,v 1.19 2004/02/06 23:08:19 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../../src/libs/tgf/params.dtd" [
+<!-- general definitions for tracks -->
+<!ENTITY default-surfaces SYSTEM "../../../data/tracks/surfaces.xml">
+<!ENTITY default-objects SYSTEM "../../../data/tracks/objects.xml">
+]>
+
+<params name="E-Track 2" type="trackdef" mode="mw">
+
+  <!-- Header -->
+  <section name="Header">
+    <attstr name="name"        val="E-Track 2"/>
+    <attstr name="category"    val="road"/>
+    <attnum name="version"     val="4"/>
+    <attstr name="author"      val="E. Espie"/>
+    <attstr name="description" val="Narrow track"/>
+  </section>  <!-- Header -->
+
+  <!-- Surfaces -->
+  <section name="Surfaces">
+      &default-surfaces;
+  </section>  <!-- Surfaces -->
+
+  <!-- Objects -->
+  <section name="Objects">
+      &default-objects;
+  </section>  <!-- Objects -->
+
+  <!-- Graphic -->
+  <section name="Graphic">
+    <attstr name="3d description" val="e-track-2.acc"/>
+
+    <attstr name="background image" val="background.png"/>
+    <attnum name="background type" val="4"/>
+
+    <attnum name="background color R" val="0.30"/>
+    <attnum name="background color G" val="0.11"/>
+    <attnum name="background color B" val="0.08"/>
+
+    <attnum name="ambient color R" val="0.2"/>
+    <attnum name="ambient color G" val="0.2"/>
+    <attnum name="ambient color B" val="0.2"/>
+
+    <attnum name="diffuse color R" val="1"/>
+    <attnum name="diffuse color G" val="0.6"/>
+    <attnum name="diffuse color B" val="0.3"/>
+
+    <attnum name="specular color R" val="0.2"/>
+    <attnum name="specular color G" val="0.2"/>
+    <attnum name="specular color B" val="0.2"/>
+
+
+    <attnum name="light position x" val="500"/>
+    <attnum name="light position y" val="-200"/>
+    <attnum name="light position z" val="100"/>
+
+    <attnum name="fov factor" val="0.8"/>
+
+    <section name="Environment Mapping">
+      <section name="general">
+	<attstr name="env map image" val="env.png"/>
+      </section>
+    </section>
+
+    <section name="Terrain Generation">
+      <attnum name="track step" unit="m" val="20"/>
+      <attnum name="border margin" unit="m" val="150"/>
+      <attnum name="border step" unit="m" val="20"/>
+      <attstr name="surface" val="grass"/>
+
+      <attstr name="relief file" val="e-track-2-relief.ac"/>
+      <attstr name="elevation map" val="elevation-map.png"/>
+      <attnum name="maximum altitude" val="15"/>
+      <attnum name="minimum altitude" val="0"/>
+      <attnum name="group size" val="100"/>
+
+      <section name="Object Maps">
+	<section name="map 1">
+	  <attstr name="object map" val="object-map1.png"/>
+	</section>
+	<section name="map 2">
+	  <attstr name="object map" val="object-map2.png"/>
+	</section>
+      </section>
+
+    </section>
+
+    <section name="Turn Marks">
+      <attnum name="width" unit="m" val="1.0"/>
+      <attnum name="height" unit="m" val="1.0"/>
+      <attnum name="vertical space" unit="m" val="0.0"/>
+      <attnum name="horizontal space" unit="m" val="2.0"/>
+    </section>
+
+  </section>  <!-- Graphic -->
+
+
+  <section name="Starting Grid">
+    <attnum name="rows" val="2"/>
+    <attstr name="pole position side" val="left"/>
+    <attnum name="distance to start" unit="m" val="4.0"/>
+    <attnum name="distance between columns" unit="m" val="8.0"/>
+    <attnum name="offset within a column" unit="m" val="4.0"/>
+    <attnum name="initial height" unit="m" val="0.2"/>
+  </section>
+
+  <!-- Main Track -->
+  <section name="Main Track">
+
+    <attstr name="surface" val="asphalt2-lines"/>
+    <attnum name="width" unit="m" val="12.0"/>
+    <attnum name="profil steps length" unit="m" val="6"/>
+
+    <section name="Right Side">
+      <attstr name="surface" val="grass3"/>
+      <attnum name="width" val="9.0"/>
+      <attstr name="banking type" in="tangent,level" val="tangent"/> <!-- shared with border -->
+    </section>
+
+    <section name="Right Border">
+      <attnum name="width" val="1.0"/>
+      <attstr name="surface" val="tar-grass3-r"/>
+      <attstr name="style" val="plan"/>
+    </section>
+
+    <section name="Left Side">
+      <attstr name="surface" val="grass3"/>
+      <attnum name="width" val="15.0"/>
+      <attstr name="banking type" in="tangent,level" val="tangent"/>
+    </section>
+
+
+    <!-- PITS -->
+    <section name="Pits">
+      <attstr name="side" val="left"/>
+      <attstr name="entry" val="pit-entry"/>
+      <attstr name="start" val="pit-start"/>
+      <attstr name="end" val="start lane"/>
+      <attstr name="exit" val="pit-exit"/>
+      <attnum name="length" unit="m" val="15"/>
+      <attnum name="width" unit="m" val="5"/>
+    </section>  <!-- PITS -->
+
+    <!-- Track Segments -->
+    <section name="Track Segments">
+
+      <section name="start lane">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+	<section name="Left Side">
+	  <attstr name="surface" val="asphalt-pits"/>
+	  <attnum name="start width" val="14.5"/>
+	  <attnum name="end width" val="14.5"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="0.5"/>
+	  <attnum name="height" val="1.0"/>
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="surface" val="wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="0.5"/>
+	  <attnum name="height" val="2.0"/>	  
+	</section>
+      </section>
+
+      <section name="pit-exit">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+	<section name="Left Side">
+	  <attnum name="start width" val="15"/>
+	  <attnum name="end width" val="5.0"/>
+	  <attstr name="surface" val="asphalt"/>
+	</section>
+	<section name="Left Border">
+	  <attnum name="width" val="0"/>
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="style" val="fence"/>
+	  <attnum name="height" val="0.6"/>
+	  <attstr name="surface" val="barrier"/>
+	</section>
+      </section>
+
+      <section name="turn 1.1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="35"/>
+	<attstr name="marks" val="50;100"/>
+	<section name="Right Side">
+	  <attnum name="end width" val="49.0"/>
+	  <attstr name="surface" val="sand"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-sand"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Left Side">
+	  <attstr name="surface" val="grass3"/>
+	  <attnum name="start width" val="4"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+     </section>
+
+      <section name="turn 1.2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="100"/>
+	<section name="Left Side">
+	  <attnum name="start width" val="4"/>
+	  <attnum name="end width" val="9.0"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="surface" val="tire-wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="2.0"/>
+	  <attnum name="height" val="2.0"/>	  
+	</section>
+      </section>
+
+      <section name="s1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+	<section name="Right Side">
+	  <attstr name="surface" val="grass3"/>
+	  <attnum name="end width" val="9.0"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="style" val="fence"/>
+	  <attnum name="height" val="0.6"/>
+	  <attstr name="surface" val="barrier"/>
+	</section>
+      </section>
+
+      <section name="turn 2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="45"/>
+      </section>
+
+      <section name="s2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<attnum name="banking end" unit="%" val="4"/>
+	<attstr name="profil" val="spline"/>
+	<attnum name="profile steps" val="10"/>
+      </section>
+
+      <section name="turn 3">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="135"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s3">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 4">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="50"/>
+	<attnum name="arc" unit="deg" val="70"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s4">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<attnum name="banking end" val="0"/>
+	<attstr name="profil" val="spline"/>
+	<attnum name="profile steps" val="10"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 5">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="50"/>
+	<attnum name="arc" unit="deg" val="50"/>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+      </section>
+
+      <section name="s5">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 6">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="50"/>
+	<attnum name="arc" unit="deg" val="25"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s6">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 7">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="marks" val="50"/> 
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+     </section>
+
+      <section name="s7">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="120"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 8">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="110"/>
+	<attstr name="marks" val="50"/>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+      </section>
+
+      <section name="turn 9a">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="300"/>
+	<attnum name="arc" unit="deg" val="25"/>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="surface" val="tire-wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="2.0"/>
+	  <attnum name="height" val="2.0"/>	  
+	</section>
+      </section>
+
+      <section name="turn 9b">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="300"/>
+	<attnum name="arc" unit="deg" val="25"/>
+	<section name="Right Barrier">
+	  <attstr name="style" val="fence"/>
+	  <attnum name="height" val="0.6"/>
+	  <attstr name="surface" val="barrier"/>
+	</section>
+      </section>
+
+      <section name="turn 10a">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="50"/>
+	<section name="Left Side">
+	  <attstr name="surface" val="sand"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="tar-sand"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="turn 10">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="50"/>
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+	<section name="Left Barrier">
+	  <attstr name="surface" val="tire-wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="2.0"/>
+	  <attnum name="height" val="2.0"/>	  
+	</section>
+      </section>
+
+      <section name="turn 11a">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="70"/>
+	<attnum name="arc" unit="deg" val="30"/>
+	<section name="Left Side">
+	  <attstr name="surface" val="grass3"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="tar-grass3-l"/>
+	</section>
+	<section name="Right Side">
+	  <attnum name="end width" val="19.0"/>
+	  <attstr name="surface" val="sand"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-sand"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Left Barrier">
+	  <attstr name="style" val="fence"/>
+	  <attnum name="height" val="0.6"/>
+	  <attstr name="surface" val="barrier"/>
+	</section>
+      </section>
+
+      <section name="turn 11b">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+      </section>
+
+      <section name="turn 11c">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="80"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s11">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+	<section name="Right Side">
+	  <attnum name="end width" val="9"/>
+	  <attstr name="surface" val="grass3"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 12a">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="marks" val="50;100"/>
+	<section name="Right Side">
+	  <attstr name="surface" val="concrete"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="concrete"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Left Side">
+	  <attstr name="surface" val="concrete"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+      </section>
+
+      <section name="turn 12b">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="20"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<section name="Right Side">
+	  <attstr name="surface" val="concrete"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+	<section name="Left Side">
+	  <attstr name="surface" val="concrete"/>
+	</section>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="concrete"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s12a">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<section name="Right Side">
+	  <attstr name="surface" val="grass3"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Left Side">
+	  <attstr name="surface" val="grass3"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="tar-grass3-l"/>
+	</section>
+      </section>
+
+      <section name="s12b">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="400"/>
+      </section>
+
+      <section name="turn 13">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="50"/>
+	<attnum name="arc" unit="deg" val="45"/>
+	<section name="Right Side">
+	  <attnum name="end width" val="29"/>
+	  <attstr name="surface" val="sand"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-sand"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+      </section>
+
+      <section name="s13">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="30"/>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 14">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<attstr name="marks" val="50;100;150"/>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="surface" val="tire-wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="2.0"/>
+	  <attnum name="height" val="2.0"/>	  
+	</section>
+      </section>
+
+      <section name="s14">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="80"/>
+	<section name="Right Side">
+	  <attnum name="end width" val="9"/>
+	</section>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 15">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="135"/>
+	<section name="Right Side">
+	  <attstr name="surface" val="grass3"/>
+	</section>
+	<section name="Left Side">
+	  <attnum name="end width" val="19"/>
+	  <attstr name="surface" val="sand"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="tar-sand"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+	<section name="Left Barrier">
+	  <attstr name="surface" val="tire-wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="2.0"/>
+	  <attnum name="height" val="2.0"/>	  
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="style" val="fence"/>
+	  <attnum name="height" val="0.6"/>
+	  <attstr name="surface" val="barrier"/>
+	</section>
+      </section>
+
+      <section name="s15-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<section name="Left Side">
+	  <attnum name="end width" val="9"/>
+	  <attstr name="surface" val="sand"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s15-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+	<section name="Left Side">
+	  <attstr name="surface" val="grass3"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+	<section name="Left Barrier">
+	  <attstr name="style" val="fence"/>
+	  <attnum name="height" val="0.6"/>
+	  <attstr name="surface" val="barrier"/>
+	</section>
+      </section>
+
+      <section name="turn 16">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+	<section name="Left Barrier">
+	  <attstr name="style" val="fence"/>
+	  <attnum name="height" val="0.6"/>
+	  <attstr name="surface" val="barrier"/>
+	</section>
+	<section name="Right Side">
+	  <attstr name="surface" val="sand"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-sand"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s16">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="73.81329039"/>
+	<section name="Left Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="tar-grass3-l"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="turn 17">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="30"/>
+	<attnum name="arc" unit="deg" val="90"/>
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	  <attnum name="width" val="1"/>
+	</section>
+      </section>
+
+      <section name="pit-entry">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="114.01632434"/>
+	<section name="Left Side">
+	  <attnum name="start width" val="10"/>
+	  <attnum name="end width" val="15.0"/>
+	  <attstr name="surface" val="asphalt"/>
+	</section>
+	<section name="Left Border">
+	  <attnum name="width" val="0"/>
+	</section>
+	<section name="Right Side">
+	  <attstr name="surface" val="grass3"/>
+	</section>
+	<section name="Right Border">
+	  <attstr name="surface" val="tar-grass3-r"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="pit-start">
+        <attstr name="type" val="str"/>
+	<attstr name="surface" val="asphalt2-lines"/>
+	<attnum name="lg" unit="m" val="75"/>
+	<section name="Left Side">
+	  <attstr name="surface" val="asphalt-pits"/>
+	  <attnum name="start width" val="14.5"/>
+	  <attnum name="end width" val="14.5"/>
+	</section>
+	<section name="Left Border">
+	  <attstr name="surface" val="wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="0.5"/>
+	  <attnum name="height" val="1.0"/>
+	</section>
+	<section name="Right Barrier">
+	  <attstr name="surface" val="wall"/>
+	  <attstr name="style" val="wall"/>
+	  <attnum name="width" val="0.5"/>
+	  <attnum name="height" val="2.0"/>	  
+	</section>
+      </section>
+
+    </section>    <!-- Track Segments -->
+
+  </section>  <!-- Main Track -->
+
+  <!-- Cameras -->
+  <section name="Cameras">
+
+    <section name="cam 0">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="pit-exit"/>
+      <attnum name="to right" val="6.0"/>
+      <attnum name="to start" val="150"/>
+      <attnum name="height" val="5"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="pit-start"/> <!-- included  -->
+      <attstr name="fov end" val="turn 1.1"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 1">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="s1"/>
+      <attnum name="to right" val="-5.0"/>
+      <attnum name="to start" unit="deg" val="5"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn 1.1"/> <!-- included  -->
+      <attstr name="fov end" val="turn 2"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 2">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 3"/>
+      <attnum name="to right" val="18.0"/>
+      <attnum name="to start" unit="deg" val="5"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn 2"/> <!-- included  -->
+      <attstr name="fov end" val="s3"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 3">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 4"/>
+      <attnum name="to right" val="18.0"/>
+      <attnum name="to start" unit="deg" val="35"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s3"/> <!-- included  -->
+      <attstr name="fov end" val="turn 5"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 4">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 7"/>
+      <attnum name="to right" val="18.0"/>
+      <attnum name="to start" unit="deg" val="45"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn 5"/> <!-- included  -->
+      <attstr name="fov end" val="s7"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 5">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 8"/>
+      <attnum name="to right" val="-10.0"/>
+      <attnum name="to start" unit="deg" val="75"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s7"/> <!-- included  -->
+      <attstr name="fov end" val="turn 9b"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 6">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 11b"/>
+      <attnum name="to right" val="-20.0"/>
+      <attnum name="to start" unit="deg" val="45"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn 9b"/> <!-- included  -->
+      <attstr name="fov end" val="turn 11c"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 7">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 11c"/>
+      <attnum name="to right" val="-20.0"/>
+      <attnum name="to start" unit="deg" val="75"/>
+      <attnum name="height" val="1"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn 11c"/> <!-- included  -->
+      <attstr name="fov end" val="s11"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 8">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 12a"/>
+      <attnum name="to right" val="-10.0"/>
+      <attnum name="to start" unit="deg" val="45"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s11"/> <!-- included  -->
+      <attstr name="fov end" val="s12b"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 9">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="s12b"/>
+      <attnum name="to right" val="-10.0"/>
+      <attnum name="to start" unit="m" val="350"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s12b"/> <!-- included  -->
+      <attstr name="fov end" val="s13"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 10">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 14"/>
+      <attnum name="to right" val="-30.0"/>
+      <attnum name="to start" unit="deg" val="45"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s13"/> <!-- included  -->
+      <attstr name="fov end" val="s14"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 11">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 15"/>
+      <attnum name="to right" val="15.0"/>
+      <attnum name="to start" unit="deg" val="65"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s14"/> <!-- included  -->
+      <attstr name="fov end" val="s15-2"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 12">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 16"/>
+      <attnum name="to right" val="-10.0"/>
+      <attnum name="to start" unit="deg" val="45"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s15-2"/> <!-- included  -->
+      <attstr name="fov end" val="turn 17"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 13">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="turn 17"/>
+      <attnum name="to right" val="-10.0"/>
+      <attnum name="to start" unit="deg" val="45"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="turn 17"/> <!-- included  -->
+      <attstr name="fov end" val="pit-start"/> <!-- excluded -->
+    </section>
+
+  </section>  <!-- Cameras -->
+
+</params>

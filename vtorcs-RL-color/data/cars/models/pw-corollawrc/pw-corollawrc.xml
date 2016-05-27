@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	file                 : pw-corollawrc.xml
+	created              : Sat Mar 18 23:03:59 CET 2000
+	copyright            : (C) 2008 by Eric Espie, Bernhard Wymann
+	email                : torcs@free.fr   
+	version              : $Id: pw-corollawrc.xml,v 1.7.2.2 2008/05/22 21:34:53 berniw Exp $
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!--    3D MODEL copyright (C) Patrick Wisselo  Patwo Design Production 1999 (see readme.txt) -->
+
+<!DOCTYPE params SYSTEM "../../../../src/libs/tgf/params.dtd">
+
+<params name="Toyota Corolla WRC" type="template">
+	
+	<section name="Bonnet">
+		<!-- Position of the driver -->
+		<attnum name="xpos" unit="m" val="0.50"/>
+		<attnum name="ypos" unit="m" val="0.0"/>
+		<attnum name="zpos" unit="m" val="0.95"/>
+	</section>
+	
+	<section name="Driver">
+		<!-- Position of the driver -->
+		<attnum name="xpos" unit="m" val="-0.10"/>
+		<attnum name="ypos" unit="m" val="0.30"/>
+		<attnum name="zpos" unit="m" val="0.95"/>
+	</section>
+	
+	<section name="Sound">
+		<attstr name="engine sample" val="corolla1400hi2.wav"/>
+		<attnum name="rpm scale" val="1.2347"/>
+	</section>
+	
+	
+	<section name="Graphic Objects">
+		<attstr name="wheel texture" val="tex-wheel.rgb"/>
+		<attstr name="shadow texture" val="shadow.rgb"/>
+		<attstr name="tachometer texture" val="rpm8500.rgb"/>
+		<attnum name="tachometer min value" unit="rpm" val="0"/>
+		<attnum name="tachometer max value" unit="rpm" val="10000"/>
+		<attstr name="speedometer texture" val="speed240.rgb"/>
+		<attnum name="speedometer min value" unit="km/h" val="0"/>
+		<attnum name="speedometer max value" unit="km/h" val="240"/>
+	
+		<section name="Ranges">
+			<section name="1">
+				<attnum name="threshold" val="10"/>
+				<attstr name="car" val="pw-corollawrc.acc"/>
+			</section>
+			<section name="2">
+				<attnum name="threshold" val="5"/>
+				<attstr name="car" val="pw-corollawrc-lod1.acc"/>
+			</section>
+			<section name="3">
+				<attnum name="threshold" val="0"/>
+				<attstr name="car" val="pw-corollawrc-lod2.acc"/>
+			</section>
+		</section>
+	
+		<section name="Light">
+			<section name="1">
+				<attstr name="type" val="brake2"/>
+				<attnum name="xpos" val="-1.76"/>
+				<attnum name="ypos" val="0.67"/>
+				<attnum name="zpos" val="0.54"/>
+				<attnum name="size" val="0.3"/>
+			</section>
+			<section name="2">
+				<attstr name="type" val="brake2"/>
+				<attnum name="xpos" val="-1.76"/>
+				<attnum name="ypos" val="-0.67"/>
+				<attnum name="zpos" val="0.54"/>
+				<attnum name="size" val="0.3"/>
+			</section>
+			<section name="3">
+				<attstr name="type" val="brake"/>
+				<attnum name="xpos" val="-1.52"/>
+				<attnum name="ypos" val="-0.05"/>
+				<attnum name="zpos" val="1.19"/>
+				<attnum name="size" val="0.15"/>
+			</section>
+			<section name="4">
+				<attstr name="type" val="brake"/>
+				<attnum name="xpos" val="-1.52"/>
+				<attnum name="ypos" val="0.05"/>
+				<attnum name="zpos" val="1.19"/>
+				<attnum name="size" val="0.15"/>
+			</section>
+		</section>
+	
+	</section>
+	
+	<section name="Car">
+		<attstr name="category" val="Offroad-4WD-GrA"/>    
+		<attnum name="body length" unit="m" val="3.81"/>
+		<attnum name="body width" unit="m" val="1.98"/>
+		<attnum name="body height" unit="m" val="1.48"/>
+		<!-- collision bounding box -->
+		<attnum name="overall length" unit="m" val="3.81"/>
+		<attnum name="overall width" unit="m" val="1.98"/>
+		<attnum name="mass" min="950.0" max="1350" unit="kg" val="1350.0"/>
+		<attnum name="GC height" min="0.2" max="0.3" unit="m" val="0.23"/>
+		<!-- weight bias -->
+		<attnum name="front-rear weight repartition" min="0.4" max="0.6" val="0.52"/>
+		<attnum name="front right-left weight repartition" min="0.4" max="0.6" val="0.5"/>
+		<attnum name="rear right-left weight repartition" min="0.4" max="0.6" val="0.5"/>
+		<!-- used for inertia, indicates the good mass centering (lower values) -->
+		<attnum name="mass repartition coefficient" min="0.7" max="1.0" val="0.7"/>
+		<attnum name="fuel tank" unit="l" val="55.0"/>
+		<attnum name="initial fuel" min="1.0" max="55.0" unit="l" val="55.0"/>
+	</section>
+	
+	<section name="Exhaust">
+		<!-- for flames -->
+		<attnum name="power" val="1.0"/>
+		<section name="1">
+			<attnum name="xpos" val="-1.88"/>
+			<attnum name="ypos" val="0.43"/>
+			<attnum name="zpos" val="0.17"/>
+		</section>
+	</section>
+	
+	<section name="Aerodynamics">
+		<attnum name="Cx" val="0.5"/>
+		<attnum name="front area" unit="m2" val="2.2"/>
+		<attnum name="front Clift" val="0.28"/>
+		<attnum name="rear Clift" val="0.22"/>
+	</section>
+	
+	<section name="Front Wing">
+		<attnum name="area" unit="m2" val="0.2"/>
+		<attnum name="angle" min="0" max="30" unit="deg" val="10"/>
+		<attnum name="xpos" unit="m" val="1.9"/>
+		<attnum name="zpos" unit="m" val="0.0"/>
+	</section>
+	
+	<section name="Rear Wing">
+		<attnum name="area" unit="m2" val="0.6"/>
+		<attnum name="angle" min="0" max="30" unit="deg" val="15"/>
+		<attnum name="xpos" unit="m" val="-1.72"/>
+		<attnum name="zpos" unit="m" val="1.24"/>
+	</section>
+	
+	<section name="Engine">
+		<attnum name="inertia" unit="kg.m2" val="0.243"/>
+		<attnum name="revs limiter" unit="rpm" val="8500"/>
+		<attnum name="revs maxi" unit="rpm" val="10000"/>
+		<attnum name="tickover" min="1000" max="5000" unit="rpm" val="1100"/>
+		<attnum name="fuel cons factor" val="1.1"/>
+		
+		<section name="data points">
+			<section name="1">
+				<attnum name="rpm" unit="rpm" val="0"/>
+				<attnum name="Tq" unit="N.m" val="100"/>
+			</section>
+			<section name="2">
+				<attnum name="rpm" unit="rpm" val="1024"/>
+				<attnum name="Tq" unit="N.m" val="227"/>
+			</section>
+			<section name="3">
+				<attnum name="rpm" unit="rpm" val="2048"/>
+				<attnum name="Tq" unit="N.m" val="310"/>
+			</section>
+			<section name="4">
+				<attnum name="rpm" unit="rpm" val="3072"/>
+				<attnum name="Tq" unit="N.m" val="375"/>
+			</section>
+			<section name="5">
+				<attnum name="rpm" unit="rpm" val="4096"/>
+				<attnum name="Tq" unit="N.m" val="471"/>
+			</section>
+			<section name="6">
+				<attnum name="rpm" unit="rpm" val="5120"/>
+				<attnum name="Tq" unit="N.m" val="472"/>
+			</section>
+			<section name="7">
+				<attnum name="rpm" unit="rpm" val="5888"/>
+				<attnum name="Tq" unit="N.m" val="462"/>
+			</section>
+			<section name="8">
+				<attnum name="rpm" unit="rpm" val="7168"/>
+				<attnum name="Tq" unit="N.m" val="438"/>
+			</section>
+			<section name="9">
+				<attnum name="rpm" unit="rpm" val="8192"/>
+				<attnum name="Tq" unit="N.m" val="364"/>
+			</section>
+			<section name="10">
+				<attnum name="rpm" unit="rpm" val="9216"/>
+				<attnum name="Tq" unit="N.m" val="210"/>
+			</section>
+			<section name="11">
+				<attnum name="rpm" unit="rpm" val="10000"/>
+				<attnum name="Tq" unit="N.m" val="157"/>
+			</section>
+		</section>
+	</section>
+	
+	<section name="Clutch">
+		<!-- pressure plate -->
+		<attnum name="inertia" unit="kg.m2" val="0.1150"/>
+	</section>
+	
+	<section name="Gearbox">
+		<attnum name="shift time" unit="s" val=".2"/>
+		<section name="gears">
+			<section name="r">
+				<attnum name="ratio" min="-5" max="0" val="-2.96"/>
+				<attnum name="inertia" val="0.0037"/>
+				<attnum name="efficiency" val="0.957"/>
+			</section>
+			<section name="1">
+				<attnum name="ratio" min="0" max="10" val="2.232"/>
+				<attnum name="inertia" val="0.003"/>
+				<attnum name="efficiency" val="0.955"/>
+			</section>
+			<section name="2">
+				<attnum name="ratio" min="0" max="10" val="1.625"/>
+				<attnum name="inertia" val="0.0037"/>
+				<attnum name="efficiency" val="0.957"/>
+			</section>
+			<section name="3">
+				<attnum name="ratio" min="0" max="10" val="1.086"/>
+				<attnum name="inertia" val="0.0048"/>
+				<attnum name="efficiency" val="0.950"/>
+			</section>
+			<section name="4">
+				<attnum name="ratio" min="0" max="10" val=".856"/>
+				<attnum name="inertia" val="0.0064"/>
+				<attnum name="efficiency" val="0.983"/>
+			</section>
+			<section name="5">
+				<attnum name="ratio" min="0" max="10" val=".69"/>
+				<attnum name="inertia" val="0.0107"/>
+				<attnum name="efficiency" val="0.948"/>
+			</section>
+			<section name="6">
+				<attnum name="ratio" min="0" max="10" val="0.6"/>
+				<attnum name="inertia" val="0.0150"/>
+				<attnum name="efficiency" val="0.940"/>
+			</section>
+		</section>
+	</section>
+	
+	<section name="Drivetrain">
+		<!-- allowed values RWD, FWD, 4WD -->
+		<attstr name="type" in="RWD,FWD,4WD" val="4WD"/>
+		<!-- drive shaft inertia -->
+		<attnum name="inertia" unit="kg.m2" val="0.0091"/>
+	</section>
+	
+	<section name="Steer">
+		<attnum name="steer lock" min="1" max="35" unit="deg" val="25"/>
+		<attnum name="max steer speed" min="1" max="360" unit="deg/s" val="120"/>
+	</section>
+	
+	<section name="Brake System">
+		<attnum name="front-rear brake repartition" min="0.0" max="1.0" val="0.62"/>
+		<attnum name="max pressure" min="100" max="1500000" unit="kPa" val="15000"/>
+	</section>
+	
+	<section name="Front Axle">
+		<attnum name="xpos" min="0.0" max="12.5" unit="m" val="1.13"/>
+		<attnum name="inertia" unit="kg.m2" val="0.0056"/>
+		<attnum name="roll center height" unit="m" val="0.2"/>
+	</section>
+	
+	<section name="Rear Axle">
+		<attnum name="xpos" min="-12.5" max="0.0" unit="m" val="-1.23"/>
+		<attnum name="inertia" unit="kg.m2" val="0.0080"/>
+		<attnum name="roll center height" unit="m" val="0.16"/>
+	</section>
+	
+	<section name="Front Differential">
+		<!-- type of differential : SPOOL (locked), FREE, LIMITED SLIP -->
+		<attstr name="type" in="SPOOL,FREE,LIMITED SLIP" val="FREE"/>
+		<attnum name="inertia" unit="kg.m2" val="0.0488"/>
+		<attnum name="efficiency" val="0.9625"/>
+	</section>
+	
+	<section name="Rear Differential">
+		<!-- type of differential : SPOOL (locked), FREE, LIMITED SLIP -->
+		<attstr name="type" in="SPOOL,FREE,LIMITED SLIP" val="LIMITED SLIP"/>
+		<attnum name="inertia" unit="kg.m2" val="0.0488"/>
+		<attnum name="efficiency" val="0.9625"/>
+	</section>
+	
+	<section name="Central Differential">
+		<!-- type of differential : SPOOL (locked), FREE, LIMITED SLIP -->
+		<attstr name="type" in="SPOOL,FREE,LIMITED SLIP,VISCOUS COUPLER" val="VISCOUS COUPLER"/>
+		<attnum name="min torque bias" min="20" max="50" unit="%" val="40"/>
+		<attnum name="max torque bias" min="20" max="80" unit="%" val="60"/>
+		<attnum name="inertia" unit="kg.m2" val="0.0488"/>
+		<attnum name="ratio" min="0" max="10" val="6.85"/>
+		<attnum name="efficiency" val="0.9625"/>
+	</section>
+	
+	<section name="Front Right Wheel">
+		<attnum name="ypos" unit="m" val="-0.81"/>
+		<attnum name="rim diameter" min="15" max="18" unit="in" val="17.0"/>
+		<attnum name="tire width" min="125" max="235" unit="mm" val="235"/>
+		<attnum name="tire height-width ratio" min="0.1" max="1.0" val=".40"/>
+		<attnum name="inertia" min="0.5" max="4.0" unit="kg.m2" val="1.2200"/>
+		<!-- initial ride height -->
+		<attnum name="ride height" min="50" max="250" unit="mm" val="100"/>
+		<attnum name="toe" min="-5" max="5" unit="deg" val="0"/>
+		<attnum name="camber" min="-5" max="0" unit="deg" val="-5"/>
+		<!-- Adherence -->
+		<attnum name="stiffness" min="10.0" max="30.0" val="20.0"/>
+		<attnum name="dynamic friction" min="50" max="100" unit="%" val="75"/>
+		<attnum name="rolling resistance" min="0.01" max="0.1" val="0.03"/>
+		<attnum name="mu" min="0.05" max="1.5" val="1.5"/>
+	</section>
+	
+	<section name="Front Left Wheel">
+		<attnum name="ypos" unit="m" val="0.81"/>
+		<attnum name="rim diameter" min="15" max="18" unit="in" val="17.0"/>
+		<attnum name="tire width" min="125" max="235" unit="mm" val="235"/>
+		<attnum name="tire height-width ratio" min="0.1" max="1.0" val=".40"/>
+		<attnum name="inertia" min="0.5" max="4.0" unit="kg.m2" val="1.2200"/>
+		<!-- initial ride height -->
+		<attnum name="ride height" min="50" max="250" unit="mm" val="100"/>
+		<attnum name="toe" min="-5" max="5" unit="deg" val="0"/>
+		<attnum name="camber" min="-5" max="0" unit="deg" val="-5"/>
+		<!-- Adherence -->
+		<attnum name="stiffness" min="10.0" max="30.0" val="20.0"/>
+		<attnum name="dynamic friction" min="50" max="100" unit="%" val="75"/>
+		<attnum name="rolling resistance" min="0.01" max="0.1" val="0.03"/>
+		<attnum name="mu" min="0.05" max="1.5" val="1.5"/>
+	</section>
+	
+	<section name="Rear Right Wheel">
+		<attnum name="ypos" unit="m" val="-0.80"/>
+		<attnum name="rim diameter" min="15" max="18" unit="in" val="17.0"/>
+		<attnum name="tire width" min="125" max="235" unit="mm" val="235"/>
+		<attnum name="tire height-width ratio" min="0.1" max="1.0" val=".40"/>
+		<attnum name="inertia" min="0.5" max="4.0" unit="kg.m2" val="1.2200"/>
+		<!-- initial ride height -->
+		<attnum name="ride height" min="50" max="250" unit="mm" val="100"/>
+		<attnum name="toe" min="-5" max="5" unit="deg" val="0"/>
+		<attnum name="camber" min="-5" max="0" unit="deg" val="-3"/>
+		<!-- Adherence -->
+		<attnum name="stiffness" min="10.0" max="30.0" val="20.0"/>
+		<attnum name="dynamic friction" min="50" max="100" unit="%" val="75"/>
+		<attnum name="rolling resistance" min="0.01" max="0.1" val="0.03"/>
+		<attnum name="mu" min="0.05" max="1.6" val="1.5"/>
+	</section>
+	
+	<section name="Rear Left Wheel">
+		<attnum name="ypos" unit="m" val="0.80"/>
+		<attnum name="rim diameter" min="15" max="18" unit="in" val="17.0"/>
+		<attnum name="tire width" min="125" max="235" unit="mm" val="235"/>
+		<attnum name="tire height-width ratio" min="0.1" max="1.0" val=".40"/>
+		<attnum name="inertia" min="0.5" max="4.0" unit="kg.m2" val="1.2200"/>
+		<!-- initial ride height -->
+		<attnum name="ride height" min="50" max="250" unit="mm" val="100"/>
+		<attnum name="toe" min="-5" max="5" unit="deg" val="0"/>
+		<attnum name="camber" min="-5" max="0" unit="deg" val="-3"/>
+		<!-- Adherence -->
+		<attnum name="stiffness" min="10.0" max="30.0" val="20.0"/>
+		<attnum name="dynamic friction" min="50" max="100" unit="%" val="75"/>
+		<attnum name="rolling resistance" min="0.01" max="0.1" val="0.03"/>
+		<attnum name="mu" min="0.05" max="1.6" val="1.5"/>
+	</section>
+	
+	<section name="Front Anti-Roll Bar">
+		<attnum name="spring" min="0" max="10000" unit="lbs/in" val="0"/>
+		<attnum name="suspension course" min="0" max="1.0" unit="m" val="0.2"/>
+		<attnum name="bellcrank" min="0.5" max="5" val="2.5"/>
+	</section>
+	
+	<section name="Rear Anti-Roll Bar">
+		<attnum name="spring" min="0" max="10000" unit="lbs/in" val="0"/>
+		<attnum name="suspension course" min="0" max="1.0" unit="m" val="0.2"/>
+		<attnum name="bellcrank" min="0.5" max="5" val="2.5"/>
+	</section>
+	
+	<section name="Front Right Suspension">
+		<attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+		<attnum name="suspension course" min="0" max="1.0" unit="m" val="0.30"/>
+		<attnum name="bellcrank" min="0.1" max="5" val="1.5"/>
+		<attnum name="packers" min="0" max="100" unit="mm" val="0"/>
+		<attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="200"/>
+		<attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="100"/>
+		<attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="60"/>
+		<attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="60"/>
+	</section>
+	
+	<section name="Front Left Suspension">
+		<attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+		<attnum name="suspension course" min="0" max="1.0" unit="m" val="0.30"/>
+		<attnum name="bellcrank" min="0.1" max="5" val="1.5"/>
+		<attnum name="packers" min="0" max="100" unit="mm" val="0"/>
+		<attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="200"/>
+		<attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="100"/>
+		<attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="60"/>
+		<attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="60"/>
+	</section>
+	
+	<section name="Rear Right Suspension">
+		<attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+		<attnum name="suspension course" min="0" max="1.0" unit="m" val="0.30"/>
+		<attnum name="bellcrank" min="0.1" max="5" val="1.5"/>
+		<attnum name="packers" min="0" max="100" unit="mm" val="0"/>
+		<attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="100"/>
+		<attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="200"/>
+		<attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="60"/>
+		<attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="60"/>
+	</section>
+	
+	<section name="Rear Left Suspension">
+		<attnum name="spring" min="0" max="10000" unit="lbs/in" val="2000"/>
+		<attnum name="suspension course" min="0" max="1.0" unit="m" val="0.30"/>
+		<attnum name="bellcrank" min="0.1" max="5" val="1.5"/>
+		<attnum name="packers" min="0" max="100" unit="mm" val="0"/>
+		<attnum name="slow bump" min="0" max="1000" unit="lbs/in/s" val="100"/>
+		<attnum name="slow rebound" min="0" max="1000" unit="lbs/in/s" val="200"/>
+		<attnum name="fast bump" min="0" max="1000" unit="lbs/in/s" val="60"/>
+		<attnum name="fast rebound" min="0" max="1000" unit="lbs/in/s" val="60"/>
+	</section>
+	
+	<section name="Front Right Brake">
+		<attnum name="disk diameter" min="100" max="500" unit="mm" val="350"/>
+		<attnum name="piston area" min="25" max="50" unit="cm2" val="50"/>
+		<attnum name="mu" min="0.25" max="0.5" val="0.45"/>
+		<attnum name="inertia" unit="kg.m2" val="0.1241"/>
+	</section>
+	
+	<section name="Front Left Brake">
+		<attnum name="disk diameter" min="100" max="500" unit="mm" val="350"/>
+		<attnum name="piston area" min="25" max="50" unit="cm2" val="50"/>
+		<attnum name="mu" min="0.25" max="0.5" val="0.45"/>
+		<attnum name="inertia" unit="kg.m2" val="0.1241"/>
+	</section>
+	
+	<section name="Rear Right Brake">
+		<attnum name="disk diameter" min="100" max="500" unit="mm" val="200"/>
+		<attnum name="piston area" min="25" max="50" unit="cm2" val="50"/>
+		<attnum name="mu" min="0.25" max="0.5" val="0.45"/>
+		<attnum name="inertia" unit="kg.m2" val="0.1241"/>
+	</section>
+	
+	<section name="Rear Left Brake">
+		<attnum name="disk diameter" min="100" max="500" unit="mm" val="200"/>
+		<attnum name="piston area" min="25" max="50" unit="cm2" val="50"/>
+		<attnum name="mu" min="0.25" max="0.5" val="0.45"/>
+		<attnum name="inertia" unit="kg.m2" val="0.1241"/>
+	</section>
+		
+</params>
+
+

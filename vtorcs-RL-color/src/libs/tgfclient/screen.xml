@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+                             Screen definitions                             
+
+    created              : Fri Aug 13 22:30:50 CEST 1999
+    copyright            : (C) 1999 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: screen.xml,v 1.4 2003/12/06 16:30:41 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../tgf/params.dtd">
+
+<params name="screen" type="params" mode="mw">
+
+  <section name="Screen Properties">
+    <attnum name="x" val="640"/>
+    <attnum name="y" val="480"/>
+    <attnum name="bpp" val="24"/>
+    <attstr name="fullscreen" in="yes,no" val="no"/>
+    <attnum name="gamma" val="2.0"/>
+  </section>
+
+  <section name="Menu Font">
+    <attstr name="name"        val="b5.glf"/>
+    <attnum name="size big"    val="16"/>
+    <attnum name="size large"  val="12"/>
+    <attnum name="size medium" val="9"/>
+    <attnum name="size small"  val="7"/>
+  </section>
+
+  <section name="Console Font">
+    <attstr name="name"        val="b7.glf"/>
+    <attnum name="size big"    val="14"/>
+    <attnum name="size large"  val="10"/>
+    <attnum name="size medium" val="6"/>
+    <attnum name="size small"  val="5"/>
+  </section>
+
+  <section name="Digital Font">
+    <attstr name="name"        val="digital.glf"/>
+    <attnum name="size big"    val="6"/>
+  </section>
+
+  <section name="Menu Colors">
+    <section name="colors">
+      <section name="background">
+	<attnum name="red" val="0.0"/>
+	<attnum name="green" val="0.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="0.01"/>
+      </section>
+      <section name="title">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="1.0"/>
+	<attnum name="blue" val="1.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="background focused button">
+	<attnum name="red" val="0.1"/>
+	<attnum name="green" val="0.1"/>
+	<attnum name="blue" val="0.3"/>
+	<attnum name="alpha" val="0.5"/>
+      </section>
+      <section name="background pushed button">
+	<attnum name="red" val="0.1"/>
+	<attnum name="green" val="0.1"/>
+	<attnum name="blue" val="0.3"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="background enabled button">
+	<attnum name="red" val="0.0"/>
+	<attnum name="green" val="0.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="0.0"/>
+      </section>
+      <section name="background disabled button">
+	<attnum name="red" val="0.0"/>
+	<attnum name="green" val="0.0"/>
+	<attnum name="blue" val="0.1"/>
+	<attnum name="alpha" val="0.1"/>
+      </section>
+      <section name="focused button">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="0.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="pushed button">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="1.0"/>
+	<attnum name="blue" val="1.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="enabled button">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="1.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="disabled button">
+	<attnum name="red" val="0.3"/>
+	<attnum name="green" val="0.3"/>
+	<attnum name="blue" val="0.3"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="background scroll list">
+	<attnum name="red" val="0.0"/>
+	<attnum name="green" val="0.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="0.0"/>
+      </section>
+      <section name="scroll list">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="1.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="background selected scroll list">
+	<attnum name="red" val="0.1"/>
+	<attnum name="green" val="0.1"/>
+	<attnum name="blue" val="0.3"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="selected scroll list">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="0.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="label">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="1.0"/>
+	<attnum name="blue" val="1.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="tip">
+	<attnum name="red" val="0.8"/>
+	<attnum name="green" val="0.8"/>
+	<attnum name="blue" val="0.8"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="mouse 1">
+	<attnum name="red" val="0.4"/>
+	<attnum name="green" val="0.4"/>
+	<attnum name="blue" val="1.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="mouse 2">
+	<attnum name="red" val="0.1"/>
+	<attnum name="green" val="0.1"/>
+	<attnum name="blue" val="0.4"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="help key">
+	<attnum name="red" val="1.0"/>
+	<attnum name="green" val="1.0"/>
+	<attnum name="blue" val="0.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+      <section name="help description">
+	<attnum name="red" val="0.0"/>
+	<attnum name="green" val="1.0"/>
+	<attnum name="blue" val="1.0"/>
+	<attnum name="alpha" val="1.0"/>
+      </section>
+    </section>
+  </section>
+
+</params>
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: xml
+sgml-omittag:nil
+sgml-shorttag:nil
+sgml-namecase-general:nil
+sgml-general-insert-case:lower
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-indent-data:nil
+sgml-parent-document:nil
+sgml-exposed-tags:nil
+sgml-local-catalogs:nil
+sgml-local-ecat-files:nil
+End:
+-->

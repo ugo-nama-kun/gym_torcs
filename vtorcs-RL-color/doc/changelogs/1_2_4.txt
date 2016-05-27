@@ -1,0 +1,188 @@
+Changes since 1.2.4-test3
+-------------------------
+- Version number 1.2.4 (Bernhard).
+- Updated Linux installer (Bernhard).
+- Updated Windows installer (Bernhard).
+- Windows patch for test3 (Bernhard).
+- Released as 1.2.4 (Bernhard).
+
+
+Changes since 1.2.4-test2
+-------------------------
+- Fixed wrong CWD set by installer for trackeditor.bat (Bernhard).
+- Fixed OpenAL backend design flaw (run out of sources) (Bernhard, Christos).
+- Reviewed and applied penalty clearing/pit stop patches from Mart Kelder
+  (Mart Kelder, Bernhard).
+- Prepared installation instructions for 1.2.4 (Bernhard).
+- Prepared credits for 1.2.4 (Bernhard).
+- Updated robot tutorial for 1.2.4 (Bernhard).
+- Applied reverse gear patch from Mart Kelder (Mart Kelder, Bernhard).
+- Make engine consume fuel on negative torque (Bernhard).
+- Fixed cars starting at odd heights, reported by Andrew Sumner (Bernhard).
+- Commited some more docs from the website into the CVS (Bernhard).
+
+
+Changes since 1.2.4-test1
+-------------------------
+- Tried to fix problem with GL headers differences in Linux (Bernhard).
+- Car sound adjustments and new samples (Christos).
+- Moved learning and math headers in subdirectories to stop the upcoming
+  chaos, updated dependent files (Bernhard).
+- Updated Windows project preparation bat files (Bernhard).
+- Ported the project to Windows, except olethros and learning (Bernhard).
+- Fixed resident texture problem in Windows (Bernhard).
+- Updated gl headers for Windows, oss.sgi.com (Bernhard).
+- Resolved some OpenAL compatibility issues (Bernhard).
+- Fixed XSLT problem in Windows, was a combination of wrong dtd filename,
+  missing GetLocalDir and GetDataDir setup (Bernhard).
+- Fixed weird bug in screen.cpp, execlp had wrong arguments, therefore
+  the XML results headers become formatted wrong when you changed the
+  display properties... yikes. Currently it does now work when the full path
+  is given in argv[0], so a bit more work is needed (Bernhard).
+- Make gcc 4.0.1 compile the code (warnings in trackgen are scheduled for
+  1.2.5) (Bernhard).
+- Removed unused code in various places (Bernhard).
+- Fixed virtual constructor in olethros (Bernhard).
+- Removed volume setting from sound menu (Bernhard).
+- Ported learning to Windows (Bernhard).
+- Ported olethros to Windows (Bernhard).
+- Windows version result generation now correct if either started with full
+  path or with wtorcs[.exe], current working directory must be the directory
+  containing wtorcs.exe, there is no reason to improve this more (people
+  start via desktop icon/menu entry anyway) (Bernhard).
+- Added GfCreateDir in tgf (Christos, Bernhard).
+- Fixed olethros clkdtm texture (Christos).
+- Changed some code according to mail of Steven Gutknecht, did not look at the
+  sqrt problem (if you want to have TORCS compile for a certain non free
+  compiler send me patches or the money to buy it) (Steven Gutknecht,
+  Bernhard).
+- Kicked out SmartAssert.h for 2 reasons: 1. I want to get rid of this "clever"
+  preprocessor tricks (because I think it is really silly to do such things),
+  2. Assertions simply do never belong into any code which a third person can
+  look at (if the user runs the software to code must deal with its problems by
+  itself, the messages will be meaningless for the user anyway) (Bernhard).
+- Removed assertions from Olethros (Bernhard).
+- Fixed various memory leaks in Olethros caused by sloppy use of make_message
+  (a comment regarding that: if possible do not allocate heap memory inside
+  a called function, it is better to allocate it before calling and pass the
+  buffer and its size as parameter, because the allocation is then visible on
+  the first glimpse) (Bernhard).
+- Fixed crash bug in Olethros (the proposed singleton does not work, reverted
+  to working version) (Bernhard).
+- Fixed a possible crash bug in gui.cpp, added deactivation of
+  glutKeyboardUpFunc and glutSpecialUpFunc in GfuiScreenDeactivate (Bernhard).
+- removed make_message and replaced it (Bernhard).
+- Created a debug project for Windows, needed to remove make_message, enhanced
+  custom realloc for debug versions of cutom malloc/free, added a workaround
+  for clean allocator/deallocator pair in img.cpp, etc, huh... that was a lot
+  of work (Bernhard).
+- Fixed one more olethros bug, linker (in Linux) was confused about which
+  CheckMatchingToken to use, added static to those in ANN.cpp -> file scope
+  (Bernhard).
+- Tested, build and debug build work with: gcc 3.3.1 (0 warnings), gcc 3.4.3
+  (0 warnings), gcc 4.0.1 (a lot of warnings, but just in trackgen, otherwise
+  0 warnings), vc++ 6.0sp6 (release build 0 warnings, debug 131 warnings which
+  one can safely ignore) (Bernhard).
+- Updated Windows installer, checks now for already installed versions, works
+  with 1.2.3 or later (Bernhard). Trackeditor is not yet included.
+- Windows deinstaller does not delete generated files anymore (Bernhard).
+- Integrated trackeditor into Windows installer (Bernhard).
+
+
+Changes since 1.2.3
+-------------------
+- Reworked eroad (Bernhard).
+- New sounds/sound adjustments (Christos).
+- Introduced additional sound effects for simuv2 (Christos).
+- Reworked cg-nascar-rwd (holes, dark lod, better lighting) (Bernhard).
+- Max Torque as well for simuv2 (Christophe Baegert, Christos).
+- More efficient rear mirror (Felix Kühling, Bernhard).
+- Reworked e-track-1 (Bernhard).
+- Reworked Aalborg track (Bernhard).
+- Reworked g-track-2 (Bernhard).
+- Fixed wheel normals (Bernhard).
+- Bugfixes in menus (Christos).
+- Improvments in simuv2 (Christos, Bernhard)
+- Updated porsche-gt3rs (Olaf Sassnick, Bernhard).
+- Fixed weird (new introduced, post 1.2.3, car.cpp) bug in simuv2 (Bernhard).
+- Applied patches from Debian maintainer (Rudy Godoy, Bernhard).
+- Skidmarks code cleanup and improvment, backface culling (Christos, Bernhard).
+- Applied more patches from Debian for AMD64 (Rudy Godoy, Bernhard).
+- Smoke code cleanup and improvment (Christos, Bernhard).
+- grey-tracks.rgb downsized (Bernhard).
+- Updated clkdtm (Eliam Speedychonchon, Bernhard).
+- Fixed fence transparency of g-track-3 and spring (Bernhard).
+- Visualize clutch command value (Bernhard).
+- Simplyfied conditional compiling in grtrackmap.cpp, it requires now OpenGL
+  1.3 compatible header files. (Bernhard).
+- Added configure test for GL_ARB_texture_compression (Bernhard).
+- Added configure test for GL_VERSION_1_3 (Bernhard).
+- Disabled mipmapping of "*shadow*" texture files (Bernhard).
+- Backface culling for car shadow (Bernhard).
+- Added texture compression (Bernhard).
+- Added texture downscaling (Bernhard).
+- Fixed an issue in sound/simu config screen (after changing values and hitting
+  cancel the fields did not represent the current settings) (Bernhard).
+- Added OpenGL configuration screen (Bernhard).
+- Fixed inconsistency of texture loaders, "_nmm" is now obsolete, use "_n"
+  (Bernhard).
+- Improved Makefiles of alpine-1, g-track-3 and ole-road-1 (Bernhard).
+- New sound architecture/implementation with a plib and OpenAL backend
+  (Christos).
+- Changes in sound menu for new sound implementation, added volume (Christos).
+- Optimized ole-road-1 (Christos).
+- Updated pit door (Speedychonchon).
+- Fixed Windows version memory management bugs in tgf.cpp (malloc, realloc),
+  this should solve some trackgen/accc problems in Windows (Bernhard).
+- Updated FAQ (Bernhard).
+- Fixed closing of invalid file handle in maintrackgen.cpp (Bernhard).
+- Fixed a bug in the msh files generated by trackgen which caused AC3D to
+  crash (Bernhard).
+- Fixed missing check if model file could be loaded in elevation.cpp
+  (Bernhard).
+- Fixed non working trackgen -H option in Linux (Bernhard).
+- Fixed gamma value in image loader of elevation map loader of trackgen,
+  must currently match with the default in img.cpp (Bernhard).
+- reviewed "(null)" texture problem and found it harmless, no immediate action
+  needed. Its actually a "bug" of the ac files and happend on retexturing/
+  "untexturing" objects. Perhaps it is not anymore the case with newer
+  versions (Bernhard).
+- Reworked g-track-1 (Bernhard).
+- Fixed lighting (material) properties of some models to fix the "darkening
+  on LOD switch problem". On some models it helps, other models need to
+  be rewoked later (the problem there seems to be the model itself -> normals)
+  (Bernhard).
+- Fixed strndup for FreeBSD (Thierry Thomas, Bernhard).
+- Fixed a bug in collision detection which happend when 2 wrecks where
+  overlapping. This caused permanent collisions, which in turn avoided to call
+  dtProceed and therefore avoided the needed update of the data (Bernhard).
+- Fixed: non ending races because of failing virtual crane, was a floating
+  point error accumulation problem in simu.cpp (Bernhard).
+- Barrier has now a field with normal used for barrier collision detection,
+  reworked SimCarCollideXYScene, collide.cpp (Bernhard).
+- Added vector classes, such that all berniw/bt derivates can use the same
+  copy, instead of having a copy in each bot (Bernhard).
+- Collision code refactoring/cleanup, removed doubled code, etc. (Bernhard).
+- Initial wall collision support, good enough for now, but needs
+  improvment and more testing. The damage is currently set very low, such
+  that the robots have some time to adopt (Bernhard).
+- Fixed skid sound at low speeds (Christos, Bernhard).
+- Fixed scroll lists numbering with more than 100 entries (Bernhard).
+- Enabled configure checking for OpenAL (Bernhard).
+- Fixed skidmarks when driving in reverse, bug introduced by me when enabling
+  backface-culling for skids (Christos, Bernhard).
+- Added trackgen option to just calculate the track parameters (Charalampos).
+- Increased a "margin" in trackgens track.cpp, will need further inverstigation
+  (Charalampos).
+- Finished plib backend (Christos).
+- Fixed Olethros module discovery memory leak (Bernhard).
+- Olethros textures for gt3rs and clkdtm (Christos).
+- Various fixes found with valgrind: potential crash bug in new smoke code,
+  a few leaks in other places (Bernhard).
+- Olethros writes data files to correct location (Christos).
+- Car-pitwall collisions now fine, problem was mix up of local/global
+  oriented vectors (Bernhard).
+- Update sound max. 50 times per second (perhaps this helps with the plib
+  timing problem) (Bernhard).
+- Improved car-car collisions (Bernhard).
+- Alignd widgets in sound config screen (Bernhard).

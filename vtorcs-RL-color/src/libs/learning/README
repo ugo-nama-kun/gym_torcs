@@ -1,0 +1,94 @@
+1. Introduction.
+
+1.1. Contents
+
+This directory provides a set of functions and classes for creating
+adaptive agents. Many types of algorithms are provided, all of which
+are completely generic and can be used very easily with most robots. 
+
+1.2. General guidelines for use 
+
+The complexity of the algorithms is low. Their structural complexity
+is user-defined. The user of the libraries should be able to make a
+good tradeoff between good learning and low structural complexity.
+One should be aware that low-complexity structures are easier to
+learn. Using larger structures makes learning more difficult and
+slower, but can potentially result in better solutions. Using
+extremely large structures makes learning impractical. [Note: Large
+structures can still be learned quite well if there is some kind of
+pre-determined relationship between parts of the structure. However
+the current library does not provide any way to incorporate such prior
+knowledge.]
+
+1.3. Types of algorithms
+
+Most of the algorithms provided are reinforcement learning. For an
+overview of the reinforcement learning look at Sutton's and Barto's
+great book: http://www-anw.cs.umass.edu/~rich/book/the-book.html
+
+2. A detailed look at the classes
+
+List.cpp provides a basic list class for use with ANN.
+
+ANN provides a function approximation framework, sometimes referred to
+as a neural network. However the class is more general than that.
+
+policy.h and policy.cpp provide classes for learning adaptive policies
+in discrete spaces. Current support exists for Q-learning, Sarsa and
+E-learning (a slightly modified version of SARSA). Action selection
+mechanisms are e-greedy, softmax, pursuit and an experimantal
+bayes-optimal mechanism.
+
+ann_policy.h and ann_policy.cpp provide a class for learning adaptive
+policies with function approximation. This can potentially be more
+powerful, but slightly more difficult to design for.
+
+For details look at the class header file and the
+implementation. Doxygen documentation can be generated. The book
+offers a detailed explanation of the algorithm. I have had good
+results with Sarsa in the following experiment.
+
+2.1. Experiments with Sarsa
+
+I modified berniw so that the INSANE policy had a GCTime of 0.5 and a
+SPEEDSQR factor of 1.5. I used a state vector with n_track_segments/10
+discrete states. Thus, each 10 segments of the track corresponded to
+the same state. The agent could take two actions, the first
+corresponding to the INSANE and the second to the NORMAL policy. 
+The agent considered a new action every time it entered a new
+state (once every 25 segments). The reward given at each time step was
+-1/(0.1+0.1*current_speed). 
+
+I tried the robot berniw9 with the following parameters: 
+	alpha = 0.1 or 0.01
+	lambda = 0.8
+	randomness = 0.1 or 0.01
+	softmax = false
+	init_eval = 0.0
+
+The value of gamma depended on the dt, the time between successive
+actions, according to the formula gamma = exp(-b*dt). b was chosen to
+be .5, so that gamma would equal .95 for a dt of 0.1.
+
+I ran the robot for 10000Km in e-track-3 with the two different
+settings of alpha and randomness and I managed to get a minimum time
+of around 1:17.5 in most cases. With alpha 0.01 learning is a bit slow
+and only converges towards the end of the trial. The figure
+berniw_results.ps shows a smoothed version (over 28 laps) of the time
+of the robot for each parameter set, where this can be seen clearly.
+
+Other values of lambda should work more or less as well, since this only
+affects the learning and not the quality of the final solution.
+
+A more detailed state vector might give a better asymptotic
+performance, but short-term performance can be worse.
+
+3. Future work
+
+Reinforcement learning is generally a model-free control method. Some model-based optimal control methods might be added soon.
+
+If authors of robots require other standard machine learning
+algorithms, they can contact me at dimitrak@idiap.ch for discussion
+and possible implementation.
+
+Christos Dimitrakakis, 2004

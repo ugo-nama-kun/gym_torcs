@@ -1,0 +1,70 @@
+# @configure_input@
+
+##############################################################################
+#
+#    file                 : Make-config.in
+#    created              : Mon Dec 11 23:47:37 CET 2000
+#    copyright            : (C) 2000 by Eric Espi�                        
+#    email                : Eric.Espie@torcs.org   
+#    version              : $Id: Make-config.in,v 1.17.2.1 2008/06/01 20:19:38 berniw Exp $                                  
+#
+##############################################################################
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+##############################################################################
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = ${TORCS_BASE}
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+libdir = @libdir@/torcs
+datarootdir = @datarootdir@
+datadir = @datarootdir@/games/torcs
+vardir = @localstatedir@/games/torcs
+
+top_builddir = .
+
+CC = @CC@
+CXX = @CXX@
+LD = @LD@
+AR = @AR@
+ARFLAGS = ruv
+RANLIB = @RANLIB@
+
+INSTALL = @INSTALL@
+#INSTALL_PROGRAM = @INSTALL@ -m 755
+#INSTALL_DATA = @INSTALL@ -m 644
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+
+CFLAGSD = -D_SVID_SOURCE -D_BSD_SOURCE -DSHM -DHAVE_CONFIG_H
+CXXFLAGS =  @CXXFLAGS@ @CPPFLAGS@ ${CFLAGSD}
+CFLAGS   =  @CFLAGS@ ${CFLAGSD}
+
+#EXT_LIBS = -lpthread @LIBS@
+EXT_LIBS = @LIBS@
+#LDFLAGS =  @LDFLAGS@ -L${EXPORTBASE}/lib -L/usr/lib -L/usr/local/lib
+LDFLAGS =  -L${EXPORTBASE}/lib @LDFLAGS@ -L/usr/lib
+
+#INCFLAGS =  -I${EXPORTBASE}/include -I/usr/include -I/usr/local/include
+INCFLAGS =  -I${EXPORTBASE}/include -I${TORCS_BASE}
+
+CPP = @CPP@ @CPPFLAGS@ -M -D__DEPEND__
+
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+
+TAR = gtar
+GZIP_ENV = --best
+

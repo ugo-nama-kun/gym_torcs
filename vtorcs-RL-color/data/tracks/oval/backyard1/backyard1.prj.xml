@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_26" class="java.beans.XMLDecoder"> 
+ <object class="utils.Properties"> 
+  <void property="author"> 
+   <string>HKou</string> 
+  </void> 
+  <void property="category"> 
+   <string>track-backyard1</string> 
+  </void> 
+  <void property="currentA"> 
+   <double>6.283185307179596</double> 
+  </void> 
+  <void property="currentX"> 
+   <double>7.043254868221993E-13</double> 
+  </void> 
+  <void property="currentY"> 
+   <double>4.973799150320701E-13</double> 
+  </void> 
+  <void property="curveNameCount"> 
+   <int>8</int> 
+  </void> 
+  <void property="description"> 
+   <string>Evolutionary Backyard</string> 
+  </void> 
+  <void property="path"> 
+   <string>/home/koutnij/track-backyard1/backyard1</string> 
+  </void> 
+  <void property="pitEnd"> 
+   <string></string> 
+  </void> 
+  <void property="pitEntry"> 
+   <string></string> 
+  </void> 
+  <void property="pitExit"> 
+   <string></string> 
+  </void> 
+  <void property="pitStart"> 
+   <string></string> 
+  </void> 
+  <void property="straightNameCount"> 
+   <int>1</int> 
+  </void> 
+  <void property="trackName"> 
+   <string>backyard1</string> 
+  </void> 
+  <void property="trackWidth"> 
+   <double>6.0</double> 
+  </void> 
+ </object> 
+</java> 

@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: multiple2.html,v 1.1 2004/11/30 14:02:08 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Implement Multiple Robots</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="how to implement multiple robots"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, multiple"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>2.4 Basic Implementation</h1>
+
+        <h3>Overview</h3>
+        <p>
+          This chapter will just cover the very basic initialization and shutdown of the module for multiple
+          robots. More topics will follow in the next section. All discussed changes apply to
+          <span style="color:red;">bt</span>.cpp.
+        </p>
+
+        <h3>Initialization</h3>
+        <p>
+          First we define how many robots we want to handle (sorry about mixing up the terms "cars", "drivers"
+          and "robots") and the size of the buffer to generate the names.
+        </p>
+        <p><pre class="lcolor">#define BUFSIZE 20
+#define NBBOTS 3</pre>
+        </p>
+        <p>
+          We also need an array of char pointers to remember the memory locations of the names to free them
+          on shutdown.
+        </p>
+        <p><pre class="lcolor">static char * botname[NBBOTS];</pre>
+        </p>
+        <p>
+          We modify the module entry point:
+        </p>
+        <p><pre class="lcolor">/*
+ * Module entry point
+*/
+extern "C" int
+bt(tModInfo *modInfo)
+{
+    char buffer[BUFSIZE];
+    int i;
+
+    /* clear all structures */
+    memset(modInfo, 0, 10*sizeof(tModInfo));
+
+    for (i = 0; i &lt; NBBOTS; i++) {
+        sprintf(buffer, "bt %d", i+1);
+        botname[i] = strdup(buffer);      /* store pointer */
+        modInfo[i].name    = botname[i];  /* name of the module (short) */
+        modInfo[i].desc    = "";          /* description of the module */
+        modInfo[i].fctInit = InitFuncPt;  /* init function */
+        modInfo[i].gfId    = ROB_IDENT;   /* supported framework version */
+        modInfo[i].index   = i;           /* indices from 0 to 9 */
+    }
+    return 0;
+}</pre>
+        </p>
+        <p>
+          Now we loop NBBOTS times to initialize all robots. You can see how the name is assembled in the buffer.
+          We have to store the pointers to the names because strdup(buffer) will allocate memory on the heap,
+          which we have to release on shutdown (there is no garbage collector in C or C++).<br/>
+          In case you don't want such systematic names, like "bt 1, bt 2, bt 3", you can also implement them
+          as static character arrays:
+        </p>
+        <p>
+          <tt>static char * botname[NBBOTS] = { "tiger", "penguin", "rat" };</tt>
+        </p>
+        <p>
+          The loop would look like that then:
+        </p>
+        <p><pre>...
+for (i = 0; i &lt; NBBOTS; i++) {
+    modInfo[i].name = botname[i];  /* name of the module (short) */
+...</pre>
+        </p>
+        <p>
+           This has also the advantage that you don't need to free memory on shutdown. The advantage of the
+           first method is, if you want to add a driver, you just need to increment NBBOTS. Remember that the
+           names should match with the names defined in the <span style="color:red;">bt</span>.xml file.
+        </p>
+
+        <h3>Shutdown</h3>
+        <p>
+          We have also to change the shutdown of the module to free the memory on the heap. Because shutdown
+          is called for every robot, we need just to release the memory of botname with index i.
+        </p>
+        <p><pre class="lcolor">/* Called before the module is unloaded */
+static void
+shutdown(int index)
+{
+    free(botname[index]);
+}</pre>
+        </p>
+        <p>
+          You should now implement the above stuff. In case you try it out, keep in mind, that if you run
+          more than one robot of this module, they will share the stuck variable. So there could be weird
+          effects. Anyway, try a quickrace with your three robots to check if everything is ok so far.
+        </p>
+        
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt24.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+          <li>You understand how initialization and shutdown works.</li>
+          <li>You know how to add more cars.</li>
+          <li>You have implemented it.</li>
+        </ul>
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./multiple1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./multiple3.html">
+          <p style="text-align:right;">Clean up the mess.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

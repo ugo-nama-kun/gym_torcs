@@ -1,0 +1,648 @@
+\input texinfo  @c -*-texinfo-*-
+
+@settitle User's Guide to the SOLID Interference Detection Library
+@setfilename solid2.info
+
+@ifinfo
+@format
+START-INFO-DIR-ENTRY
+* SOLID: (solid2).      Software Library for Interference Detection.
+END-INFO-DIR-ENTRY
+@end format
+@end ifinfo
+
+@ifinfo
+This file documents the features and implementation of SOLID.
+
+Copyright (C) 1997-1999  Gino van den Bergen
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+@ignore
+Permission is granted to process this file through @TeX{} and print the
+results, provided the printed document carries copying permission
+notice identical to this one except for the removal of this paragraph
+(this paragraph not being relevant to the printed manual).
+
+@end ignore
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that the
+section entitled ``GNU Library General Public License'' is included exactly as
+in the original, and provided that the entire resulting derived work is
+distributed under the terms of a permission notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that the section entitled ``GNU Library General Public License'' and
+this permission notice may be included in translations approved by the
+Free Software Foundation instead of in the original English.
+@end ifinfo
+
+@iftex
+@finalout
+@c @smallbook
+@c @cropmarks
+@end iftex
+
+@setchapternewpage odd
+
+@titlepage
+@title User's Guide
+@title to the SOLID Interference Detection Library
+@sp 3
+@subtitle last updated January 8, 1999
+@subtitle for version 2.0
+@author Gino van den Bergen
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 1997-1999  Gino van den Bergen
+
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided also that the
+section entitled ``GNU Library General Public License'' is included exactly as
+in the original, and provided that the entire resulting derived work is
+distributed under the terms of a permission notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that the section entitled ``GNU Library General Public License'' may be
+included in a translation approved by the author instead of in the original
+English.
+
+@end titlepage
+
+@ifinfo
+@node Top, Copying, , (DIR)
+
+Introduction
+
+This manual documents how to install and use SOLID.
+
+@end ifinfo
+@menu
+* Copying::	    GNU Library Public License says how you can copy
+                    and share SOLID.
+* Introduction::    What is it?                     
+* Installation::    How to configure, compile and install SOLID.
+* Trouble::         If you have trouble installing SOLID.
+* Usage::           How the API is set up.
+* Projects::	    Things Still Left to do
+* Bugs::            Where to send bugs reports and questions.
+@end menu
+
+
+@node Copying, Introduction, Top, Top
+@include lgpl.texinfo
+
+
+@node Introduction, Installation, Copying, Top
+@chapter Introduction
+
+
+
+SOLID is a library for collision detection of three-dimensional objects undergoing rigid motion and deformation.
+SOLID is designed to be used in interactive 3D graphics applications, and is especially suited for collision detection
+of objects and worlds described in VRML.  Some of its features are: 
+
+@itemize @bullet
+@item
+Object shapes are represented by primitive shapes (box, cone, cylinder,
+sphere), and complexes of polytopes (line segments, convex polygons,
+convex polyhedra). A single shape can be used to instantiate multiple
+objects. 
+
+@item
+Motion is specified by translations, rotations, and nonuniform scalings
+of the local  coordinate system of each moving object. These changes can
+be given absolute or relative to the previous frame. The local
+coordinate system can also be set according to an array of sixteen
+floats or doubles representing a 4x4 column-major matrix of an affine
+transformation, as used in OpenGL. 
+
+@item
+Deformations of complex shapes can be specified using client-defined
+vertex arrays. 
+
+@item
+Collision response is defined by the client by means of call-back
+functions. Response may be defined per object pair, for all pairs
+containing a specific object, and as default for all pairs of objects.  
+
+@item
+Response call-backs can use collision data describing the configuration
+of a pair of colliding objects. As collision data can be used: a point common
+to both objects, or the closest point pair of the objects from
+the previous frame. The latter response type can be used for
+approximating the collision plane in physics-based simulations.
+
+@item
+Frame coherence is exploited by maintaining a set of pairs of proximate
+objects (incremental sweep and prune of axis-aligned bounding boxes),
+and caching separating axes for these pairs.  This feature is optional
+and may be turned on/off at any time during a simulation.  
+@end itemize
+          
+
+@node Installation, Trouble, Introduction, Top
+@chapter Installing SOLID
+
+@section Requirements
+
+The library is written in standard C++ and relies heavily on the
+STL. Currently, it compiles under GNU g++ version 2.8.1 and up. 
+The library has a standard C API and can be linked to both C and C++
+applications. In order to link it to C applications you need the
+libstdc++ library. 
+
+@section Installation
+
+In case you have a recent GNU developers environment installed, simply
+typing @samp{make} in the root of the distribution directory will build the
+library, a sample client and documentation.
+
+If you want to use another compiler, you should make the necessary changes
+to the @file{Make-config} file in the root directory. See the comments
+in this file for details.
+
+The auxiliary C++ classes in @samp{include/3D} for performing affine
+transformation in 3D have all their code inlined, so you do not need to
+link a library in order to use them. 
+
+@node Trouble, Usage, Installation, Top
+@chapter Trouble in Installation
+
+Q: My compiler cannot figure out the templates used in the SOLID
+source! What's the matter?
+
+A: Your compiler does not comply with the ISO standard for C++. Install
+the GNU g++ compiler version 2.8.1 or higher for your platform.  
+
+@node Usage, Projects, Trouble, Top
+@chapter The SOLID API
+
+@section Building Shapes
+
+The commands for creating and destroying shapes are 
+@example
+DtShapeRef dtBox(DtScalar x, DtScalar y, DtScalar z);
+DtShapeRef dtCone(DtScalar radius, DtScalar height);
+DtShapeRef dtCylinder(DtScalar radius, DtScalar height);
+DtShapeRef dtSphere(DtScalar radius);
+DtShapeRef dtNewComplexShape();
+
+void dtDeleteShape(DtShapeRef shape);
+@end example
+Shapes are referred to by values of @code{DtShapeRef}. 
+Currently, the type @code{DtScalar} is defined as @code{double}.
+The command @code{dtBox} creates a rectangular parallelepiped centered
+at the origin and aligned with the axes of the shape's local coordinate system.
+The parameters specify its extent along the respective coordinate axes.
+The commands @code{dtCone} and @code{dtCylinder} create respectively a
+cone and a cylinder centered
+at the origin and whose central axis is aligned with the @math{Y}-axis of the
+local coordinate system.
+The cone's apex is at @math{y = height / 2}. 
+The command @code{dtSphere} creates a sphere centered at the origin of
+the local coordinate system.
+
+Other shape types based on point data, such as polygon soups, simplicial
+complexes, (compositions of) convex polyhedra, are created by the 
+@code{dtNewComplexShape} command.
+For constructing complex shapes the following commands are used: 
+@example
+DtShapeRef dtNewComplexShape();
+void dtEndComplexShape();
+
+void dtBegin(DtPolyType type);
+void dtEnd();
+void dtVertex(DtScalar x, DtScalar y, DtScalar z);
+
+void dtVertexBase(const void *base);
+void dtVertexIndex(DtIndex index);
+void dtVertexIndices(DtPolyType type, DtCount count, const DtIndex *indices);
+void dtVertexRange(DtPolyType type, DtIndex first, DtCount count); 
+@end example
+A complex shape is composed of @math{d}-dimensional polytopes, where
+@math{d} is at most 3. 
+A @math{d}-polytope can be a simplex (point, line segment, triangle,
+tetrahedron), a convex polygon, or a convex polyhedron.
+The type of @math{d}-polytope is specified by a value of
+@code{DtPolyType}, defined as 
+@example
+typedef enum DtPolyType @{
+  DT_SIMPLEX,
+  DT_POLYGON,
+  DT_POLYHEDRON
+@} DtPolyType;
+@end example
+A @math{d}-polytope is specified by enumerating its vertices. This can be done
+in two ways. In the first way, the vertices are specified by value,
+using the @code{dtVertex} command. The following example shows how the
+faces of a pyramid are specified.   
+@example
+DtShapeRef pyramid = dtNewComplexShape();
+
+dtBegin(DT_SIMPLEX);
+dtVertex(1.0, 0.0, 1.0); 
+dtVertex(1.0, 0.0, -1.0); 
+dtVertex(-1.0, 0.0, -1.0); 
+dtVertex(-1.0, 0.0, 1.0);
+dtEnd();
+
+dtBegin(DT_SIMPLEX);
+dtVertex(1.0, 0.0, 1.0); 
+dtVertex(1.0, 0.0, -1.0); 
+dtVertex(0.0, 1.27, 0.0); 
+dtEnd();
+
+...
+
+dtEndComplexShape();
+@end example
+In the second method, the vertices are stored in an array, and are
+referred to by indices. 
+For each complex shape, we can specify a single array.
+A vertex array is specified by  the command @code{dtVertexBase}, which
+takes the address of the first element in the array, referred to as the base of
+the array, as argument. 
+The command @code{dtVertexIndex} is used for
+specifying vertices. See the following example:
+@example
+DtScalar vertices[5 * 3] = @{ 
+  1.0, 0.0, 1.0, 
+  1.0, 0.0, -1.0, 
+  -1.0, 0.0, -1.0, 
+  -1.0, 0.0, 1.0, 
+  0.0, 1.27, 0.0 
+@};
+
+DtShapeRef pyramid = dtNewComplexShape();
+dtVertexBase(vertices);
+
+dtBegin(DT_SIMPLEX);
+dtVertexIndex(0); 
+dtVertexIndex(1); 
+dtVertexIndex(2); 
+dtVertexIndex(3); 
+dtEnd();
+
+dtBegin(DT_SIMPLEX);
+dtVertexIndex(0); 
+dtVertexIndex(1); 
+dtVertexIndex(4); 
+dtEnd();
+
+...
+
+dtEndComplexShape();
+@end example
+Alternatively, the indices can be placed into an array and specified
+using the command @code{dtVertexIndices}, as in the following example:
+@example
+DtScalar vertices[5 * 3] = @{ 
+  1.0, 0.0, 1.0, 
+  1.0, 0.0, -1.0, 
+  -1.0, 0.0, -1.0, 
+  -1.0, 0.0, 1.0, 
+  0.0, 1.27, 0.0 
+@};
+
+DtIndex face0[4] = @{ 0, 1, 2, 3 @};
+DtIndex face1[3] = @{ 0, 1, 4 @};
+
+...
+
+DtShapeRef pyramid = dtNewComplexShape();
+dtVertexBase(vertices);
+
+dtVertexIndices(DT_SIMPLEX, 4, face0);
+dtVertexIndices(DT_SIMPLEX, 3, face1);
+
+...
+
+dtEndComplexShape();
+@end example
+Finally, a polytope can be specified from a range of vertices using the
+command @code{dtVertexRange}.
+The range is specified by the first index and the number of vertices.
+In the following example a pyramid is constructed as a convex polyhedron,
+which is the convex hull of the vertices in the array.
+@example
+DtScalar vertices[5 * 3] = @{ 
+  1.0, 0.0, 1.0, 
+  1.0, 0.0, -1.0, 
+  -1.0, 0.0, -1.0, 
+  -1.0, 0.0, 1.0, 
+  0.0, 1.27, 0.0 
+@};
+
+DtShapeRef pyramid = dtNewComplexShape();
+dtVertexBase(vertices);
+dtVertexRange(DT_POLYHEDRON, 0, 5);
+dtEndComplexShape();
+@end example
+
+Note that the vertices of a simplex need not be affinely independent,
+and the vertices specifying a convex polyhedron need not be extreme
+vertices of the convex hull.
+However, in order to construct a proper convex polygon, the vertices
+should be approximately coplanar and specified in the order as they
+appear on the boundary.
+
+@section Creating and Moving Objects
+
+An object is an instance of a shape.
+The commands for creating, moving and deleting objects are 
+@example
+void dtCreateObject(DtObjectRef object, DtShapeRef shape); 
+void dtDeleteObject(DtObjectRef object);
+void dtSelectObject(DtObjectRef object);
+
+void dtLoadIdentity();
+
+void dtLoadMatrixf(const float *m);
+void dtLoadMatrixd(const double *m);
+
+void dtMultMatrixf(const float *m);
+void dtMultMatrixd(const double *m);
+
+void dtTranslate(DtScalar x, DtScalar y, DtScalar z);
+void dtRotate(DtScalar x, DtScalar y, DtScalar z, DtScalar w);
+void dtScale(DtScalar x, DtScalar y, DtScalar z);
+
+@end example
+An object is referred to by a @code{DtObjectRef}, which is defined
+as @code{void *}. 
+Any pointer type may be used to refer to an object. In general,
+a pointer to a structure in the client application associated with the
+collision object should be used.
+
+An object's motion is specified by changing the placement of the local
+coordinate system of the shape.  
+Initially, the local coordinate system of an object
+coincides with the world coordinate system. 
+
+The @dfn{current object} is the last created or selected object.
+The placement of the current object is changed, either by translations,
+rotations and nonuniform scalings, or by using an OpenGL 4x4
+column-major matrix representing an affine transformation. 
+Placements are specified absolute or relative to the previous placement.
+Rotations are specified using quaternions. 
+Following example shows how a pair
+of objects are given absolute placements.  
+@example
+dtCreateObject(&object1, hammer);
+dtCreateObject(&object2, nail);
+
+dtSelectObject(&object1);
+dtLoadIdentity();
+dtTranslate(0, 1, 1);
+dtRotate(0, 0, 1, 0);
+
+dtSelectObject(&object2);
+dtLoadIdentity();
+dtTranslate(0, 1, 0);
+dtRotate(0, 0, 0, 1);
+@end example
+
+@subsection Who's Afraid of Quaternions?
+
+A quaternion is a four-dimensional vector. The set of quaternions of
+length one (points on a four-dimensional sphere) map to the set of
+orientations in three-dimensional space. Since in many applications an
+orientation defined by either a rotation axis and angle or by a
+triple of Euler angles is more convenient, the package includes code for
+quaternion operations. The code is found in a library of C++ classes for
+3D affine transformations. The classes are found in the 
+@file{include/3D} directory. All the code is inlined so you do not need
+to link a library in order to use the classes.
+
+The quaternion class is found in the file @file{Quaternion.h}. The class
+has constructors and methods for setting a quaternion. For example
+@example
+Quaternion q1(axis, angle);
+Quaternion q2(yaw, pitch, roll);
+
+...
+
+q1.setRotation(axis, angle);
+q2.setEuler(yaw, pitch, roll);
+
+...
+
+dtRotate(q1[X], q1[Y], q1[Z], q1[W]);
+@end example
+Also included is a static method @code{Quaternion::random()}, which
+returns a random orientation.
+
+@section Response Handling
+
+Collision response in SOLID is handled by means of callback functions.
+The callback functions have the type @code{DtResponse} defined by
+@example
+ typedef void (*DtResponse)(
+   void *client_data, 
+   DtObjectRef object1, 
+   DtObjectRef object2,
+   const DtCollData *coll_data)
+@end example
+Here, @code{client_data} is a pointer to an arbitrary structure in the
+client application, @code{object1} and @code{object2} are colliding
+objects, and @code{coll_data} is the response data computed by SOLID.
+
+Currently, there are three types of response: @dfn{simple},
+@dfn{smart} and @dfn{witnessed} response. For simple response the value
+of @code{coll_data} is @code{NULL}. 
+For smart and witnessed response @code{coll_data} points to the
+following structure 
+@example
+typedef struct DtCollData @{
+  DtVector point1;
+  DtVector point2;
+  DtVector normal;
+@} DtCollData;
+@end example 
+An object of this type represents a pair of points of the respective
+objects. The points  @code{point1} and @code{point2} are given relative
+to the local coordinate system of their respective objects
+@code{object1} and @code{object2}. The @code{normal} field is used for smart
+response only. 
+
+For witnessed response, the points represent a witness of the collision.
+As a result of this the global coordinates of the witness points are
+equal.
+For smart response, the points represent the closest point pair of the
+objects at placements from the previous time frame. The
+@code{normal} field contains the difference of the global
+coordinates of the closest point pair, i.e., @code{normal = Global(point1) - Global(point2)}.
+We will discuss this type of response more thoroughly further on.
+
+Response is defined as @dfn{default response} for all pairs of objects, as
+@dfn{object response} for all pairs containing a given object, or as
+@dfn{pair response} for a particular pair of objects. The commands for
+defining and undefining response are  
+@example
+void dtSetDefaultResponse(DtResponse response, DtResponseType type, 
+			  void *client_data)  
+void dtClearDefaultResponse()
+
+void dtSetObjectResponse(DtObjectRef obj, DtResponse response, 
+			 DtResponseType type, void *client_data)
+void dtClearObjectResponse(DtObjectRef obj)
+void dtResetObjectResponse(DtObjectRef obj)
+
+void dtSetPairResponse(DtObjectRef obj1, DtObjectRef obj2, 
+		       DtResponse response, DtResponseType type, 
+		       void *client_data)
+void dtClearPairResponse(DtObjectRef obj1, DtObjectRef obj2)
+void dtResetPairResponse(DtObjectRef obj1, DtObjectRef obj2)
+@end example
+A response is defined by either a @code{Set} or a
+@code{Clear} command.
+The @code{Clear} command defines the response to be nil (no response). 
+
+Initially, the default response is nil and all pairs of objects have a
+default response. 
+If for an object pair, one of the objects has an object response defined,
+then this response overrules the default response. A pair response
+overrules any object or default response. 
+If for both objects there is an object response defined, then one of the
+responses is chosen. In this case, one of the responses may be forced to
+be chosen by defining it as a pair response.
+
+A response is undefined, i.e., reset to a more general setting, by the
+@code{Reset} commands. 
+The command @code{dtResetPairResponse} resets the response of a pair of
+objects to an object response, if one is defined for an object in the pair,
+or otherwise to the default response.
+The command @code{dtResetObjectResponse} resets the responses of the object
+pairs, for which no other object response or a pair response is defined, to 
+the default response.
+Note that whenever an object is deleted, the object response and
+all pair responses that are set for this object are reset automatically.     
+
+The @code{DtResponseType} is defined by
+@example 
+  typedef enum DtResponseType @{ 
+    DT_NO_RESPONSE,
+    DT_SIMPLE_RESPONSE, 
+    DT_SMART_RESPONSE,
+    DT_WITNESSED_RESPONSE   
+  @} DtResponseType
+@end example
+Setting the response type to @code{DT_NO_RESPONSE} is equivalent to 
+clearing the response.
+
+The response callback functions are executed for each colliding pair of
+objects by calling
+@example
+int dtTest()
+@end example
+This function returns the number of callback functions that are executed.
+  
+@subsection Smart Response
+
+For physics-based simulations it is often necessary to have a
+representation of the collision plane of a pair of colliding objects in
+order to compute the reaction forces. 
+From a single configuration of two colliding objects it is hard to compute a
+collision plane, since there is no knowledge of how this configuration
+came about. 
+Therefore, SOLID uses the configuration of the objects from the
+previous time frame for approximating the collision plane.
+If the objects were disjoint in the previous time frame, then the
+vector defined by the difference of the closest point pair of the objects is
+a good approximation of the collision plane's normal. 
+
+By selecting smart response for a pair of objects, the closest point
+pair and the normal from the previous time frame are
+computed. 
+The points @code{point1} and @code{point2} are given in local
+coordinates and the @code{normal} relative to the 
+global basis and pointing away from @code{object2}. 
+In order to compute these values, the configuration of
+objects must be stored in each time frame. This is done by calling 
+@example
+void dtProceed();
+@end example 
+Note that in order to guarantee that a non-zero normal can be found,
+the @code{dtProceed} command may only be called if all object pairs for
+which a smart response is defined, are disjoint!
+The common way of guarding this is by iteratively doing collision tests
+and changing the placements until the objects are disjoint.
+Note that it is possible and often necessary to call @code{dtTest}
+multiple times before calling @code{dtProceed}.
+
+
+@section Deformable Models
+
+SOLID handles deformations of complex shapes.  In this context
+deformations are specified by changes of vertex positions. 
+Complex shapes that are defined using a vertex array in the client
+application may be deformed by changing the array elements, or
+specifying a new array. 
+SOLID is notified of a change of vertices by the command 
+@example
+void dtChangeVertexBase(DtShapeRef shape, const void *base);
+@end example 
+When using convex polygons or convex polyhedra as shape components, the
+client should warrant that the vertex changes do not violate the
+convexity and topology (planar graph embedding) of a component!  
+
+Note that in order to use smart response for deformable shapes, the
+change of vertices should be done by specifying a new array.
+The vertex array of the previous time frame should be kept intact,
+otherwise SOLID can not determine the configuration of objects of the
+previous time frame.
+This is best handled by applying a `double buffering' technique.
+After a call to @code{dtProceed}, the new vertex positions are placed in the
+free buffer of a pair of vertex buffers, and @code{dtChangeVertexBase}
+is called using this buffer, after which the other buffer becomes the
+free buffer.     
+
+
+@section Caching
+
+In computer animations there is usually a lot of frame coherence
+(objects move smoothly).
+In these cases, caching and reusing earlier computations will yield a
+considerable performance improvement.  
+The @dfn{caching} option of SOLID enables an incremental sort on the set
+of objects, in order to reduce the number of pairwise intersection
+tests. 
+Moreover, when the cashing option is on, data from earlier intersection
+tests is stored and used for faster determination of the intersection
+status of a pair of objects.  
+Caching is enabled and disabled by 
+@example
+void dtEnableCaching()
+void dtDisableCaching()
+@end example
+Caching may be enabled or disabled at any time during a
+simulation. This option is enabled by default.
+
+@node Projects, Bugs, Usage, Top
+@chapter Projects and other things left to do
+
+@section Coming Attractions
+
+Look out for my thesis describing the design and performance evaluation
+of SOLID, to appear in March, 1999. 
+
+@node Bugs, , Projects, Top
+@chapter Bug Reports
+
+Please send remarks, questions and bug reports to gino@@win.tue.nl,
+or write to Gino van den Bergen, Department of Mathematics and Computing
+Science, Eindhoven University of Technology, P.O. Box 513, 5600 MB
+Eindhoven, The Netherlands.
+
+@contents
+@bye

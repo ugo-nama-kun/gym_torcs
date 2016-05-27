@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: gears.html,v 1.1 2004/11/30 14:02:10 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Gear Changing</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="basic breaking"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, gears, gear changing"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>3.3 Gear Changing</h1>
+
+        <h3>Implementation</h3>
+        <p>
+          I will show you an implementation similar to that used by the "Damned" robot from Eric Espié. I
+          show you this, because it's simply better than my implementation in the berniw robot.
+        </p>
+        <p>
+          <pre class="lcolor">/* Compute gear */
+int Driver::getGear(tCarElt *car)
+{
+    if (car-&gt;_gear &lt;= 0) return 1;</pre>
+        </p>
+        <p>
+          If we are in neutral or reverse shift to the first gear.
+        </p>
+        <p>
+          <pre class="lcolor">    float gr_up = car-&gt;_gearRatio[car-&gt;_gear + car-&gt;_gearOffset];
+    float omega = car-&gt;_enginerpmRedLine/gr_up;
+    float wr = car-&gt;_wheelRadius(2);
+
+    if (omega*wr*SHIFT &lt; car-&gt;_speed_x) {
+        return car-&gt;_gear + 1;</pre>
+        </p>
+        <p>
+          Shift up if the allowed speed for the current gear (omega*wr*SHIFT) is exceeded.
+        </p>
+        <p>
+          <pre class="lcolor">    } else {
+        float gr_down = car-&gt;_gearRatio[car-&gt;_gear + car-&gt;_gearOffset - 1];
+        omega = car-&gt;_enginerpmRedLine/gr_down;
+        if (car-&gt;_gear &gt; 1 && omega*wr*SHIFT &gt; car-&gt;_speed_x + SHIFT_MARGIN) {
+            return car-&gt;_gear - 1;</pre>
+        </p>
+        <p>
+          If the current gear is greater than one (we don't want to shift to neutral here), check if the
+          current speed (plus a constant) is lower than the allowed speed with the next lower gear. If that's
+          true, shift down. We add the constant to avoid oscillating up- and down-shifting.
+        </p>
+        <p>
+          <pre class="lcolor">        }
+    }
+    return car-&gt;_gear;
+}</pre>
+        </p>
+        <p>
+          If all of the above didn't apply, simply return the current gear. You have to put the new constants
+          at the beginning of driver.cpp.
+        </p>
+
+        <p>
+          <pre class="lcolor">const float Driver::SHIFT = 0.9;         /* [-] (% of rpmredline) */
+const float Driver::SHIFT_MARGIN = 4.0;  /* [m/s] */</pre>
+        </p>
+        <p>
+          We have to add the call to the drive method in driver.cpp.
+        <p>
+          <pre class="lcolor">        car-&gt;ctrl.gear = getGear(car);</pre>
+        </p>
+        <p>
+          Finally we put the method interface and the constants into driver.h.
+        </p>
+        <p>
+          <pre class="lcolor">        int getGear(tCarElt *car);</pre>
+        </p>
+        <p>
+          <pre class="lcolor">        static const float SHIFT;
+        static const float SHIFT_MARGIN;</pre>
+        </p>
+
+        <h3>Testdrive</h3>
+        <p>
+          Do again some test runs with the different cars. Because we accelerate from the first gear we face
+          a new problem: the driven wheels are skidding, because we apply full throttle. It will be necessary
+          to add some kind of traction control. The current lap times are:
+        </p>
+         <ul style="list-style-type:disk; color:black;">
+          <li>mixed-2: 1:43:93, 619 damage.</li>
+          <li>e-track-2: 1:46:93, 0 damage.</li>
+          <li>e-track-4: 2:15:13, 4 damage.</li>
+        </ul>
+
+        <h3>Code Performance</h3>
+        <p>
+          You have seen an implementation for gear changing and braking. You should have recognized, that
+          we compute in every timestep a lot of stuff we could put in a preprocess and just compute it once
+          (e. g the allowed speed on a segment, the gear ratios, ...).
+          Why we didn't do that? It's because we need still some additional code, so in fact we don't know
+          how the robot looks like in the end. I would recommend to develop first straightforward, and if you
+          are happy with the result, then you can start improving performance. But you should do it, because
+          there are some poor guys like me with just 550MHz.
+        </p>
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt33.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know a way to change the gears.</li>
+           <li>You have implemented it.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./braking1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./utility2.html">
+          <p style="text-align:right;">Let's integrate aerodynamics.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

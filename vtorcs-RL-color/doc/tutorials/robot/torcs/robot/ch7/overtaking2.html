@@ -1,0 +1,150 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: overtaking2.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Overtaking</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="Overtaking"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, overtaking, opponent"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>7.6 Finishing Overtaking</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  Finally we need to add the offset to the target point. We will integrate that directly
+		  into the getTargetPoint() method. For that we need a normalized vector at the target
+		  point perpendicular to the track tangent. Before we add this vector we multiply it with
+		  the offset.
+		</p>
+
+		<h3>Implementation</h3>
+		<p>
+		  Have a look on the changed Driver::getTargetPoint() method.
+		</p>
+
+		<p><pre class="lcolor">/* compute target point for steering */
+v2d Driver::getTargetPoint()
+{
+    tTrackSeg *seg = car-&gt;_trkPos.seg;
+    float lookahead = LOOKAHEAD_CONST + car-&gt;_speed_x*LOOKAHEAD_FACTOR;
+    float length = getDistToSegEnd();
+    float offset = getOvertakeOffset();</pre></p>
+
+		<p>
+		  The first change is the offset variable, initialized with getOvertakeOffset().
+		</p>
+
+		<p><pre class="lcolor">    while (length &lt; lookahead) {
+        seg = seg-&gt;next;
+        length += seg-&gt;length;
+    }
+
+    length = lookahead - length + seg-&gt;length;
+    v2d s;
+    s.x = (seg-&gt;vertex[TR_SL].x + seg-&gt;vertex[TR_SR].x)/2.0;
+    s.y = (seg-&gt;vertex[TR_SL].y + seg-&gt;vertex[TR_SR].y)/2.0;
+
+    if ( seg-&gt;type == TR_STR) {
+        v2d d, n;
+        n.x = (seg-&gt;vertex[TR_EL].x - seg-&gt;vertex[TR_ER].x)/seg-&gt;length;
+        n.y = (seg-&gt;vertex[TR_EL].y - seg-&gt;vertex[TR_ER].y)/seg-&gt;length;
+        n.normalize();</pre></p>
+
+		<p>
+		  Here the new v2d variable "n" has been added. It is initialized with the normalized
+		  vector perpendicular to the track tanget.
+		</p>
+
+		<p><pre class="lcolor">        d.x = (seg-&gt;vertex[TR_EL].x - seg-&gt;vertex[TR_SL].x)/seg-&gt;length;
+        d.y = (seg-&gt;vertex[TR_EL].y - seg-&gt;vertex[TR_SL].y)/seg-&gt;length;
+        return s + d*length + offset*n;
+    } else {</pre></p>
+
+		<p>
+		  Finally "n" is multiplied with offset and added to the target point. A similar
+		  implementation follows for the turns.
+		</p>
+
+		<p><pre class="lcolor">        v2d c, n;
+        c.x = seg-&gt;center.x;
+        c.y = seg-&gt;center.y;
+        float arc = length/seg-&gt;radius;
+        float arcsign = (seg-&gt;type == TR_RGT) ? -1.0 : 1.0;
+        arc = arc*arcsign;
+        s = s.rotate(c, arc);
+        n = c - s;
+        n.normalize();
+        return s + arcsign*offset*n;
+    }
+}</pre></p>
+
+		<h3>Testdrive</h3>
+		<p>
+		  Before you go to the track you should set the camber of the front wheels to -5 degrees.
+		  Change this in the file 0/default.xml. My conclusion after some races is that the
+		  collision avoidance and overtaking works really well (at least for its simplicity).
+		</p>
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt76.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+		<h3>Feedback</h3>
+        <p>
+          <a href="mailto:berni4you@gmx.ch">Let me know</a>
+          if you read this chapter and your thoughts about it. Please
+          <a href="mailto:berni4you@gmx.ch">send me</a>
+          also spelling, grammar, math and code corrections. Thank you for the feedback.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented and understood collision avoidance and overtaking.</li>
+		   <li>You have a robot which is able to race.</li>
+		   <li>You know how to improve it.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./overtaking1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+         <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../robot.html','content')">
+          <p style="text-align:right;">Up</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

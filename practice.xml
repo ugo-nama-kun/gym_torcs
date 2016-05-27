@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE params SYSTEM "params.dtd">
+
+
+<params name="Practice">
+  <section name="Header">
+    <attstr name="name" val="Practice"/>
+    <attstr name="description" val="Practice"/>
+    <attnum name="priority" val="100"/>
+    <attstr name="menu image" val="data/img/splash-practice.png"/>
+    <attstr name="run image" val="data/img/splash-run-practice.png"/>
+  </section>
+
+  <section name="Tracks">
+    <attnum name="maximum number" val="1"/>
+    <section name="1">
+      <attstr name="name" val="michigan"/>
+      <attstr name="category" val="oval"/>
+    </section>
+
+  </section>
+
+  <section name="Races">
+    <section name="1">
+      <attstr name="name" val="Practice"/>
+    </section>
+
+  </section>
+
+  <section name="Practice">
+    <attnum name="laps" val="20"/>
+    <attstr name="type" val="practice"/>
+    <attstr name="starting order" val="drivers list"/>
+    <attstr name="restart" val="yes"/>
+    <attstr name="display mode" val="normal"/>
+    <attstr name="display results" val="yes"/>
+    <attnum name="distance" unit="km" val="0"/>
+    <section name="Starting Grid">
+      <attnum name="rows" val="1"/>
+      <attnum name="distance to start" val="100"/>
+      <attnum name="distance between columns" val="20"/>
+      <attnum name="offset within a column" val="10"/>
+      <attnum name="initial speed" unit="km/h" val="0"/>
+      <attnum name="initial height" unit="m" val="0.2"/>
+    </section>
+
+  </section>
+
+  <section name="Drivers">
+    <attnum name="maximum number" val="1"/>
+    <attstr name="focused module" val="scr_server"/>
+    <attnum name="focused idx" val="1"/>
+    <section name="1">
+      <attnum name="idx" val="0"/>
+      <attstr name="module" val="scr_server"/>
+    </section>
+
+  </section>
+
+  <section name="Configuration">
+    <attnum name="current configuration" val="4"/>
+    <section name="1">
+      <attstr name="type" val="track select"/>
+    </section>
+
+    <section name="2">
+      <attstr name="type" val="drivers select"/>
+    </section>
+
+    <section name="3">
+      <attstr name="type" val="race config"/>
+      <attstr name="race" val="Practice"/>
+      <section name="Options">
+        <section name="1">
+          <attstr name="type" val="race length"/>
+        </section>
+
+        <section name="2">
+          <attstr name="type" val="display mode"/>
+        </section>
+
+      </section>
+
+    </section>
+
+  </section>
+
+  <section name="Drivers Start List">
+    <section name="1">
+      <attstr name="module" val="inferno"/>
+      <attnum name="idx" val="5"/>
+    </section>
+
+  </section>
+
+</params>

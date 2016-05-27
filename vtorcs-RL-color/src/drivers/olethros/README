@@ -1,0 +1,174 @@
+This robot is a demonstration of using a predictive estimation system
+for control.
+
+The robot is based on bt, by Bernhard.
+
+It differs in two ways.
+
+I. Estimation
+-------------
+
+The first difference is that there are some estimated quantities.
+There are four types of estimates:
+
+1) Estimate of future steering/acceleration.
+
+There are two things controlled: the acceleration/braking and the
+steering. The system relies on an existing controller to reasonable
+initial values for acceleration, braking and steering. It basically
+does the following update at every timestep t (it is slightly more
+complicated in the code, in order to take into account emergency
+steering manouevres and prediction)
+
+for k=0 to ...
+	accel(t-k) += pow(lambda, k) * a *(accel_input(t+1) - accel(t))
+	steer(t-k) += pow(lambda, k) * a *(steer_input(t+1) + gamma *steer(t+1) - steer(t));
+endfor
+
+the acceleration and steering prediction at particular times are
+associated to various points in the track, so the actual update in the
+code looks lightly different.
+
+lambda is in the range [0,1]. The closer it is to one, the higher the
+smoothing effect. 
+
+Gamma is in the range [0,1] also. The closer it is to one, the more
+important future steering commands are.
+
+In any case, the effect of the update is that steer(t) approximates
+sum_{k=0}^{\infty} gamma ^ k steer_input(t+k), the discounted future
+steer input.
+
+accel(t) on the other hand, approximates a low-pass filtered version
+of future acceleration input. 
+
+Both predictions are added to the output of the naive controller. This
+way the system can anticipate movements. Thus, for example, if by
+using the naive controller at a particular turn it happens that we
+usually end up a bit too wide at the of the curve, the algorithm
+predicts that and tries to turn a bit more in the beginning of the
+curve.
+[The acceleration/brake is currently disabled though].
+
+Using the predicted steering helps generate a better, smoother
+trajectory close to the ideal one, because the resulting steering will
+be minimising the sum of total squares of steering over the whole
+track, which is a quite good rule for generating ideal trajectories.
+
+Note: If the robot for some reason, after having learned the
+predictions, is out of its normal path, the predictions should not be
+used to steer as they are not valid. Currently I am not checking for
+such a condition. (And it is not possible to check it by looking at
+the original planned trajectory - I must check it by looking at the
+*usual* trajectory). This needs to be fixed.
+
+2) Estimate of curve radius.
+
+The robot features a naive trajectory target planning algorithn,
+in the function Driver::prepareTrack(). This can be used to set up the
+desired trajectory.
+
+Then the function Driver::EstimateRadius() is used to estimate the
+radius of all turns, using a mean-square fit of a circle to the points
+of the planned trajectory. In ComputeRadius() there is another
+estimate computed, based on the central trajectory. The final estimate
+is the maximum of the two estimates.
+
+During the race, learn.cpp adjusts the estimate again. There are two
+ways to adjust it. One is to see how far away you are from the middle
+of the curve and adjust the estimate this way (this is what Bernhard
+was doing). The other is to see how far away you are from the target
+trajectory and/or if you are about to get out of the track. If you are
+close to the trajectory and not about to get out of the track,
+increase the radius, otherwise reduce it. I use a parameter beta to
+mix the two estimates. Currently the robot works best with beta=1,
+i.e. just usin the second estimate. This is because the planned
+trajectory can many times be very close to the track edge, causing the
+first method to underestimate the radius.
+
+
+3) Estimates of friction for braking.
+
+Bernhard's code uses a first order approximation to compute braking
+distance given the current speed and estimates of friction. It is
+quite accurate, but the accuracy nevertheless can be improved
+considerably. Instead of using more precise approximations (which
+might be even worse if the simulation model does not correspond to our
+assumed model), I am trying to estimate the friction force for each
+segment of the track instead. Normally the estimates for the
+friction coefficients look like this:
+		c = mu*G;
+		d = (CA*mu + CW)/mass;
+
+I add some parameters that estimate the error in these coefficients:
+
+		c = mu*G + dm + dm[seg]
+		d = (CA*mu + CW + dm dm2[seg])/mass;
+
+two parameters are added for each coefficient. One is global and one
+is specific to each segment. How are they learned? It is very simple. Our model says how much our speed should be reduced given the speed, brake and segment. In the next timestep we see how much the speed is reduced and we adjust dm, dm[], dm2, dm2[] to reduce the error (with steepest gradient descent).
+
+(Note that these estimated values would have to be different for
+different speeds, however we pass each segment always at approximately
+the same speed.)
+
+This type of correction gives a huge increase in stability.
+
+Note that I could have added an estimate for mu, CA/CW for calculating the acceleration due to steering but this is not so necessary as the model is perfect since the speed does not change. In any case, the steering filter takes care of that more or less.
+
+4) Danger estimate
+
+I predict the time until exiting the track given the current
+trajectory. Currently this is very naive. However, it is useful in
+some cases where the robot is about to exit the track and makes
+learning a bit more stable. This estimate adjusts the current steering/brake input and influences the steering filter.
+
+II. Other changes
+-----------------
+
+I modified slightly all of the braking/acceleration functions and the main drive loop so that the behaviour is smoother. The acceleration function has a parameter to control how many seconds before a curve should the driver release the accelerator, if it is necessary to brake. This gives a very significant reduction in fuel consumed and slightly better behaviour in curves.
+
+I am adjusting the mu coefficient of the track slighlty depending on
+the banking and inclination.  This is very useful in the initial
+stages of learning. 
+
+III. Results
+----------------
+
+The robot now is performing as well as the berniw robot. On some
+tracks it is better, on others it is worse. Unfortunately it is not as
+fast as me on any track, yet, although it the speed it uses on curves
+is the same as mine, even higher sometimes. Probably it is because it
+starts braking too early and starts accelerating too late. Changing
+the smoothness might give an improvement.
+
+IV. Future work
+---------------
+
+- Add some support for setting hyperparameters from the .xml
+file. Some tracks should require smoother driving than others,
+perhaps. 
+
+- Make it so that it drives a bit less riskily on real races. 
+
+- Implement a way to save the learned values.
+
+- Adjust riskiness of driving depending on situation (i.e. well-ahead,
+trying to catch up with the leader on a race).
+
+- Adjust smoothness of driving depending on situation (do I need to go
+as fast as possible? Am I in a good position and the race is almost
+finished, but if I continue going fast I will have to make a pitstop?)
+
+- Fix offsets when overtaking. (I think they are broken at the moment,
+because my planned trajectory is almost never in the center of the
+track).
+
+- Use reinforcement learning somewhere, possibly for making tactical
+and strategic decisions.
+
+
+Enjoy
+
+Christos Dimitrakakis <dimitrak@idiap.ch>
+

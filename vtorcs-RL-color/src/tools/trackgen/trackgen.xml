@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : trackgen.xml
+    created              : Sun Dec 24 15:48:26 CET 2000
+    copyright            : (C) 2000 by Eric Espié                         
+    email                : Eric.Espie@torcs.org   
+    version              : $Id: trackgen.xml,v 1.4 2002/11/16 07:20:36 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+
+<params name="" type="template" mode="mw">
+
+  <section name="Modules">
+    <attstr name="track"     val="track"/>
+  </section>
+
+</params>
+
+

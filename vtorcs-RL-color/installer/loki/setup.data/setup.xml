@@ -1,0 +1,80 @@
+<?xml version="1.0" standalone="yes"?>
+<install product="torcs" desc="TORCS - The Open Racing Car Simulator" version="1.2.4" binarypath="/usr/bin"
+         promptbinaries="yes" express="no">
+
+	<readme>
+		README
+	</readme>
+
+	<eula>
+		LICENSE
+	</eula>
+
+	<component name="Default" version="1.2.4" default="yes">
+		<option arch="x86" install="true" required="true">
+			TORCS Base System
+			<help>TORCS base system, contains the application, cars, tracks and opponents.</help>
+			<binary arch="x86" libc="any" symlink="torcs" icon="ticon.xpm" play="yes">
+				torcs
+			</binary>
+			<files>
+				torcs_base.tar.gz
+				ticon.xpm
+			</files>
+			<script>
+				sh setup.data/scripts/torcs_finalize.sh
+			</script>
+		</option>
+
+		<option install="true" arch="x86">
+			Developer tools
+			<help>Developer tools.</help>
+			<binary arch="x86" libc="any" symlink="accc">
+				accc
+			</binary>
+			<binary arch="x86" libc="any" symlink="trackgen">
+				trackgen
+			</binary>
+			<binary arch="x86" libc="any" symlink="nfs2ac">
+				nfs2ac
+			</binary>
+			<binary arch="x86" libc="any" symlink="nfsperf">
+				nfsperf
+			</binary>
+			<binary arch="x86" libc="any" symlink="texmapper">
+				texmapper
+			</binary>
+			<files>
+				torcs_tools.tar.gz
+			</files>
+			<script>
+				sh setup.data/scripts/tools_finalize.sh
+			</script>
+		</option>
+
+		<option install="true" arch="any">
+			Non Free - Rally Cars
+			<help>Non free rally cars, read the readme.txt in the directory of the car for details.</help>
+			<files>
+				torcs_cars_pw.tar.gz
+			</files>
+		</option>
+
+		<option install="true" arch="any">
+			Non Free - Classic Cars
+			<help>Non free classic cars, read the readme.txt in the directory of the car for details.</help>
+			<files>
+				torcs_cars_kc.tar.gz
+			</files>
+		</option>
+
+		<option install="true" arch="any">
+			Non Free - Prototype Cars
+			<help>Non free prototype cars, read the readme.txt in the directory of the car for details.</help>
+			<files>
+				torcs_cars_vm.tar.gz
+			</files>
+		</option>
+	</component>
+</install>
+

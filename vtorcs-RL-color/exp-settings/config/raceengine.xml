@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file        : raceengine.xml
+    created     : Sat Nov 16 19:39:26 CET 2002
+    copyright   : (C) 2002 by Eric Espié                         
+    email       : Eric.Espie@torcs.org   
+    version     : $Id: raceengine.xml,v 1.5 2005/02/01 15:55:52 berniw Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../tgf/params.dtd">
+
+<params name="" type="template" mode="mw">
+
+  <section name="Modules">
+    <attstr name="track" val="track"/>
+    <attstr name="simu" val="simuv2"/>
+    <attstr name="graphic" val="ssggraph"/>
+  </section>
+
+  <section name="Movie Capture">
+    <attstr name="enable capture" in="yes,no" val="no"/>
+    <attnum name="fps" val="25"/>
+    <attstr name="output directory" val="/home/torcs/captures"/>
+  </section>
+
+</params>
+
+

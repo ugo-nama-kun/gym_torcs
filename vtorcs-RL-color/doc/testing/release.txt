@@ -1,0 +1,117 @@
+This thing acts a reminder and check list for me before I pull a release.
+Feel free to add other tests, even if they currently fail.
+
+General:
+--------
+
+- valgrind runs (to get module symbol information comment out the dlclose in
+  linuxspec.cpp, look for the valgrind comment, and build a debug version).
+  Currently you need to disable the sound for valgrind runs.
+
+- run a race and check if the memory size stays constant after the start (run
+  in a window and top in a console on Linux, the task manager in Windows).
+  Use different camera perspectives and look at various cars, is the mem
+  footprint stable?
+
+
+Physics:
+--------
+
+- Differentials:
+    - Check free, limited slip and spool, park car such that one driven
+      wheel is on a loose surface and one on a rigid one (sand/asphalt).
+    - Doughnut: clkdtm, pro mode, ASR off, apply full throttle and steer.
+
+- Does stopping on a slope work, check sideways, rear and front uphill,
+  rear and front downhill.
+
+- Collisions:
+    - Does colliding with pit wall work, test all sort of crashes, forward,
+      reverse, in reverse track direction, all 4 sides of the wall.
+    - Scratch along the barriers on every track at least one full lap, both
+      sides.
+    - Check Car-Car and Car-Car-Wall collisions, prepare a stillstanding dummy
+      bot for this test, take a rookie car and set the dummy as well to rookie.
+      First hit the car and check if the behaviour is acceptable from all
+      directions, speeds, reverse and forward. Then push the car onto a wall/
+      barrier (check both) such that the dummy is in the sandwich of your car
+      and the wall, is the collision reasonable and stable?
+
+
+Graphics:
+---------
+
+Sound:
+------
+
+- Does disabling the sound work?
+
+- Does the OpenAL backend work?
+
+- Does the Plib backend work?
+
+- Effects:
+    - Engine with Doppler effect.
+    - Gear switching "clunk" sound (which one to test?).
+    - Air at high speeds, good audible with open wheel car.
+    - Engine backfire on some cars, good audible with porsche-gt1 .
+    - Turbo sound (which one to test?).
+    - Ground scratching, try with Player clkdtm (any car with soft suspension).
+    - Sand sound.
+    - Barrier scratching sound.
+
+
+Input Devices:
+
+Players:
+
+Multiplayer:
+
+
+Gamemodes:
+----------
+
+- check every gamemode, to accelerate it reduce the laps to run in the xml
+  files.
+
+- Check the result files (Correct location, intermediate results, XSLT).
+
+
+Tracks:
+-------
+
+- Is every track selectable?
+
+- Are any textures missing?
+
+- Are holes in the track?
+
+
+Cars:
+-----
+
+
+
+Robots:
+-------
+
+- check if robots crash when you restart the race within the time -2..0.
+
+- each module must have run at least a few laps on every track with at least
+  2 robots out of it if more than 1 is available, racing against some
+  opponents. Good way to do it is a quickrace on every track.
+
+- Robots which have some kind of experience saving: Check if saving works,
+  check if loading works, and check as well what happens when no data files
+  are present.
+
+
+Platforms:
+
+Packages/Installer:
+
+
+
+
+
+

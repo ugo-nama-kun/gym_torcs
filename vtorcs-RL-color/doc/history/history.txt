@@ -1,0 +1,29 @@
+TORCS Project History
+---------------------
+
+TORCS started 1997 and was called RCS (Racing Car Simulator). In the beginning
+it was a 2D simulator. Later Eric and Christophe bought a 3DFX graphics card and
+created a 3D version with OpenGL. The RARS project was very important at this
+time as reference. This version was called ORCS (Open Racing Car Simulator)
+because RCS was already known in the Unix world (Revision Control System).
+
+In the first versions the cars did not have engines and just rolled downhill
+(soap box derby simulator), there where as well no textures on the cars at this
+time.
+
+As next step the cars got engines, engine sound and were able to drive on flat
+and elevated tracks. Another name change happend at this time, ORCS was
+not related enough to cars, so the new name become TORCS (from torque??).
+
+Christophe made the first camera following the cars from the side of the track,
+and it was very nice how the cars were coming out of the haze (the haze
+was very near for a good frame rate).
+
+Another important event was when Eric found out that the forces were not
+computed in the correct frame of reference (car local instead of global) and was
+able to resolve a related car steering problem (steering back at the end of the
+turns was necessary).
+
+Later Christophe added multitexturing, this was a big step. Generally he created
+a lot of the original graphic code, and Eric converted it into the final
+"product".

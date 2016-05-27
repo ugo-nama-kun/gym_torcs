@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : e-track-5.xml
+    created              : Sun Apr 30 15:45:57 CEST 2000
+    copyright            : (C) 2000 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: e-track-6.xml,v 1.1.2.1 2008/08/19 21:06:00 berniw Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+
+<!DOCTYPE params SYSTEM "../../../src/libs/tgf/params.dtd" [
+<!-- general definitions for tracks -->
+<!ENTITY default-surfaces SYSTEM "../../../data/tracks/surfaces.xml">
+<!ENTITY default-objects SYSTEM "../../../data/tracks/objects.xml">
+]>
+
+<params name="e-track-6" type="template" mode="mw">
+
+  <!-- Surfaces -->
+  <section name="Surfaces">
+      &default-surfaces;
+      <section name="e6grass6">
+	<attnum name="color R1" val="0.4"/>
+	<attnum name="color G1" val="0.4"/>
+	<attnum name="color B1" val="0.1"/>
+	<attnum name="color R2" val="0.5"/>
+	<attnum name="color G2" val="0.5"/>
+	<attnum name="color B2" val="0.2"/>
+	<attstr name="texture name" val="tr-grass6.rgb"/>
+	<attstr name="texture type" in="discrete, continuous" val="continuous"/>
+	<attnum name="texture size" val="5.0" unit="m"/>
+	<attnum name="texture mipmap" val="4.0"/>
+
+	<attstr name="bump name" val=""/>
+	<attnum name="bump size" val="2.0" unit="m"/>
+
+	<attnum name="friction"           val="0.4"/>
+	<attnum name="rolling resistance" val="0.015"/>
+
+	<attnum name="roughness" val="0.05"/>
+	<attnum name="roughness wavelength" val="0.8"/>
+      </section>
+      <section name="e6-road1-grass6-l2">
+	<attnum name="color R1" val="0.4"/>
+	<attnum name="color G1" val="0.4"/>
+	<attnum name="color B1" val="0.2"/>
+	<attnum name="color R2" val="0.5"/>
+	<attnum name="color G2" val="0.5"/>
+	<attnum name="color B2" val="0.3"/>
+	<attstr name="texture name" val="tr-e6-road1-grass6-l2.rgb"/>
+	<attstr name="texture type" in="discrete, continuous" val="discrete"/>
+	<attnum name="texture size" val="5.0" unit="m"/>
+	<attnum name="texture mipmap" val="4.0"/>
+
+	<attstr name="bump name" val=""/>
+	<attnum name="bump size" val="2.0" unit="m"/>
+
+	<attnum name="friction"           val="0.7"/>
+	<attnum name="rolling resistance" val="0.005"/>
+
+	<attnum name="roughness" val="0.03"/>
+	<attnum name="roughness wavelength" val="1.5"/>
+      </section>
+  </section>
+
+  <!-- Objects -->
+  <section name="Objects">
+      &default-objects;
+  </section>  <!-- Objects -->
+
+
+  <section name="Header">
+    <attstr name="name" val="E-Track 6"/>
+    <attstr name="category" val="road"/>
+    <attnum name="version" val="4"/>
+    <attstr name="author" val="E. Espie, A. Sumner"/>
+    <attstr name="description" val=""/>
+  </section>
+
+  <section name="Graphic">
+    <attstr name="3d description" val="e-track-6.acc"/>
+    <attstr name="background image" val="background.png"/>
+    <attnum name="background type" val="4"/>
+
+    <attnum name="background color R" val="0.55"/>
+    <attnum name="background color G" val="0.55"/>
+    <attnum name="background color B" val="0.45"/>
+
+    <attnum name="ambient color R" val="0.2"/>
+    <attnum name="ambient color G" val="0.2"/>
+    <attnum name="ambient color B" val="0.2"/>
+
+    <attnum name="diffuse color R" val="1"/>
+    <attnum name="diffuse color G" val="1"/>
+    <attnum name="diffuse color B" val="1"/>
+
+    <attnum name="specular color R" val="0.5"/>
+    <attnum name="specular color G" val="0.5"/>
+    <attnum name="specular color B" val="0.5"/>
+
+    <attnum name="light position y" val="900"/>
+    <attnum name="light position x" val="-3220"/>
+    <attnum name="light position z" val="1543"/>
+
+    <section name="Environment Mapping">
+      <section name="1">
+	<attstr name="env map image" val="env.png"/>
+      </section>
+    </section>
+
+    <section name="Terrain Generation">
+      <attnum name="track step" unit="m" val="20"/>
+      <attnum name="border margin" unit="m" val="500"/>
+      <attnum name="border step" unit="m" val="50"/>
+      <attnum name="border height" unit="m" val="40"/>
+      <attstr name="relief file" val="e-track-6-relief.ac"/>
+      <attstr name="surface" val="e6grass6"/>
+
+      <section name="Object Maps">
+	<section name="map 1">
+	  <attstr name="object map" val="object-map1.png"/>
+	</section>
+      </section>
+    </section>
+  </section>
+
+
+  <section name="Main Track">
+
+    <attnum name="width" unit="m" val="13"/>
+    <attnum name="profil steps length" unit="m" val="10"/>
+
+    <!-- PITS -->
+    <section name="Pits">
+      <attstr name="type" val="track side"/>
+      <attstr name="side" val="left"/>
+      <attstr name="entry" val="pit entry"/>
+      <attstr name="start" val="last seg"/>
+      <attstr name="end" val="start lane"/>
+      <attstr name="exit" val="pit exit"/>
+      <attnum name="length" unit="m" val="15"/>
+      <attnum name="width" unit="m" val="5"/>
+    </section>  <!-- PITS -->
+
+
+    <section name="Track Segments">
+
+
+      <section name="start lane">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+	<attstr name="surface" val="road1"/>
+
+	<section name="Right Side">
+	  <attnum name="start width" val="10"/>
+	  <attnum name="end width" val="10"/>
+	  <attstr name="surface" val="e6grass6"/>
+	  <attstr name="type" in="level,tangent" val="level"/>
+	</section>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attnum name="start width" val="15"/>
+	  <attnum name="end width" val="15"/>
+	  <attstr name="surface" val="road1-pits"/>
+	  <attstr name="type" in="level,tangent" val="level"/>
+	</section>
+
+      </section>
+
+      <section name="pit exit">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="83.333333"/>
+	<attnum name="grade" unit="%" val="4"/>
+	<attnum name="profil start tangent" unit="%" val="0"/>
+	<attnum name="profil end tangent" unit="%" val="4"/>
+	<attnum name="banking end" unit="deg" val="3"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-l2p"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="road1"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+      </section>
+
+      <section name="t1">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="66.666666"/>
+	<attnum name="arc" unit="deg" val="28"/>
+	<attnum name="grade" unit="%" val="2"/>
+	<attnum name="profil end tangent" unit="%" val="2"/>
+	<attnum name="banking end" unit="deg" val="1"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="e6grass6"/>
+	</section>
+     </section>
+
+      <section name="s2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="133.333333"/>
+	<attnum name="grade" unit="%" val="5"/>
+	<attnum name="profil end tangent" unit="%" val="5"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t2">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="66.666666"/>
+	<attnum name="arc" unit="deg" val="62"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s3">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="61.22176107"/>
+	<attnum name="grade" unit="%" val="3"/>
+	<attnum name="profil end tangent" unit="%" val="3"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="25"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-sand3-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t3">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="66.666666"/>
+	<attnum name="arc" unit="deg" val="61"/>
+	<attnum name="grade" unit="%" val="5"/>
+	<attnum name="profil end tangent" unit="%" val="5"/>
+	<attnum name="banking end" unit="deg" val="-1"/>
+
+	<section name="Right Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="25"/>
+	</section>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="b-road1-sand3-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s4">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+	<attnum name="grade" unit="%" val="5"/>
+	<attnum name="profil end tangent" unit="%" val="5"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+	<section name="Right Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+      </section>
+
+      <section name="s4-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="66.666666"/>
+	<attnum name="grade" unit="%" val="5"/>
+	<attnum name="profil end tangent" unit="%" val="5"/>
+	<attnum name="banking end" unit="deg" val="5"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Right Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10.0"/>
+	  <attstr name="type" val="tangent"/>
+	</section>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+      </section>
+
+      <section name="t4">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="53.333333"/>
+	<attnum name="arc" unit="deg" val="110"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="25"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-sand3-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s5-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="60"/>
+	<attnum name="grade" unit="%" val="4"/>
+	<attnum name="profil end tangent" unit="%" val="0"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+     </section>
+
+      <section name="s5-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="73.3333333"/>
+	<attnum name="grade" unit="%" val="-5"/>
+	<attnum name="profil end tangent" unit="%" val="-5"/>
+	<attnum name="banking end" unit="deg" val="1"/>
+     </section>
+
+      <section name="t5">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="133.333333"/>
+	<attnum name="arc" unit="deg" val="24"/>
+      </section>
+
+      <section name="s6">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="266.666666"/>
+      </section>
+
+      <section name="t6">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="200"/>
+	<attnum name="arc" unit="deg" val="17"/>
+      </section>
+
+      <section name="s7">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+	<attnum name="grade" unit="%" val="-4"/>
+	<attnum name="profil end tangent" unit="%" val="-4"/>
+	<attnum name="banking end" unit="deg" val="4"/>
+      </section>
+
+      <section name="t7">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="40"/>
+	<attnum name="arc" unit="deg" val="90"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="25"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-sand3-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s8">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="33.333333"/>
+	<attnum name="grade" unit="%" val="-4"/>
+	<attnum name="profil end tangent" unit="%" val="-4"/>
+	<attnum name="banking end" unit="deg" val="2"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t8">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="53.333333"/>
+	<attnum name="arc" unit="deg" val="35"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s9">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="33.333333"/>
+	<attnum name="grade" unit="%" val="-2"/>
+	<attnum name="profil end tangent" unit="%" val="-2"/>
+	<attnum name="banking end" unit="deg" val="-2"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+      </section>
+
+      <section name="t9">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="46.666666"/>
+	<attnum name="arc" unit="deg" val="77"/>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s10">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="33.333333"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t10">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="33.333333"/>
+	<attnum name="arc" unit="deg" val="58"/>
+
+	<section name="Right Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="25"/>
+	</section>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="b-road1-sand3-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s11-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<attnum name="grade" unit="%" val="-1"/>
+	<attnum name="profil end tangent" unit="%" val="0"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s11-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<attnum name="grade" unit="%" val="5"/>
+	<attnum name="profil end tangent" unit="%" val="5"/>
+	<attnum name="banking end" unit="deg" val="-3"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Right Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10.0"/>
+	  <attstr name="type" val="tangent"/>
+	</section>
+      </section>
+
+      <section name="t11">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="133.333333"/>
+	<attnum name="arc" unit="deg" val="45"/>
+      </section>
+
+      <section name="s12">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="166.666666"/>
+	<attnum name="grade" unit="%" val="6"/>
+	<attnum name="profil end tangent" unit="%" val="6"/>
+	<attnum name="banking end" unit="deg" val="1"/>
+      </section>
+
+      <section name="t12">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="200"/>
+	<attnum name="arc" unit="deg" val="28"/>
+      </section>
+
+      <section name="s13">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="133.333333"/>
+      </section>
+
+      <section name="t13">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="200"/>
+	<attnum name="arc" unit="deg" val="27"/>
+      </section>
+
+      <section name="s14-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="50"/>
+	<attnum name="grade" unit="%" val="5"/>
+	<attnum name="profil end tangent" unit="%" val="5"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+      </section>
+
+      <section name="s14-2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+	<attnum name="grade" unit="%" val="1"/>
+	<attnum name="profil end tangent" unit="%" val="1"/>
+	<attnum name="banking end" unit="deg" val="5"/>
+      </section>
+
+      <section name="t14">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="33.333333"/>
+	<attnum name="arc" unit="deg" val="135"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="25"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-sand3-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s15">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="133.333333"/>
+	<attnum name="grade" unit="%" val="-6"/>
+	<attnum name="profil end tangent" unit="%" val="-6"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+      </section>
+
+      <section name="t15">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="66.666666"/>
+	<attnum name="arc" unit="deg" val="28"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s16">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t16">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="66.666666"/>
+	<attnum name="arc" unit="deg" val="35"/>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s17">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="66.666666"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t17">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="200"/>
+	<attnum name="arc" unit="deg" val="80"/>
+      </section>
+
+      <section name="s18">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+      </section>
+
+      <section name="t18">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="133.333333"/>
+	<attnum name="arc" unit="deg" val="22"/>
+      </section>
+
+      <section name="s19">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="66.666666"/>
+      </section>
+
+      <section name="t19">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="53.333333"/>
+	<attnum name="arc" unit="deg" val="67"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="sand3"/>
+	  <attnum name="end width" val="25"/>
+	</section>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-sand3-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s20">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="33.333333"/>
+	<attnum name="grade" unit="%" val="-2"/>
+	<attnum name="profil end tangent" unit="%" val="-2"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t20">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="40"/>
+	<attnum name="arc" unit="deg" val="72"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s21">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="33.333333"/>
+	<attnum name="grade" unit="%" val="0"/>
+	<attnum name="profil end tangent" unit="%" val="0"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="e6grass6"/>
+	  <attnum name="end width" val="10"/>
+	</section>
+      </section>
+
+      <section name="t21">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="66.666666"/>
+	<attnum name="arc" unit="deg" val="29"/>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="s22">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="33.333333"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="t22-1">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="40"/>
+	<attnum name="arc" unit="deg" val="45"/>
+
+	<section name="Right Border">
+	  <attstr name="surface" val="curb-5cm-r"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+      </section>
+
+      <section name="t22-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="40"/>
+	<attnum name="arc" unit="deg" val="45"/>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="curb-5cm-l"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="curb"/>
+	  <attnum name="height" val="0.05"/>
+	</section>
+
+	<section name="Right Border">
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="s23-1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="200"/>
+	<attnum name="profil end tangent" unit="%" val="0"/>
+	<attnum name="banking end" unit="deg" val="0"/>
+	<attnum name="z end" val="0"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="e6-road1-grass6-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+      </section>
+
+      <section name="pit entry">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="106.700887"/>
+
+ 	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-l2p"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="road1"/>
+	  <attnum name="end width" val="15"/>
+	</section>
+      </section>
+
+      <section name="last seg">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="150"/>
+
+	<section name="Left Border">
+	  <attstr name="surface" val="b-road1-l2"/>
+	  <attnum name="width" val="1.0"/>
+	  <attstr name="style" val="plan"/>
+	</section>
+
+	<section name="Left Side">
+	  <attstr name="surface" val="road1-pits"/>
+	</section>
+      </section>
+
+    </section>
+
+  </section>
+
+  <!-- Cameras -->
+  <section name="Cameras">
+
+    <section name="cam 0">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="start lane"/>
+      <attnum name="to right" val="7.5"/>
+      <attnum name="to start" val="0"/>
+      <attnum name="height" val="5"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="pit entry"/> <!-- excluded -->
+      <attstr name="fov end" val="pit exit"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 1">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t1"/>
+      <attnum name="to right" val="-15.0"/>
+      <attnum name="to start" unit="deg" val="15"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="pit exit"/> <!-- included  -->
+      <attstr name="fov end" val="t2"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 2">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t3"/>
+      <attnum name="to right" val="-12.0"/>
+      <attnum name="to start" unit="deg" val="15"/>
+      <attnum name="height" val="22"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t2"/> <!-- included  -->
+      <attstr name="fov end" val="s4-2"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 3">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t4"/>
+      <attnum name="to right" val="-13.0"/>
+      <attnum name="to start" unit="deg" val="50"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s4-2"/> <!-- included  -->
+      <attstr name="fov end" val="s5-1"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 4">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="s5-2"/>
+      <attnum name="to right" val="25.0"/>
+      <attnum name="to start" val="0"/>
+      <attnum name="height" val="4"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s5-1"/> <!-- included  -->
+      <attstr name="fov end" val="t5"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 5">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t7"/>
+      <attnum name="to right" val="25.0"/>
+      <attnum name="to start" unit="deg" val="20"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t5"/> <!-- included  -->
+      <attstr name="fov end" val="s9"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 7">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t10"/>
+      <attnum name="to right" val="-10.0"/>
+      <attnum name="to start" val="1"/>
+      <attnum name="height" val="14"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s9"/> <!-- included  -->
+      <attstr name="fov end" val="t13"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 10">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="s14-2"/>
+      <attnum name="to right" val="-15.0"/>
+      <attnum name="to start" val="0"/>
+      <attnum name="height" val="8"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t13"/> <!-- included  -->
+      <attstr name="fov end" val="t14"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 11">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t14"/>
+      <attnum name="to right" val="-15.0"/>
+      <attnum name="to start" unit="deg" val="60"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t14"/> <!-- included  -->
+      <attstr name="fov end" val="s15"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 12">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t15"/>
+      <attnum name="to right" val="-15.0"/>
+      <attnum name="to start" unit="deg" val="0"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="s15"/> <!-- included  -->
+      <attstr name="fov end" val="t16"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 125">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t16"/>
+      <attnum name="to right" val="-15.0"/>
+      <attnum name="to start" unit="deg" val="10"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t16"/> <!-- included  -->
+      <attstr name="fov end" val="t17"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 13">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t17"/>
+      <attnum name="to right" val="-15.0"/>
+      <attnum name="to start" unit="deg" val="60"/>
+      <attnum name="height" val="2"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t17"/> <!-- included  -->
+      <attstr name="fov end" val="t18"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 15">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="t20"/>
+      <attnum name="to right" val="21.0"/>
+      <attnum name="to start" unit="deg" val="30"/>
+      <attnum name="height" val="13"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t18"/> <!-- included  -->
+      <attstr name="fov end" val="t22-2"/> <!-- excluded -->
+    </section>
+
+    <section name="cam 16">
+      <!-- Camera's position relative to a segment -->
+      <attstr name="segment" val="s23-1"/>
+      <attnum name="to right" val="-13.0"/>
+      <attnum name="to start" val="50"/>
+      <attnum name="height" val="5"/>
+      <!-- Camera field of view, indicates the first and last segment viewed -->
+      <attstr name="fov start" val="t22-2"/> <!-- included  -->
+      <attstr name="fov end" val="pit entry"/> <!-- excluded -->
+    </section>
+
+  </section>
+
+</params>
+
+

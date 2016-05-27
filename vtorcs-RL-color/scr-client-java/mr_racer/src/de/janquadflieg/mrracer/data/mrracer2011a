@@ -1,0 +1,14 @@
+#Default parameters for MrRacer2011, from F:\Quad\Experiments\CIG-2011\EA-Runs\TestRun1-Wheel2-Noisy\run01\Torcs-Noisy_0001inds.log indID 858
+#Thu Mar 03 13:59:47 CET 2011
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.V-=0.07133
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.B-=4.263732991790212
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.V-=0.2678
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.M-=0.66091
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.M-=0.3172
+-MrRacer2011.Acc--DAB.accDamp--GLF.Q-=0.41128
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.Q-=0.21748
+-MrRacer2011.Acc--DAB.accDamp--GLF.B-=9.098504202209975
+-MrRacer2011.Acc--DAB.accDamp--GLF.V-=0.808
+-MrRacer2011.Plan--PLAN.targetSpeeds--GLF.Q-=0.30906
+-MrRacer2011.Acc--DAB.accDamp--GLF.M-=0.5179
+-MrRacer2011.Acc--DAB.brakeDamp--GLF.B-=3.7969073512315292

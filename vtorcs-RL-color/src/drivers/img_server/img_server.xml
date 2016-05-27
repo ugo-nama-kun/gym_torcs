@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    file                 : img_server.xml
+    created              : Tue Jun 12 13:41:04 CEST 2012
+    copyright            : (C) 2002 Giuseppe Cuccu
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd">
+<params name="img_server" type="robotdef">
+  <section name="Robots">
+    <section name="index">
+
+      <section name="0">
+        <attstr name="name" val="img1_Red"></attstr>
+        <attstr name="desc" val="Vis UL+ERL"></attstr>
+        <attstr name="team" val="IDSIA"></attstr>
+        <attstr name="author" val="Giuseppe Cuccu"></attstr>
+        <attstr name="car name" val="cg-nascar-rwd"></attstr>
+        <attstr name="category" val="Nascar"></attstr>
+        <attnum name="race number" val="99"></attnum>
+        <attnum name="red" val="1.0"></attnum>
+        <attnum name="green" val="0.0"></attnum>
+        <attnum name="blue" val="0.0"></attnum>
+      </section>
+
+      <section name="1">
+        <attstr name="name" val="img2_Green"></attstr>
+        <attstr name="desc" val="Vis UL+ERL"></attstr>
+        <attstr name="team" val="IDSIA"></attstr>
+        <attstr name="author" val="Giuseppe Cuccu"></attstr>
+        <attstr name="car name" val="cg-nascar-rwd"></attstr>
+        <attstr name="category" val="Nascar"></attstr>
+        <attnum name="race number" val="92"></attnum>
+        <attnum name="red" val="0.0"></attnum>
+        <attnum name="green" val="1.0"></attnum>
+        <attnum name="blue" val="0.0"></attnum>
+      </section>
+
+      <section name="2">
+        <attstr name="name" val="img3_Blue"></attstr>
+        <attstr name="desc" val="Vis UL+ERL"></attstr>
+        <attstr name="team" val="IDSIA"></attstr>
+        <attstr name="author" val="Giuseppe Cuccu"></attstr>
+        <attstr name="car name" val="cg-nascar-rwd"></attstr>
+        <attstr name="category" val="Nascar"></attstr>
+        <attnum name="race number" val="93"></attnum>
+        <attnum name="red" val="0.0"></attnum>
+        <attnum name="green" val="0.0"></attnum>
+        <attnum name="blue" val="1.0"></attnum>
+      </section>
+
+    </section>
+  </section>
+</params>

@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: multiple1.html,v 1.1 2004/11/30 14:02:08 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Define Multiple Robots</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="how to implement multiple robots"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, multiple"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>2.3 Define Multiple Robots</h1>
+
+        <h3>Overview</h3>
+        <p>
+          First ask yourself the question, why we want more than one driver in one module? It's because we can share
+          the program code and data between the drivers of our module. If we write our driver general enough,
+          we can load parameters for the different tracks and cars, so no code difference is necessary.
+        </p>
+
+        <h3>Car Definition</h3>
+        <p>
+          In chapter 1.1 we had chosen a cg-nascar-fwd as our car. When you edited <span style="color:red;">bt</span>.cpp, you might
+          have recognized that in this file is no clue which car we want to use. The information about the
+          cars is stored in the <span style="color:red;">bt</span>.xml file. So let's have a look at it.
+        </p>
+        <p>
+          The following three lines just define the name and the structure. You'll not need to change them.
+        </p>
+        <p><pre class="lbcolor">&lt;params name="<span style="color:red;">bt</span>" type="robotdef"&gt;
+  &lt;section name="Robots"&gt;
+    &lt;section name="index"&gt;</pre>
+        </p>
+        <p>
+          The next line
+        </p>
+        <p><pre class="lbcolor">      &lt;section name="1"&gt;</pre>
+        </p>
+        <p>
+          defines the index of the driver. Because we can have more than one driver per module,
+          each one is uniquely identified by its index. You will receive it e. g. in your</p>
+        <p>
+          <tt>static void drive(int <span style="color:green;">index</span>, tCarElt* car, tSituation *s)</tt>
+        </p>
+        <p>
+          function from TORCS, so you know for which car you need to drive.
+          It has to match with the index you assign to modInfo[i].index in <span style="color:red;">bt</span>.cpp,
+          but you will see that later. The next two lines contain the name and description of you driver, they
+          have to match with the modInfo[i] entries (don't ask me why it has to be defined here and in the
+          <span style="color:red;">bt</span>.cpp).
+        </p>
+        <p><pre class="lbcolor">        &lt;attstr name="name" val="<span style="color:red;">bt 1</span>"&gt;&lt;/attstr&gt;
+        &lt;attstr name="desc" val=""&gt;&lt;/attstr&gt;</pre>
+        </p>
+        <p>
+          The next three entries are your teams name, your name and the car to use.
+        </p>
+        <p>
+        <p><pre class="lbcolor">        &lt;attstr name="team" val="<span style="color:red;">berniw</span>"&gt;&lt;/attstr&gt;
+        &lt;attstr name="author" val="<span style="color:red;">Bernhard Wymann</span>"&gt;&lt;/attstr&gt;
+        &lt;attstr name="car name" val="cg-nascar-rwd"&gt;&lt;/attstr&gt;</pre>
+        </p>
+        <p>
+          Now you can choose a racing number and define the color of the drivers entry in the leaders board (if you don't
+          know how to enable the leaders board during the race, hit F1 for help).
+        </p>
+
+        <p><pre class="lbcolor">        &lt;attnum name="race number" val="<span style="color:red;">61</span>"&gt;&lt;/attnum&gt;
+        &lt;attnum name="red" val="<span style="color:red;">1.0</span>"&gt;&lt;/attnum&gt;
+        &lt;attnum name="green" val="<span style="color:red;">0.0</span>"&gt;&lt;/attnum&gt;
+        &lt;attnum name="blue" val="<span style="color:red;">1.0</span>"&gt;&lt;/attnum&gt;
+      &lt;/section&gt;
+    &lt;/section&gt;
+  &lt;/section&gt;
+&lt;/params&gt;</pre>
+        </p>
+
+        <h3>Adding Cars</h3>
+        <p>
+          We will now add two car entries to the file <span style="color:red;">bt</span>.xml (one module is allowed
+          to handle up to ten robots). This will not yet
+          work in the simulation, because we need to change also <span style="color:red;">bt</span>.cpp. You can
+          simply copy the part between &lt;section name="1"&gt; and &lt;/section&gt; two times and change the
+          race numbers, the leaders board color if you like, the car you choose and of course the index. To follow
+          the tutorial choose indices 0, 1 and 2 and the names "<span style="color:red;">bt</span> 1",
+          "<span style="color:red;">bt</span> 2" and "<span style="color:red;">bt</span> 3". If you want other cars do
+        </p>
+        <p>
+          <tt>
+           $ ls /usr/local/games/torcs/cars
+          </tt>
+        </p>
+        <p>
+          to get a list of the installed cars. The file <span style="color:red;">bt</span>.xml should finally
+          look similar to this:
+        </p>
+        <p><pre class="lcolor">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!--
+    file                 : bt.xml
+    created              : Thu Dec 12 02:34:31 CET 2002
+    copyright            : (C) 2002 Bernhard Wymann
+--&gt;
+
+&lt;!--    This program is free software; you can redistribute it and/or modify  --&gt;
+&lt;!--    it under the terms of the GNU General Public License as published by  --&gt;
+&lt;!--    the Free Software Foundation; either version 2 of the License, or     --&gt;
+&lt;!--    (at your option) any later version.                                   --&gt;
+
+&lt;!DOCTYPE params SYSTEM "../../libs/tgf/params.dtd"&gt;
+
+&lt;params name="bt" type="robotdef"&gt;
+  &lt;section name="Robots"&gt;
+    &lt;section name="index"&gt;
+
+      &lt;section name="0"&gt;
+        &lt;attstr name="name" val="bt 1"&gt;&lt;/attstr&gt;
+        &lt;attstr name="desc" val=""&gt;&lt;/attstr&gt;
+        &lt;attstr name="team" val="berniw"&gt;&lt;/attstr&gt;
+        &lt;attstr name="author" val="Bernhard Wymann"&gt;&lt;/attstr&gt;
+        &lt;attstr name="car name" val="cg-nascar-rwd"&gt;&lt;/attstr&gt;
+        &lt;attnum name="race number" val="61"&gt;&lt;/attnum&gt;
+        &lt;attnum name="red" val="1.0"&gt;&lt;/attnum&gt;
+        &lt;attnum name="green" val="0.0"&gt;&lt;/attnum&gt;
+        &lt;attnum name="blue" val="1.0"&gt;&lt;/attnum&gt;
+      &lt;/section&gt;
+
+      &lt;section name="1"&gt;
+        &lt;attstr name="name" val="bt 2"&gt;&lt;/attstr&gt;
+        &lt;attstr name="desc" val=""&gt;&lt;/attstr&gt;
+        &lt;attstr name="team" val="berniw"&gt;&lt;/attstr&gt;
+        &lt;attstr name="author" val="Bernhard Wymann"&gt;&lt;/attstr&gt;
+        &lt;attstr name="car name" val="xj-220"&gt;&lt;/attstr&gt;
+        &lt;attnum name="race number" val="62"&gt;&lt;/attnum&gt;
+        &lt;attnum name="red" val="1.0"&gt;&lt;/attnum&gt;
+        &lt;attnum name="green" val="0.0"&gt;&lt;/attnum&gt;
+        &lt;attnum name="blue" val="1.0"&gt;&lt;/attnum&gt;
+      &lt;/section&gt;
+
+      &lt;section name="2"&gt;
+        &lt;attstr name="name" val="bt 3"&gt;&lt;/attstr&gt;
+        &lt;attstr name="desc" val=""&gt;&lt;/attstr&gt;
+        &lt;attstr name="team" val="berniw"&gt;&lt;/attstr&gt;
+        &lt;attstr name="author" val="Bernhard Wymann"&gt;&lt;/attstr&gt;
+        &lt;attstr name="car name" val="155-DTM"&gt;&lt;/attstr&gt;
+        &lt;attnum name="race number" val="63"&gt;&lt;/attnum&gt;
+        &lt;attnum name="red" val="1.0"&gt;&lt;/attnum&gt;
+        &lt;attnum name="green" val="0.0"&gt;&lt;/attnum&gt;
+        &lt;attnum name="blue" val="1.0"&gt;&lt;/attnum&gt;
+      &lt;/section&gt;
+
+    &lt;/section&gt;
+  &lt;/section&gt;
+&lt;/params&gt;</pre>
+        </p>
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+          <li>You know how to define cars in <span style="color:red;">bt</span>.xml.</li>
+          <li>You know you can define up to ten cars.</li>
+          <li>To follow the tutorial you have chosen the indices 0, 1 and 2.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./comments.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./multiple2.html">
+          <p style="text-align:right;">Now change the code.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: openal-install.html,v 1.1 2005/08/16 14:21:35 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Plib Installation</title>
+  <link rel="stylesheet" type="text/css" href="../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="Plib installation"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, openal, install, berniw, bernhard wymann"/>
+  <script src="../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+        <h1>OpenAL Installation</h1>
+        <h3>Checking for OpenAL</h3>
+        <p>First we check if there is already an openal version installed.</p>
+        <p><tt>$ rpm -qa | grep -i openal</tt></p>
+        <p>In case you find an installed version uninstall it. Remove first the openal-devel
+		package and then openal (you need to be root):</p>
+        <p>
+          <tt>
+            # rpm -e openal-devel<br/>
+            # rpm -e openal<br/>
+          </tt>
+        </p>
+        <p>
+			There is a certain danger in removing OpenAL, because it is a shared library. If the
+			package management system refuses to remove it, try to stick with the installed version,
+			perhaps TORCS will compile with it (but you will expirience some sound glitches with that).
+		</p>
+
+        <h3>Download and Unpack OpenAL</h3>
+        <p>
+          Download OpenAL from
+          <a href="http://sourceforge.net/project/showfiles.php?group_id=3777&package_id=158735&release_id=344126" target="_parent">
+          here</a>. TORCS has been tested against this version, for other versions we guarantee for nothing!
+		  Stay as root and do</p>
+        <p>
+          <tt>
+            # cd /usr/src/torcs<br/>
+            # tar xfvj /path_to_downloaded_files/torcs-1.2.4-openal.tar.bz2<br/>
+            # cd openal/linux<br/>
+          </tt>
+        </p>
+
+        <h3>Compiling and Installing OpenAL</h3>
+        <p>
+			You are still root and in /usr/src/torcs/openal/linux:</p>
+		</p>
+        <p>
+          <tt>
+            # ./configure<br/>
+            # make<br/>
+            # make install<br/>
+          </tt>
+        </p>
+        <p>
+          If something fails you need to resolve it. In case the configure script complained
+          about something you can find some additional information in the file config.log. The
+          cause for problems are usually missing header files or libraries, wrong versions or
+          multiple versions installed.<br/><br/>
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./plib-install.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./torcs-install.html">
+          <p style="text-align:right;">I want to race, hurry up, let's build TORCS.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

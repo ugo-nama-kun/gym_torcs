@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE params SYSTEM "params.dtd">
+
+
+<params name="sound">
+  <section name="Sound Settings">
+    <attstr name="state" val="disabled"/>
+    <attnum name="volume" unit="%" val="100"/>
+  </section>
+
+</params>

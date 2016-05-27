@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: software-requirements.html,v 1.1 2004/11/30 14:02:05 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>TORCS Software Requirements</title>
+  <link rel="stylesheet" type="text/css" href="../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="requirements"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, requirements, berniw, bernhard wymann"/>
+  <script src="../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+        <h1>TORCS Requirements</h1>
+        <h2>Software</h2>
+        <h3>Introduction</h3>
+        <p>
+          You need a working OpenGL/DRI driver, development tools and some additional libraries. Most often you
+          can go into your Linux distribution setup and simply click something like "development machine" and
+          all necessary tools will be installed. You need gcc, header files for OpenGL, GLUT, GLU, XFree86 and libc.
+          OpenGL driver setup is most often supported by the distribution, consult the documentation.
+          Below we will check if the basic requirements are fullfilled. If you have already compiled OpenGL
+          applications and you are sure your hardware is set up correct, <a href="./packages.html">skip</a>
+          the rest of this page.
+        </p>
+
+        <h3>Checking OpenGL/DRI</h3>
+        <p>
+          Start your XFree86 (if not already done), open a terminal and run as normal user (the $ means the
+          prompt of a normal user, # the prompt of root).
+        </p>
+        <p> 
+        <tt>$ glxinfo | grep direct</tt></p>
+        <p>The result should look like this:</p>
+        <p><tt>direct rendering: Yes</tt></p>
+        <p>
+          If that's not the case you have to check your OpenGL setup.
+        </p>
+
+        <h3>Checking GLUT</h3>
+        <p>
+          For rpm based distributions, run the following command (we run a query over the whole package database):
+        </p>
+        <p><tt>$ rpm -qa | grep glut</tt></p>
+        <p>The result should look something like this (this depends on the package names):</p>
+        <p>
+          <tt>
+            mesaglut-3.4.2-42<br/>
+            mesaglut-devel-3.4.2-42<br/>
+          </tt>
+        </p>
+        <p>
+          If the result lists nothing you have to install GLUT. Use the tool provided from your distribution. Make
+          sure that you also install glut.h. If just one package shows up, you can list the package content and search
+          for glut.h:
+        </p>
+        <p><tt>$ rpm -ql NAME | grep glut.h</tt></p>
+        <p>
+          where NAME means in the above example mesaglut or mesaglut-devel, without version numbers. If
+          nothing shows up, glut.h is not installed, so search your distribution and install it.
+        </p>
+        <h3>Checking Libpng</h3>
+        <p>
+          For rpm based distributions, run the following command:
+        </p>
+        <p><tt>$ rpm -qa | grep png</tt></p>
+        <p>The result should look something like this (this depends on the package names):</p>
+        <p><tt>libpng-2.1.0.12-153</tt></p>
+        <p>
+          If the result lists nothing you have to install libpng with header files (eg. png.h).<br/><br/>
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./hardware-requirements.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./packages.html">
+          <p style="text-align:right;">Hey, now let's get the files!</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>
+  

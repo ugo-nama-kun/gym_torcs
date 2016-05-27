@@ -1,0 +1,11 @@
+;
+; ssggraph.def
+;
+
+LIBRARY
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	ssggraph
+

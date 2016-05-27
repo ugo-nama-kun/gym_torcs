@@ -1,0 +1,755 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+	file        : faq.html
+	created     : Wed Feb  25 18:27:13 CET 2004
+	copyright   : (C) 2004-2006 by Bernhard Wymann
+	email       : berniw@bluewin.ch
+	version     : $Id: faq.html,v 1.18.2.1 2008/11/11 23:08:24 berniw Exp $
+
+	Permission is granted to copy, distribute and/or modify this document
+	under the terms of the GNU Free Documentation License, Version 1.2
+	or any later version published by the Free Software Foundation;
+	with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+	Texts.  A copy of the license is available at http://www.gnu.org/copyleft.
+-->
+
+<head>
+  <title>TORCS Frequently Asked Questions</title>
+  <link rel="stylesheet" type="text/css" href="../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="torcs frequently asked questions"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, installation, robot, driver, tutorial, racing, problem, screen"/>
+  <script src="../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <a name="topofthepage">
+		   <h1>The Official TORCS 1.3.1 FAQ</h1>
+		</a>
+
+		<h2>0. About this Document.</h2>
+		<ul style="list-style-type:disk; color:black;">
+		  <li><h3><a href="#c0_1">0.1 License and copyright.</a></h3></li>
+		  <li><h3><a href="#c0_2">0.2 Document version.</a></h3></li>
+		</ul>
+
+		<h2>1. About TORCS in General.</h2>
+		<ul style="list-style-type:disk; color:black;">
+		  <li><h3><a href="#c1_1">1.1 What is TORCS?</a></h3></li>
+		  <li><h3><a href="#c1_2">1.2 Who develops TORCS?</a></h3></li>
+		  <li><h3><a href="#c1_3">1.3 Is documentation available?</a></h3></li>
+		  <li><h3><a href="#c1_4">1.4 Which features has TORCS?</a></h3></li>
+		  <li><h3><a href="#c1_5">1.5 What are the future plans?</a></h3></li>
+		  <li><h3><a href="#c1_6">1.6 Why do you not...?</a></h3></li>
+		  <li><h3><a href="#c1_7">1.7 What do you mean with robot?</a></h3></li>
+		  <li><h3><a href="#c1_8">1.8 Why do you not replace GLUT with SDL?</a></h3></li>
+		  <li><h3><a href="#c1_9">1.9 Are there official championships?</a></h3></li>
+		  <li><h3><a href="#c1_10">1.10 Should I start my own racing sim project?</a></h3></li>
+		</ul>
+
+		<h2>2. Platforms and Requirements.</h2>
+		<ul style="list-style-type:disk; color:black;">
+		  <li><h3><a href="#c2_1">2.1 On which operating systems runs TORCS?</a></h3></li>
+		  <li><h3><a href="#c2_2">2.2 What are the hardware requirements?</a></h3></li>
+		  <ul style="list-style-type:disk; color:black;">
+			<li><h4><a href="#c2_2_1">2.2.1 Robot development.</a></h4></li>
+			<li><h4><a href="#c2_2_2">2.2.2 Driving yourself.</a></h4></li>
+		  </ul>
+		  <li><h3><a href="#c2_3">2.3 What are the software requirements?</a></h3></li>
+		</ul>
+
+		<h2>3. Installation.</h2>
+		<ul style="list-style-type:disk; color:black;">
+		  <li><h3><a href="#c3_1">3.1 How do I install TORCS?</a></h3></li>
+		</ul>
+
+		<h2>4. Problems and Solutions.</h2>
+		<ul style="list-style-type:disk; color:black;">
+		  <li><h3><a href="#c4_1">4.1 General problem solving approach.</a></h3></li>
+
+		  <li><h3><a href="#c4_2">4.2 Build Problems.</a></h3></li>
+		  <ul style="list-style-type:disk; color:black;">
+			<li><h4><a href="#c4_2_1">4.2.1 ./configure reports "configure: error: Can't find GL/glut.h".</a></h4></li>
+			<li><h4><a href="#c4_2_2">4.2.2 ./configure reports "configure: error: Can't find plib/ssg.h" or "plib/ul.h".</a></h4></li>
+			<li><h4><a href="#c4_2_3">4.2.3 TORCS does not compile on Windows.</a></h4></li>
+			<li><h4><a href="#c4_2_4">4.2.4 FreeGLUT compilation fails with NVidia OpenGL driver.</a></h4></li>
+			<li><h4><a href="#c4_2_5">4.2.5 TORCS does not compile with make: 'Make-config' is up to date.</a></h4></li>
+			<li><h4><a href="#c4_2_6">4.2.6 Compiling stops with "error: `GL_TEXTURE0_ARB' undeclared".</a></h4></li>
+			<li><h4><a href="#c4_2_7">4.2.7 Compiling fails with "The syntax of
+			the command is incorrect.  Error executing c:\winnt\system32\cmd.exe".</a></h4></li>
+			<li><h4><a href="#c4_2_8">4.2.8 ./configure fails in "checking for sin in -lm" on Gentoo.</a></h4></li>
+		  </ul>
+
+		  <li><h3><a href="#c4_3">4.3 Startup and Runtime Problems.</a></h3></li>
+		  <ul style="list-style-type:disk; color:black;">
+			<li><h4><a href="#c4_3_1">4.3.1 Broken OpenGL/DRI drivers or '~' file.</a></h4></li>
+			<li><h4><a href="#c4_3_2">4.3.2 Multiple GLU libraries.</a></h4></li>
+			<li><h4><a href="#c4_3_3">4.3.3 Not removed old TORCS version.</a></h4></li>
+			<li><h4><a href="#c4_3_4">4.3.4 TORCS reports missing files and crashes.</a></h4></li>
+			<li><h4><a href="#c4_3_5">4.3.5 My screen resolution is not supported.</a></h4></li>
+			<li><h4><a href="#c4_3_6">4.3.6 I have a problem with the fullscreen mode.</a></h4></li>
+			<li><h4><a href="#c4_3_7">4.3.7 TORCS graphics is slow and it crashes on "READY!"</a></h4></li>
+			<li><h4><a href="#c4_3_8">4.3.8 TORCS on Windows hangs after &quot;READY!&quot;</a></h4>
+			<li><h4><a href="#c4_3_9">4.3.9 TORCS does not start and reports slDSP:.</a></h4></li>
+			<li><h4><a href="#c4_3_10">4.3.10 The cars are flickering.</a></h4></li>
+			<li><h4><a href="#c4_3_11">4.3.11 I use ALSA and TORCS does not start up.</a></h4></li>
+			<li><h4><a href="#c4_3_12">4.3.12 TORCS does not start up and complains about display requirements.</a></h4></li>
+			<li><h4><a href="#c4_3_13">4.3.13 The racetrack mini map is just a blue square.</a></h4></li>
+			<li><h4><a href="#c4_3_14">4.3.14 TORCS runs but without textures.</a></h4></li>
+			<li><h4><a href="#c4_3_15">4.3.15 TORCS on Windows crashes after "new race".</a></h4></li>
+		  </ul>
+
+		  <li><h3><a href="#c4_4">4.4 Other Problems.</a></h3></li>
+		  <ul style="list-style-type:disk; color:black;">
+			<li><h4><a href="#c4_4_1">4.4.1 How do I capture a movie?</a></h4></li>
+			<li><h4><a href="#c4_4_2">4.4.2 Can I develop a robot using Windows?</a></h4></li>
+			<li><h4><a href="#c4_4_3">4.4.3 Is my joystick/steering wheel/gamepad supported?</a></h4></li>
+			<li><h4><a href="#c4_4_4">4.4.4 How do I set up a multiplayer game?</a></h4></li>
+			<li><h4><a href="#c4_4_5">4.4.5 I cannot adjust the joystick/wheel centering.</a></h4></li>
+		  </ul>
+		</ul>
+
+		<h2>5. Problem reporting.</h2>
+		<ul style="list-style-type:disk; color:black;">
+		  <li><h3><a href="#c5_1">5.1 When do I report a problem?</a></h3></li>
+		  <li><h3><a href="#c5_2">5.2 How and where do I report a problem?</a></h3></li>
+		</ul>
+
+		<h2>6. Links.</h2>
+		<ul style="list-style-type:disk; color:black;">
+		  <li><h3><a href="#c6_1">6.1 TORCS.</a></h3></li>
+		  <li><h3><a href="#c6_2">6.2 Libraries and Drivers.</a></h3></li>
+		  <li><h3><a href="#c6_3">6.3 Other.</a></h3></li>
+		</ul>
+
+
+
+
+
+		<br/><h2>0. About this Document.</h2>
+
+		<h3><a name="c0_1">0.1 License and copyright.</a></h3>
+		<p>
+		  Copyright (c) 2004-2008 <a href="mailto:berni4you@gmx.ch">Bernhard Wymann</a>.
+		</p>
+		<p>
+		Permission is granted to copy, distribute and/or modify this document
+		under the terms of the GNU Free Documentation License, Version 1.2
+		or any later version published by the Free Software Foundation;
+		with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+		Texts.  A copy of the license is available <a href="http://www.gnu.org/copyleft">here</a>.
+		</p>
+
+		<h3><a name="c0_2">0.2 Document version.</a></h3>
+		<p>
+			2008-11-10.
+		</p>
+
+
+		<br/><h2>1. About TORCS in General.</h2>
+
+		<h3><a name="c1_1">1.1 What is TORCS?</a></h3>
+		<p>
+          <a href="http://torcs.org" target="_parent">TORCS</a>, <b>The Open Racing Car Simulator</b>,
+          is a car racing simulation, which allows you to drive in races against opponents simulated by
+		  the computer. You can also develop your own computer-controlled driver (also called a robot) in
+		  C or C++. TORCS is "Open Source" (GNU General Public License Version 2 or later).
+		</p>
+
+		<h3><a name="c1_2">1.2 Who develops TORCS?</a></h3>
+		<p>
+          The TORCS project has been created by Eric Espié and Christophe Guionneau. Currently Bernhard Wymann,
+		  Christos Dimitrakakis and other contributors continue to develop the project.
+		  Visit the official <a href="http://torcs.org" target="_parent">TORCS site</a> for more information.
+		</p>
+
+
+		<h3><a name="c1_3">1.3 Is documentation available?</a></h3>
+		<p>
+		  Yes, there is quite a lot of documentation available. Look at the official
+		  <a href="http://torcs.org" target="_parent">TORCS site</a> and on
+		  <a href="http://www.berniw.org" target="_parent">Bernhard's homepage</a>. You can find installation instructions,
+		  the robot tutorial, instructions how to use TORCS and more.
+		</p>
+
+		<h3><a name="c1_4">1.4 Which features has TORCS?</a></h3>
+		<p>
+		  There are 42 different cars, 30 tracks and more than 50 opponents to race against.
+		  You can steer with a joystick or steering wheel, if it's supported by your platform.
+		  It is also possible to drive with the mouse or the keyboard, but it's not easy. Graphic features
+		  lighting, smoke, skidmarks and glowing brake disks. The simulation features a simple damage
+		  model, collisions, tire and wheel properties
+          (springs, dampers, stiffness, ...), aerodynamics (ground effect, spoilers, ...) and much more.
+		  The gameplay allows different types of races from the simple practice session up to the championship.
+		  Enjoy racing against your friends in the split screen mode with up to four human players.
+		</p>
+
+		<h3><a name="c1_5">1.5 What are the future plans?</a></h3>
+		<p>
+		  First, take the following features not as promise, it can take a very long time till the
+		  features are working if at all. Beside the maintenance and bugfixing the following features
+		  will probably become implemented: Improved physics, better inside view,
+		  replay and networking.
+		</p>
+
+		<h3><a name="c1_6">1.6 Why do you not...?</a></h3>
+		<p>
+		  Don't ever forget that we develop TORCS in our spare time and you get it for free. Your wishes,
+		  ideas and feature requests are welcome in the
+		  <a href="http://lists.sourceforge.net/lists/listinfo/torcs-users" target="_parent">
+		  torcs-users</a> mailing list. If nobody picks up your idea feel free to contact the project leader
+		  and to implement it yourself. Please avoid posting something like this:
+		  "I am sure there are numerous technical reasons why not to use GLUT for games."
+		  This kind of argumentation might work for a junior president of a well known country
+		  to convince the citizens of the existence of weapons of mass destruction in Iraq, of course
+		  "we are sure there are weapons of mass destruction in Iraq"... But here you better put up some
+		  arguments;-)
+		</p>
+
+		<h3><a name="c1_7">1.7 What do you mean with robot?</a></h3>
+		<p>
+		  In TORCS a "robot" is a piece of program code that drives a car, so all the opponents you
+		  choose are robots.
+		</p>
+
+		<h3><a name="c1_8">1.8 Why do you not replace GLUT with SDL?</a></h3>
+		
+		<p>
+		  We will switch soon because of portable threading and networking, but for fun I leave the	
+		  former answer.
+		</p>
+
+		<p>
+		  Ah, simple question, simple answer. Like you can easily see G-L-U-T has four letters
+		  and S-D-L has just three letters, that should be enough proof of superiority, is it? Ok,
+		  then look at the version numbers, GLUT has a major 3.7, SDL has a childish 1.2.7, so
+		  GLUT is 3.7/1.27 => 2.913385826 times better at least. By the way, I am sure there are
+		  numerous technical reasons why not to use SDL for games, got it, bro?
+		</p>
+		<p>
+		  Ok, now back to serious mode. First let us have a closer look at the question, to understand it
+		  you need to have an idea what
+		  <a href="http://libsdl.org" target="_parent">SDL</a>,
+		  <a href="http://freeglut.sourceforge.net" target="_parent">GLUT</a> and
+		  <a href="http://plib.sourceforge.net" target="_parent">plib</a> provide. In a nutshell,
+		  SDL provides framebuffer access, OpenGL context, a thread API, support for input devices and audio
+		  output. There are loads of additional services available through additional libraries. GLUT
+		  provides an OpenGL context, keyboard and mouse input and simple window management functionality.
+		  Now you can see that SDL provides much more functionality than GLUT, but where does e. g. the
+		  sound in TORCS come from? Yes, it comes form plib. Plib provides sound, a scene graph, a
+		  geometry library, joystick input and much more.
+		</p>
+		<p>
+		  Now you can see what we are talking about. We need plib because of its scene graph, so the
+		  only thing we need and SDL could provide is the OpenGL context, input and simple window
+		  management. Hmm, sounds familiar, does it? Yes, GLUT fits perfectly, no SDL functionality
+		  is needed at the moment. That raises the question why should we replace working code with new
+		  code if there is no advantage? Yes, it is simply a crazy idea. Keep in mind, all the libraries
+		  are maintained and have an appropriate license. Both FreeGLUT and SDL are not standard, so
+		  there is also no advantage.
+		</p>
+		<p>
+		  Conclusion: SDL is a great library but we don't need it, it simply does not fit the
+		  requirements. That might change in the future, one never knows.
+		</p>
+
+
+		<h3><a name="c1_9">1.9 Are there official championships?</a></h3>
+		<p>
+			Yes, you can find offline robot championships
+			<a href="http://www.berniw.org/trb" target="_parent">here</a>.
+		</p>
+
+
+		<h3><a name="c1_10">1.10 Should I start my own racing sim project?</a></h3>
+		<p>
+			Definitively not, no! Why? Do a search on sf.net and Google,
+			you will find between 15 and 40 open source car/driving/racing sim
+			projects, and most of them have been &quot;promising&quot; and
+			died. Instead of starting another dead project contribute to the
+			few existing successful ones.
+		</p>
+		<p>
+			Believe it or not, but your project will very likely be a dead
+			one as well. The reason is quite simple, people underestimate the
+			required effort and the change of their lives during the project lifespan, think
+			about it. Just that you get an idea, TORCS turns now 10...
+		</p>
+
+
+		<br/><h2>2. Platforms and Requirements.</h2>
+
+		<h3><a name="c2_1">2.1 On which operating systems runs TORCS?</a></h3>
+		<p>
+		  Linux (x86, AMD64 and ppc are known to work), FreeBSD, Windows 2000/XP/Vista.
+		</p>
+
+		<h3><a name="c2_2">2.2 What are the hardware requirements?</a></h3>
+
+		<h4><a name="c2_2_1">2.2.1 Robot development.</a></h4>
+		<p>
+		  Minimum: 400MHz CPU, 128MB RAM, OpenGL 1.2 compatible graphics card with 16 MB RAM.<br/>
+		  Recommended: 600MHz CPU, 256MB RAM, OpenGL 1.3 compatible graphics card with 64 MB RAM.
+		</p>
+
+		<h4><a name="c2_2_2">2.2.2 Driving yourself.</a></h4>
+		<p>
+		  Minimum: 550MHz CPU, 128MB RAM, OpenGL 1.3 compatible graphics card with 32 MB RAM.<br/>
+		  Recommended: 800MHz CPU, 256MB RAM, OpenGL 1.3 compatible graphics card with 64 MB RAM.
+		</p>
+
+		<h3><a name="c2_3">2.3 What are the software requirements?</a></h3>
+		<p>
+		  You need recent, working and properly configured OpenGL/DRI drivers. You need also several
+		  libraries. To avoid problems you should prefer
+		  <a href="http://FreeGLUT.sourceforge.net" target="_parent">FreeGLUT</a> over GLUT. Make
+		  sure that you use exactly plib version 1.8.5. For
+		  AMD64 you need to set the &quot;-fPIC&quot; compiler switch when
+		  compiling plib (export CFLAGS=&quot;-fPIC&quot;, export
+		  CPPFLAGS=&quot;-fPIC&quot;, export CXXFLAGS=&quot;-fPIC&quot;). You need as well OpenAL,
+		  for best sound quality you should get the version from the TORCS site.
+		</p>
+
+
+
+
+
+		<br/><h2>3. Installation.</h2>
+
+		<h3><a name="c3_1">3.1 How do I install TORCS?</a></h3>
+		<p>
+		  You can find installation instructions on the
+		  <a href="http://torcs.org" target="_parent">TORCS site</a> and on
+		  <a href="http://www.berniw.org" target="_parent">Bernhard's homepage</a>.
+		</p>
+
+
+
+
+
+		<br/><h2>4. Problems and Solutions.</h2>
+
+		<h3><a name="c4_1">4.1 General problem solving approach.</a></h3>
+		<p>
+		  You may encounter this kind of problems: System configuration
+		  problems, build problems and runtime problems. If you face a
+		  problem follow these steps:
+		  <ul>
+			<li>Have a look into this FAQ, perhaps your problem is already known.</li>
+			<li>Clean up your old TORCS installation, including old environment settings.</li>
+			<li>Read the installation instructions carefully, double check your steps.</li>
+			<li>Make sure that you have not installed multiple GLU libraries.</li>
+			<li>Make sure that you have installed the latest OpenGL/DRI and sound drivers.</li>
+			<li>Try to start up TORCS with the "-s" switch to disable multitexturing.</li>
+			<li>Make sure that the version number of your ALSA drivers, libraries and utilities match.</li>
+			<li>Test your OpenGL setup with tuxracer and bzflag.</li>
+			<li>Have a look into the mailing list, perhaps there is already a solution.</li>
+			<li>If you get stuck learn how to <a href="#c5_1">report a problem</a> and contact the mailing list.</li>
+		  </ul>
+		</p>
+
+
+
+		<h3><a name="c4_2">4.2 Build Problems.</a></h3>
+
+		<h4><a name="c4_2_1">4.2.1 ./configure reports "configure: error: Can't find GL/glut.h".</a></h4>
+		<p>
+		  Download and install <a href="http://FreeGLUT.sourceforge.net" target="_parent">FreeGLUT</a>
+		  or install GLUT which is probably included in your distribution (you need also the header files,
+		  which may be in a separate package like glut-devel). I suggest using FreeGLUT.
+		</p>
+
+		<h4><a name="c4_2_2">4.2.2 ./configure reports "configure: error: Can't find plib/ssg.h" or "plib/ul.h".</a></h4>
+		<p>
+		  TORCS requires <a href="http://plib.sourceforge.net" target="_parent">plib</a> 1.8.5 and its
+		  header files. Download and install plib.
+		</p>
+
+		<h4><a name="c4_2_3">4.2.3 TORCS does not compile on Windows.</a></h4>
+		<p>
+		  To compile TORCS in Windows you need Visual C++ 6.0. Follow exactly the instructions in
+		  the README file to build a release.
+		</p>
+
+		<h4><a name="c4_2_4">4.2.4 FreeGLUT compilation fails with NVidia OpenGL driver.</a></h4>
+		<p>
+		  If you have an NVIDIA driver and FreeGLUT breaks the compilation with complaints about libGL.la,
+		  then update your drivers to 5336 (previous libGL.la was broken).
+		</p>
+
+		<h4><a name="c4_2_5">4.2.5 TORCS does not compile with make: 'Make-config' is up to date.</a></h4>
+		<p>
+		  You have some environment variables set like $TORCS_BASE and $MAKE_DEFAULT (to follow the
+		  robot tutorial), they are pointing now to the wrong directory. Unset or update the variables
+		  suitable for the new directories.
+		</p>
+
+		<h4><a name="c4_2_6">4.2.6 Compiling stops with "error: `GL_TEXTURE0_ARB' undeclared".</a></h4>
+		<p>
+		  If the compiler stops with the above message you have probably OpenGL header files installed which do
+		  not define the GL_TEXTURE0_ARB and other symbols. If you have updated your NVidia drivers to 6xxx
+		  you will experience this error (NVidia removed those definitions...). To fix it for TORCS 1.3.1 you
+		  need to install
+		  a gl.h which defines the missing symbols. You can get it from your old (5xxx) NVidia drivers or from
+		  Mesa (the problem is not the driver itself).
+		</p>
+
+		<h4><a name="c4_2_7">4.2.7 Compiling fails with "The syntax of
+		the command is incorrect.  Error executing c:\winnt\system32\cmd.exe".</a></h4>
+		<p>
+			You have probably installed your sources in a path which contains blanks or other
+			special characters, e.g. on the desktop. Move your torcs-1.3.1 folder to a location with a
+			"clean" path, a drive is the best bet (e.g. D:\torcs-1.3.1).
+		</p>
+
+		<h4><a name="c4_2_8">4.2.8 ./configure fails in "checking for sin in -lm" on Gentoo.</a></h4>
+		<p>
+			This is a Gentoo problem, have a look at <a href="http://bugs.gentoo.org/show_bug.cgi?id=80983">this report</a>.
+		</p>
+
+
+
+		<h3><a name="c4_3">4.3 Startup and Runtime Problems.</a></h3>
+		<p>
+		  In several situations TORCS will crash at startup. The cause are often not bugs of TORCS, but
+		  a broken installation or buggy OpenGL/DRI drivers.
+		</p>
+
+		<h4><a name="c4_3_1">4.3.1 Broken OpenGL/DRI drivers or '~' file.</a></h4>
+
+		<pre>/usr/local/bin/torcs: line 54: 31895 Segmentation fault
+$LIBDIR/torcs-bin -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*</pre>
+
+		<p>
+		  There are two known possibilities which cause such a crash:
+		</p>
+		<ul style="list-style-type:disk; color:black;">
+		  <li>You have buggy OpenGL/DRI driver, you should update to a recent version. Start TORCS with
+		  the "-s" option to disable multitexturing.</li>
+		  <li>You have edited a TORCS XML file (e. g. endrace.xml) and your editor left a copy with an appended
+		  "~" (e. g. endrace.xml~). Remove those "~" files.</li>
+		</ul>
+
+		<h4><a name="c4_3_2">4.3.2 Multiple GLU libraries.</a></h4>
+
+		<pre>linuxModLoad: ...  modules/graphic/ssggraph.so:
+undefined symbol: gluBuild2DMipmaps
+/usr/local/bin/torcs: line 50: 21215 Segmentation fault
+./torcs -l $LOCAL_CONF $*</pre>
+
+		<p>
+		  You have probably two GLU libraries installed on your system and TORCS has been linked to the
+		  wrong one, which does not export the "gluBuild2DMipmaps" symbol. First find all your GLU
+		  libraries on the system (cd /usr; find . -name "*GLU*"). Then check which one exports the
+		  "gluBuild2DMipmaps" symbol (e. g. nm ./lib/libGLU.so | grep gluBuild2DMipmaps). Finally move
+		  or remove the GLU libraries which do not define the symbol, such that the linker can't see it.
+		  Now recomplie and reinstall TORCS.
+		</p>
+
+		<h4><a name="c4_3_3">4.3.3 Not removed old TORCS version.</a></h4>
+
+		<pre>/usr/lib/torcs/torcs-bin: relocation
+error: /usr/lib/torcs/lib/libtgfclient.so: undefined symbol:
+_Z15GfParmWriteFilePKcPvPc</pre>
+
+		<p>
+		  If you see such a message you have probably not cleaned up your old TORCS installation.
+		  Make sure that you have removed all old TORCS files, then recompile and reinstall TORCS.
+		</p>
+
+		<h4><a name="c4_3_4">4.3.4 TORCS reports missing files and crashes.</a></h4>
+
+		<pre>data/fonts/b5.glf: No such file or directory
+data/fonts/b5.glf: No such file or directory
+data/fonts/b5.glf: No such file or directory
+data/fonts/b5.glf: No such file or directory
+data/fonts/b7.glf: No such file or directory
+data/fonts/b7.glf: No such file or directory
+data/fonts/b7.glf: No such file or directory
+data/fonts/b7.glf: No such file or directory
+data/fonts/digital.glf: No such file or directory
+Can't open file data/img/splash-main.png
+Can't open file data/img/splash-single-player.png
+Can't open file data/img/splash-qrdrv.png
+/usr/local/bin/torcs: line 54:6839 Floating point
+exception$LIBDIR/torcs-bin -l $LOCAL_CONF -L $LIBDIR -D $DATADIR $*</pre>
+
+		<p>
+		  If you see this you have not installed the mandatory data packages or installed it in the wrong
+		  location. Please read the installation instructions carefully and reinstall TORCS.
+		</p>
+
+		<h4><a name="c4_3_5">4.3.5 My screen resolution is not supported.</a></h4>
+		<p>
+		  You have a screen resolution which is not available in the selection menu of TORCS (e. g.
+		  1152x864). Exit TORCS and edit the file .torcs/config/screen.xml, change the x, y,
+		  window width and height to your values.
+		</p>
+
+		<h4><a name="c4_3_6">4.3.6 I have a problem with the fullscreen mode.</a></h4>
+		<p>
+		  If you switched TORCS to fullscreen you get a scrolling screen or the screen size is not fully
+		  utilized. If you use the original GLUT library you should choose the resolution of your
+		  screen in the display settings. To fix the problem you can also download and install
+		  FreeGLUT, then recompile and reinstall plib and TORCS.
+		</p>
+
+		<h4><a name="c4_3_7">4.3.7 TORCS graphics is slow and it crashes on "READY!"</a></h4>
+		<p>
+		  Select in the TORCS display menu a color depth of 24 or 32 bpp, even if your display runs
+		  at 16 bpp.
+		</p>
+
+		<h4><a name="c4_3_8">4.3.8 TORCS on Windows hangs after &quot;READY!&quot;</a></h4>
+		<p>
+			Shutdown TORCS and restart it, go to the sound menu and disable the
+			sound or try the other backend. The problem is likely caused by
+			some library we use, but it never happened to us, so we could not
+			fix it.
+		</p>
+
+
+		<h4><a name="c4_3_9">4.3.9 TORCS does not start and reports slDSP:.</a></h4>
+		<p>
+		  Make sure that the sound device is available for TORCS and you use the latest drivers. Perhaps you
+		  have a sound daemon
+		  running in the background and you need to start TORCS with a wrapper (e. g. artsdsp of KDE)
+		  or to disable the daemon.
+		</p>
+
+		<h4><a name="c4_3_10">4.3.10 The cars are flickering.</a></h4>
+		<p>
+		  Probably your depth buffer has just 16 bit, you should have seen a hint at TORCS startup.
+		  Try to run your X-server at 24 or 32 bpp, or update/replace your OpenGL/DRI drivers. In
+		  Windows set the quality in the OpenGL properties tab to maximum, such that TORCS has a chance
+		  to get a 24 bit depth buffer.
+		</p>
+
+		<h4><a name="c4_3_11">4.3.11 I use ALSA and TORCS does not start up.</a></h4>
+		<p>
+		  You get an error message similar like this:
+		</p>
+
+		<pre>slDSP: getBufferInfo: Broken pipe.</pre>
+
+		<p>
+		  Altough the sound works with the other applications you have messed up your ALSA installation.
+		  Make sure that the versions of your ALSA driver, libraries, tools and utilities are matching.
+		  This can especially happen if you run a selfcompiled kernel.
+		</p>
+
+
+		<h4><a name="c4_3_12">4.3.12 TORCS does not start up and complains about display requirements.</a></h4>
+
+		<pre>Visual Properties Report
+------------------------
+The minimum display requirements are not fulfilled.
+We need a double buffered RGBA visual with a 16 bit depth buffer at least.
+GLUT: Fatal Error in torcs-bin: visual with necessary capabilities not found.</pre>
+
+		<p>
+		  If you use the open Mesa/DRI drivers, update your OpenGL/DRI drivers and try FreeGLUT.
+		  It seems to be a bug in the visual matching code of GLUT or OpenGL/DRI.
+		  The output of 'glxinfo | grep "OpenGL version"' should report at least "1.2 Mesa 5.0.1".
+		</p>
+
+
+		<h4><a name="c4_3_13">4.3.13 The racetrack mini map is just a blue square.</a></h4>
+		<p>
+		  You have probably more than one GLU library installed on your system and TORCS is linked with
+		  a version that does not match the version defined in the header files. Remove all old GLU libraries,
+		  make sure that the header files are matching with the library. Make also sure that you have recent
+		  OpenGL headers installed which define the GL_UNSIGNED_INT_8_8_8_8 symbol, then recompile TORCS.
+		</p>
+
+
+		<h4><a name="c4_3_14">4.3.14 TORCS runs but without textures.</a></h4>
+		<p>
+		  This is probably an OpenGL setup problem, check your installation with bzflag and tuxcart. You have to
+		  reinstall the XFree86 libraries, FreeGLUT and your OpenGL drivers.
+		</p>
+
+
+		<h4><a name="c4_3_15">4.3.15 TORCS on Windows crashes after "new race".</a></h4>
+
+		<p>
+		  The instruction at 0x0043dda5 referenced memory at 0x00000004. The memory could not be written.
+		</p>
+
+		<p>
+		  TORCS on Windows crashes with the above message after you have choosen "new race". Probably you have
+		  not downloaded all required files or installed them in the wrong place. Please check your TORCS
+		  installation carefully.
+		</p>
+
+
+
+		<h3><a name="c4_4">4.4 Other Problems.</a></h3>
+
+		<h4><a name="c4_4_1">4.4.1 How do I capture a movie?</a></h4>
+		<p>
+		  First you have to configure the video capturing in config/raceengine.xml. The captured frames
+		  are stored in the output directory, so you need to have write permission and plenty of
+		  space (~ 1GB for one minute, depends of framerate and resolution).
+		</p>
+		<p>
+		  During the simulation you can hit "c" to start and stop the capturing. The frames are
+		  stored in the output directory and named this way: torcs-ssss-ffffffff.png, ssss is
+		  the sequence number and ffffffff the frame number in the sequence.
+		</p>
+		<p>
+		  Now you need a tool to compose the frames to a movie. If you use mencoder (of the mplayer 0.92)
+		  you have first to convert the images to jpg's with the png2jpg tool from
+		  <a href="http://cvs.sourceforge.net/viewcvs.py/torcs/torcs/torcs/src/misc/?only_with_tag=r1-2-2" target="_parent">src/misc/png2jpg</a>.
+		  Now
+		  encode the video with mencoder -ovc lavc -lavcopts vcodec=mpeg4:vhq:vbitrate=1800 &#92;*.jpg -mf on:fps=25.
+		</p>
+
+		<h4><a name="c4_4_2">4.4.2 Can I develop a robot using Windows?</a></h4>
+		<p>
+		  Yes, you can. Here is a rough guide:
+		</p>
+		<ul>
+		  <li>Download the TORCS source and manage to compile and run it.</li>
+		  <li>Download e. g. the bt robot package, it is a little enhanced version of
+              the robot developed in the tutorial, so there is good documentation available
+              to understand it.</li>
+		  <li>Copy the sources into a new directory, e. g. when you choose the name "myrobot"
+              create a directory /src/drivers/myrobot.</li>
+		  <li>Copy all the bt files into the myrobot directory.</li>
+		  <li>Now rename all "bt*" files into "myrobot*".</li>
+		  <li>Edit myrobot.def and also change all bt strings into myrobot.</li>
+		  <li>The same for myrobot.dsp, .xml, perhaps more, you get the idea.</li>
+		  <li>Change the "bt" module entry point in myrobot.cpp to "myrobot", also make
+			  the strings for the robots names and description match with those in myrobot.xml.</li>
+		  <li>Add the myrobot project to TORCS, open the project with vc++ and try to compile it.</li>
+		  <li>If you want to deploy the files you have to do that manually, create a
+			  directory in "runtime" where the other robots are and copy the required files
+              there (myrobot.dll, .xml, setup subdirectories etc.).</li>
+		  <li>Now TORCS should pick up your robot.</li>
+		</ul>
+
+		<h4><a name="c4_4_3">4.4.3 Is my joystick/steering wheel/gamepad supported?</a></h4>
+		<p>
+		  If your operating system supports your device it will also work within TORCS. To learn how
+		  to setup your input device visit the TORCS site and read the "how to drive" section.
+		</p>
+
+
+		<h4><a name="c4_4_4">4.4.4 How do I set up a multiplayer game?</a></h4>
+		<p>
+		  TORCS supports split screen multiplayer games with up to four players. Setup:
+		  <ul>
+			<li>Set up the players in the "Configure Players" screen.</li>
+			<li>If more than one player uses the keyboard, read <a href="http://www.sjbaker.org/steve/omniv/keyboards_are_evil.html" target="_parent">this</a>.</li>
+			<li>Now choose a race, select the players in the configuration screen.</li>
+			<li>Start the race, stop it with "p" to pause.</li>
+			<li>Now create the split screens with "]", or remove them with "[".</li>
+			<li>If you want to change the view of a "mini screen" point with the mouse on it and set it up as usual (F1-F11, "&gt;", "&lt;", ...).</li>
+			<li>When you have set up all views press "p" to end the pause and start the race.</li>
+			<li>Have fun;-)</li>
+		  </ul>
+		</p>
+
+
+		<h4><a name="c4_4_5">4.4.5 I cannot adjust the joystick/wheel centering.</a></h4>
+		<p>
+			Before you start TORCS make sure that the joystick/wheel is correctly set up/calibrated for the system.
+			You can use the "jscal" and "jstest" utilities for that, you should find them in your Linux distribution.
+			If this works fine center your axis (e.g. if you have noncentering axis like sliders), the start up TORCS
+			and set up your players and controls. It is important to center the axis before you go to the calibration.
+		</p>
+
+
+
+		<br/><h2>5. Problem reporting.</h2>
+
+
+		<h3><a name="c5_1">5.1 When do I report a problem?</a></h3>
+		<p>
+		  You should report a problem after you have carefully read the available documentation and did
+		  not find a solution for the problem.
+		</p>
+
+		<h3><a name="c5_2">5.2 How and where do I report a problem?</a></h3>
+		<p>
+		  First subscribe to the <a href="http://lists.sourceforge.net/lists/listinfo/torcs-users" target="_parent">
+		  Torcs-users mailing list</a> (otherwise your messages need to be approved, so it can take long
+		  till they become distributed). Send us as much information about the problem as you know. At
+		  least provide the following:
+		</p>
+
+		  <ul>
+			<li>A good description of the problem.</li>
+			<li>The TORCS version, did you compile from source?</li>
+			<li>The console output of TORCS.</li>
+			<li>Your operating system (uname -a).</li>
+			<li>The output of "glxinfo -l" (Linux, FreeBSD).</li>
+			<li>The /var/log/XFree86.0.log file (Linux, FreeBSD).</li>
+		  </ul>
+
+		<p>
+		  Please do not file a bug in the bug reporting section on sourceforge, it is not a support area
+		  for users (if you know for sure that you have found a bug in TORCS, then it is ok to report it
+		  in the bugtracking system).
+		</p>
+
+
+
+
+
+		<br/><h2>6. Links.</h2>
+
+		<h3><a name="c6_1">6.1 TORCS.</a></h3>
+		<ul>
+			<li>The main TORCS site <a href="http://www.torcs.org" target="_parent">www.torcs.org</a>.</li>
+			<li>The <a href="http://lists.sourceforge.net/lists/listinfo/torcs-users" target="_parent">
+			TORCS-users mailing list</a>.</li>
+			<li>TORCS official championships <a href="http://www.berniw.org/trb" target="_parent">www.berniw.org/trb</a>.</li>
+			<li>Bernhard's site <a href="http://www.berniw.org" target="_parent">www.berniw.org</a>.</li>
+			<li>Charalampos Alexopoulos track editor <a href="http://katergo.rege.org/projects/trackeditor" target="_parent">katergo.rege.org/projects/trackeditor</a>.</li>
+		</ul>
+
+		<h3><a name="c6_2">6.2 Libraries and Drivers.</a></h3>
+		<ul>
+		  <li>FreeGLUT <a href="http://freeglut.sourceforge.net" target="_parent">freeglut.sourceforge.net</a>.</li>
+		  <li>Plib <a href="http://plib.sourceforge.net" target="_parent">plib.sourceforge.net</a>.</li>
+		  <li>DRI Project <a href="http://dri.sourceforge.net" target="_parent">dri.sourceforge.net</a>.</li>
+		  <li>OpenAL <a href="http://www.openal.org">www.openal.org</a>.</li>
+		</ul>
+
+		<h3><a name="c6_3">6.3 Other.</a></h3>
+		<ul>
+		  <li>TORCS in research <a href="http://students.cs.byu.edu/~kroundy/research" target="_parent">students.cs.byu.edu/~kroundy/research</a>.</li>
+		  <li>Linux Journal TORCS review <a href="http://www.linuxjournal.com/article.php?sid=7080" target="_parent">www.linuxjournal.com/article.php?sid=7080</a>.</li>
+		  <li>TORCS review at linuxgames.com <a href="http://www.linuxgames.com/?dataloc=/reviews/torcs/" target="_parent">www.linuxgames.com/?dataloc=/reviews/torcs/</a>.</li>
+		  <li>TORCS at the university <a href="http://www1.coe.neu.edu/~mourant/cse270/" target="_parent">www1.coe.neu.edu/~mourant/cse270</a>.</li>
+		</ul>
+		<br/><br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../torcs.html','content')">
+          <p style="text-align:left;">Up</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>
+
+
+
+

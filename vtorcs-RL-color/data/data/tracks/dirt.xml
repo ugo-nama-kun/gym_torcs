@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : dirt.xml
+    created              : Thu Apr 25 21:52:34 CEST 2002
+    copyright            : (C) 2001 by Eric Espié                         
+    email                : Eric.Espie@torcs.org   
+    version              : $Id: dirt.xml,v 1.2 2002/11/16 07:20:23 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+<!DOCTYPE params SYSTEM "../../../src/libs/tgf/params.dtd">
+
+<params name="Dirt" type="parameter">
+  <section name="Header">
+    <attstr name="name" val="Dirt Tracks"/>
+  </section>
+</params>
+

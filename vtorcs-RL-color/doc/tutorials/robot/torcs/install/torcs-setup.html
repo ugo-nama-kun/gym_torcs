@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: torcs-setup.html,v 1.3 2005/08/16 14:21:35 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>TORCS Setup</title>
+  <link rel="stylesheet" type="text/css" href="../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="TORCS Installation"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, install, setup, berniw, bernhard wymann"/>
+  <script src="../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+        <h1>TORCS Setup</h1>
+        <h3>Permissions</h3>
+        <p>
+          Because we want later compile and install your driver, we have to change some permissions. We assume
+          that the username is uname and it belongs to the group ugroup. Simply replace uname and ugroup with
+          your real values. Do (still as root)
+        <p>
+        <p>
+          <tt>
+            # cd /usr/src/<br/>
+            # chown -R uname:ugroup torcs<br/>
+            # cd /usr/local/share/games<br/>
+            # chown -R uname:ugroup torcs<br/>
+			# cd /usr/local/lib</br>
+			# chown -R uname:ugroup torcs<br/>
+          </tt>
+        </p>
+        <p>
+          If the sound doesn't work, you have perhaps to put your user in a group like "audio". Look
+          up your distribution manual for more information about sound. You're finished with administrator
+          stuff, so you can go back to your normal user account.
+        </p>
+
+        <h3>Environment</h3>
+        <p>
+          Now we have to set up some environment variables. That you don't need to type this all the time,
+          you put it best in your shell's rc file. For bash on SuSE that is .bashrc in your home directory.
+          Copy the following on the end of the file. Don't forget to put a newline after the last line in
+          the file:
+        </p>
+        <p>
+          <tt>
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib<br/>
+            export TORCS_BASE=/usr/src/torcs/torcs-1.2.4<br/>
+            export MAKE_DEFAULT=$TORCS_BASE/Make-default.mk<br/>
+          </tt>
+        </p>
+        <p>
+          Open a new terminal with a shell to check if the .bashrc did its job. Check if the variables
+          have the right values. We will do now a final check if everything is set up correct by recompiling
+          a single driver (remember, you are working now as normal user in a shell where the above variables
+          are set):
+        </p>
+        <p>
+          <tt>
+            $ cd $TORCS_BASE<br/>
+            $ cd src/drivers/tanhoj<br/>
+            $ make clean<br/>
+            $ make<br/>
+            $ make install<br/>
+          </tt>
+        </p>
+        <p>If everything worked without errors, you are ready now! Execute</p>
+        <p>
+          <tt>
+            $ torcs<br/>
+          </tt>
+        </p>
+        <p>
+          If TORCS hangs or something went wrong, double check the stuff and look up the
+          <a href="http://sourceforge.net/mail/?group_id=3777" target="_parent">torcs mailing list
+          archives</a>. And you know, if you get stuck... the <a href="mailto:torcs-users@lists.sourceforge.net">force</a>
+          may be with you.<br/>
+          On the <a href="http://torcs.org" target="_parent">official TORCS site</a> is a nice guide how to set
+          up your joystick with TORCS. Look at "Sections", "How-To Drive".</p>
+
+		<h3>Command Line Options</h3>
+		<p>
+		  <ul>
+			<li>-s: disable multitexturing (for users of older graphics boards, e. g. i810, ATI 3D Rage LT Pro or Matrox G400/G450/G550).</li>
+			<li>-m: use the system mouse pointer and do not hide it.</li>
+			<li>-l: list the dynamically linked libraries.</li>
+			<li>-d: run under gdb and print stack trace on exit, makes most sense when compiled with --enable-debug.</li>
+			<li>-e: display the commands to issue when you want to run under gdb.</li>
+		  </ul>
+		</p>
+
+        <h3>Feedback</h3>
+        <p>
+          <a href="mailto:berni4you@gmx.ch">Let me know</a>
+          if you read this chapter and your thoughts about it. Please
+          <a href="mailto:berni4you@gmx.ch">send me</a>
+          also spelling, grammar, math and code corrections. Thank you for the feedback.<br/><br/>
+        </p>
+
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./torcs-install.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../torcs.html','content')">
+          <p style="text-align:right;">Up</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

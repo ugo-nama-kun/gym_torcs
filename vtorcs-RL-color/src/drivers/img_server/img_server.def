@@ -1,0 +1,19 @@
+;
+;   file                 : img_server.def
+;   created              : Tue Jun 12 13:41:04 CEST 2012
+;   copyright            : (C) 2002 Giuseppe Cuccu
+;
+;
+;    This program is free software; you can redistribute it and/or modify
+;    it under the terms of the GNU General Public License as published by
+;    the Free Software Foundation; either version 2 of the License, or   
+;    (at your option) any later version.                                 
+;
+
+LIBRARY	img_server
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	img_server
+

@@ -1,0 +1,148 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: overtaking1.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Overtaking</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="Overtaking"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, overtaking, opponent"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>7.5 Overtaking</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  To be able to overtake we need to modify again the steer value. This time we achieve
+		  that with the modification of the target point. Depending on the side we want to pass
+		  an opponent we slightly add an offset vector to the target point. This offset is
+		  perpendicular to the track tangent. The opponent we choose for overtaking is the one
+		  with the smallest catchdistance, because we will reach it first.
+		</p>
+
+		<h3>Changes in driver.h</h3>
+		<p>
+		  Add the following method, variable and constant declarations to the private section.
+		</p>
+
+		<p><pre class="lcolor">        float getOvertakeOffset();</pre></p>
+		<p><pre class="lcolor">        float myoffset;  /* overtake offset sideways */</pre></p>
+		<p><pre class="lcolor">        static const float BORDER_OVERTAKE_MARGIN;
+        static const float OVERTAKE_OFFSET_INC;</pre></p>
+
+
+		<h3>Implementation in driver.cpp</h3>
+		<p>
+		  At the beginning of the file we define the new constants. You should also change the
+		  WIDTHDIV constant to 3.0.
+		</p>
+		<p><pre class="lcolor">const float Driver::BORDER_OVERTAKE_MARGIN = 0.5; /* [m] */
+const float Driver::OVERTAKE_OFFSET_INC = 0.1;    /* [m/timestep] */</pre></p>
+		<p><pre class="lcolor">const float Driver::WIDTHDIV = 3.0;               /* [-] */</pre></p>
+
+		<p>
+		  The BORDER_OVERTAKE_MARGIN is the border relative to the filterTrk width. It should avoid
+		  that we leave the range on the track where filterTrk allows acceleration.
+		  OVERTAKE_OFFSET_INC is the increment of the offset value. In Driver::newRace() we
+		  initialize myoffset to zero.
+		</p>
+
+		<p><pre class="lcolor">    myoffset = 0.0;</pre></p>
+
+		<p>
+		  Now we have a look on how we compute the offset of the target point.
+		</p>
+
+		<p><pre class="lcolor">/* Compute an offset to the target point */
+float Driver::getOvertakeOffset()
+{
+    int i;
+    float catchdist, mincatchdist = FLT_MAX;
+    Opponent *o = NULL;
+
+    for (i = 0; i &lt; opponents-&gt;getNOpponents(); i++) {
+        if (opponent[i].getState() &amp; OPP_FRONT) {
+            catchdist = opponent[i].getCatchDist();
+            if (catchdist &lt; mincatchdist) {
+                mincatchdist = catchdist;
+                o = &amp;opponent[i];
+            }
+        }
+    }</pre></p>
+
+		<p>
+		  First we find the opponent with the smallest catchdist. Remember, that is the car which
+		  we will reach first. Of course the candidates need to have OPP_FRONT set.
+		</p>
+
+		<p><pre class="lcolor">    if (o != NULL) {
+        float w = o-&gt;getCarPtr()-&gt;_trkPos.seg-&gt;width/WIDTHDIV-BORDER_OVERTAKE_MARGIN;
+        float otm = o-&gt;getCarPtr()-&gt;_trkPos.toMiddle;
+        if (otm &gt; 0.0 &amp;&amp; myoffset > -w) myoffset -= OVERTAKE_OFFSET_INC;
+        else if (otm &lt; 0.0 &amp;&amp; myoffset &lt; w) myoffset += OVERTAKE_OFFSET_INC;
+    } else {</pre></p>
+
+		<p>
+		  In case there is an opponent to overtake we let slightly grow the offset toward the
+		  other track side to pass it. The borders are checked so that the offset stays within "w".
+		</p>
+
+		<p><pre class="lcolor">        if (myoffset &gt; OVERTAKE_OFFSET_INC) myoffset -= OVERTAKE_OFFSET_INC;
+        else if (myoffset &lt; -OVERTAKE_OFFSET_INC) myoffset += OVERTAKE_OFFSET_INC;
+        else myoffset = 0.0;
+    }
+    return myoffset;
+}</pre></p>
+
+		<p>
+		  In case we have not found an opponent the offset goes back slightly toward zero. In the
+		  next section we will add the offset to the target point.
+		</p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented the code above.</li>
+		   <li>You know how it works.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./collisions2.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./overtaking2.html">
+          <p style="text-align:right;">Finishing overtaking.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

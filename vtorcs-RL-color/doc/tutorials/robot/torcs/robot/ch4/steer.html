@@ -1,0 +1,225 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: steer.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>steering</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="straight class"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, steer, steering"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #pic1 { float:left; border:0px; width:155px; height:120px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    -->
+  </style>
+
+
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>4.3 Steering</h1>
+
+        <h3>Overview</h3>
+        <p>
+		  <img id="pic1" src="images/steer.jpg" alt="steering with lookahead to middle" border="0"></img>
+		  In this section we will improve the steering with a heuristic approach. In a nutshell, the 
+		  presented method still drives on the middle of the track, but now we will steer toward a point
+		  ahead of the car. The disadvantage of this simple method is that we can't drive with the 
+		  biggest possible radius through turns like you can see easily on the sketch. This drawing
+		  doesn't match exactly with the method presented below, because the lookahead distance will
+		  be measured on the middle of the track.   
+		</p>
+	  </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+		
+        <h3>The Target Point</h3>
+        <p>
+		  First we discuss how to get the target point. We know the position of our car and the
+		  geometry of the track. So we follow the track middle lookahead meters, there is our target
+		  point. Put the following code into driver.cpp.   
+		</p>
+
+		<p><pre class="lcolor">v2d Driver::getTargetPoint()
+{
+    tTrackSeg *seg = car-&gt;_trkPos.seg;
+    float lookahead = LOOKAHEAD_CONST + car-&gt;_speed_x*LOOKAHEAD_FACTOR;</pre>
+		</p>
+		<p>
+		  We compute the lookahead distance with a heuristic. Like you can see lookahead grows with
+		  the speed.
+		</p>
+	
+		<p><pre class="lcolor">    float length = getDistToSegEnd();
+
+    while (length &lt; lookahead) {
+        seg = seg-&gt;next;
+        length += seg-&gt;length;	
+    }</pre>
+		</p>
+		
+		<p>
+		  This loop finds the segment which contains the target point. 
+		</p>
+	
+		<p><pre class="lcolor">    length = lookahead - length + seg-&gt;length;
+    v2d s;
+    s.x = (seg-&gt;vertex[TR_SL].x + seg-&gt;vertex[TR_SR].x)/2.0;
+    s.y = (seg-&gt;vertex[TR_SL].y + seg-&gt;vertex[TR_SR].y)/2.0;</pre>
+		</p>
+
+		<p>
+		  Now we compute the distance of the target point to the start of the segment found and the
+		  starting point itself. From that we are able to compute the target point in the global
+		  coordinate system. We have to distinguish between straights and turns.
+		</p>
+		
+		<p><pre class="lcolor">    if ( seg-&gt;type == TR_STR) {
+        v2d d;
+        d.x = (seg-&gt;vertex[TR_EL].x - seg-&gt;vertex[TR_SL].x)/seg-&gt;length;
+        d.y = (seg-&gt;vertex[TR_EL].y - seg-&gt;vertex[TR_SL].y)/seg-&gt;length;
+        return s + d*length;</pre>
+		</p>
+	
+		<p>
+		  For the straight we compute the starting point on the middle of the track and the direction
+		  vector. From that we can get the final point and return it. 
+		</p>
+		
+		<p><pre class="lcolor">    } else {
+        v2d c;
+        c.x = seg-&gt;center.x;
+        c.y = seg-&gt;center.y;
+        float arc = length/seg-&gt;radius;
+        float arcsign = (seg-&gt;type == TR_RGT) ? -1 : 1;
+        arc = arc*arcsign;
+        return s.rotate(c, arc);
+    }
+}</pre>
+		</p>
+		
+		<p>
+		  For the turns it's a bit different. First we get the rotation center of the segment. Next we
+		  compute from the length and the radius the angle of the target point relative to the
+		  segments starting point. Finally we rotate the starting point around the center with the
+		  computed angle. At the start of driver.cpp we need to define the constants.   
+		</p>
+
+		<p><pre class="lcolor">const float Driver::LOOKAHEAD_CONST = 17.0;    /* [m] */
+const float Driver::LOOKAHEAD_FACTOR = 0.33;   /* [1/s] */</pre>
+		</p>
+		
+		<h3>Heading Toward the Target Point</h3>
+		<p>
+		  Now we finally implement the getSteer() method, which computes the steerangle towards the
+		  target point. We need atan2() because atan() doesn't work well from -PI..PI (atan(-y/-x) == 
+		  atan(y/x)).
+		</p>
+		
+		<p><pre class="lcolor">float Driver::getSteer()
+{
+    float targetAngle;
+    v2d target = getTargetPoint();
+
+    targetAngle = atan2(target.y - car-&gt;_pos_Y, target.x - car-&gt;_pos_X);
+    targetAngle -= car-&gt;_yaw;
+    NORM_PI_PI(targetAngle);
+    return targetAngle / car-&gt;_steerLock;
+}</pre>
+		</p>
+
+		<p>
+		  Now you need to change Driver::drive() so that getSteer is called: replace
+		</p>
+		
+		<p><pre class="lbcolor">        float steerangle = angle - car->_trkPos.toMiddle/car->_trkPos.seg->width;
+        car->ctrl.steer = steerangle / car->_steerLock;</pre>
+		</p>
+		
+		<p>
+		  with
+		</p>
+		
+		<p><pre class="lcolor">        car->ctrl.steer = getSteer();</pre>
+		</p>
+
+		<h3>Finishing Implementation</h3>
+		<p>
+		  Finally we need some changes in driver.h. The new methods and constants needs to be defined,
+		  and we also need to include linalg.h. 
+		</p>
+		
+		<p><pre class="lcolor">#include "linalg.h"</pre>
+		</p>
+		
+		<p><pre class="lcolor">        float getSteer();
+        v2d getTargetPoint();</pre>
+		</p>
+		
+		<p><pre class="lcolor">        static const float LOOKAHEAD_CONST;
+        static const float LOOKAHEAD_FACTOR;</pre>
+		</p>
+		
+		<h3>Testdrive</h3>
+        <p>
+          Do some test runs with the different cars. The car drives now very nice on most of the tracks.
+		  Try also e-track-3 and have a look on the first left turn after the finish line. In the next
+		  chapter we will implement a heuristic to pass turns of that type faster.
+        </p>
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt43.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented the above stuff.</li>
+           <li>You know how to steer with a heuristic approach.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./vector2.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./fast.html">
+          <p style="text-align:right;">Let's get faster.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

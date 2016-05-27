@@ -1,0 +1,19 @@
+;
+;   file                 : scr_server.def
+;   created              : Tue Dec 18 23:40:54 CET 2007
+;   copyright            : (C) 2002 Daniele Loiacono
+;
+;
+;    This program is free software; you can redistribute it and/or modify
+;    it under the terms of the GNU General Public License as published by
+;    the Free Software Foundation; either version 2 of the License, or   
+;    (at your option) any later version.                                 
+;
+
+LIBRARY	scr_server
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	scr_server
+

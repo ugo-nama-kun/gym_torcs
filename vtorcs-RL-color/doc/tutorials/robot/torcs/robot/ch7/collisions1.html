@@ -1,0 +1,180 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: collisions1.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Front Collision Avoidance</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="Front Collision Avoidance"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, collision, avoidance, overtaking, opponent, collecting data"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>7.3 Front Collision Avoidance</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  In this section we start avoiding collisions. With front collisions I mean the
+		  class of collisions where we hit with our front the back of an opponent. We can
+		  avoid this collisions with braking, so we will add an additional filter to the brake
+		  value. The reason why I handle front and side collisions different is that we need
+		  different commands.
+		</p>
+
+		<h3>Changes in driver.h</h3>
+		<p>
+          We include opponent.h and define prototypes for the classes Opponent
+		  and Opponents.
+		</p>
+
+		<p><pre class="lcolor">#include "opponent.h"
+class Opponents;
+class Opponent;</pre></p>
+
+		<p>
+		  We add a destructor to the public section, the method prototype for the filter
+		  and the variables in the private section.
+		</p>
+
+		<p><pre class="lcolor">        ~Driver();</pre></p>
+		<p><pre class="lcolor">        float filterBColl(float brake);</pre></p>
+		<p><pre class="lcolor">        Opponents *opponents;
+        Opponent *opponent;</pre></p>
+
+		<h3>Implementation in driver.cpp</h3>
+		<p>
+		  To release the opponents instance we add the destructor.
+		</p>
+
+		<p><pre class="lcolor">Driver::~Driver()
+{
+    delete opponents;
+}</pre></p>
+
+		<p>
+		  We create the instance of Opponents in Driver::newRace() and get a pointer to
+		  the array of Opponent objects.
+		</p>
+
+		<p><pre class="lcolor">    /* initialize the list of opponents */
+    opponents = new Opponents(s, this);
+    opponent = opponents-&gt;getOpponentPtr();</pre></p>
+
+		<p>
+		  Now call the filter as usual in the Driver::drive() method. Change the line
+		</p>
+
+		<p><pre class="lbcolor">        car-&gt;ctrl.brakeCmd = filterABS(getBrake());</pre></p>
+
+		<p>
+		  to
+		</p>
+
+		<p><pre class="lcolor">        car-&gt;ctrl.brakeCmd = filterABS(filterBColl(getBrake()));</pre></p>
+
+		<p>
+		  Here we update the speed of the drivers car in track direction and the opponents data.
+		  Put this code at the end of Driver::update().
+		</p>
+
+		<p><pre class="lcolor">    speed = Opponent::getSpeed(car);
+    opponents-&gt;update(s, this);</pre></p>
+
+		<p>
+		  Finally we implement the brake filter. In a nutshell it iterates through the
+		  opponents and checks for every opponent which has been tagged with OPP_COLL if we
+		  need to brake to avoid a collision. If yes we brake full and leave the method.
+		</p>
+
+		<p><pre class="lcolor">/* Brake filter for collision avoidance */
+float Driver::filterBColl(float brake)
+{
+    float currentspeedsqr = car-&gt;_speed_x*car-&gt;_speed_x;
+    float mu = car-&gt;_trkPos.seg-&gt;surface-&gt;kFriction;
+    float cm = mu*G*mass;
+    float ca = CA*mu + CW;
+    int i;
+
+    for (i = 0; i &lt; opponents-&gt;getNOpponents(); i++) {</pre></p>
+
+		<p>
+		  We set up some variables and then we enter the loop to iterate through all opponents.
+		  The presented solution is not optimal. You could replace the call to getDistance() with
+		  getChatchDist(), but additional code is necessary to make it work. The
+		  computation of the brakedistance should be familiar from previous chapters.
+		</p>
+
+		<p><pre class="lcolor">        if (opponent[i].getState() & OPP_COLL) {
+            float allowedspeedsqr = opponent[i].getSpeed();
+            allowedspeedsqr *= allowedspeedsqr;
+            float brakedist = mass*(currentspeedsqr - allowedspeedsqr) /
+                              (2.0*(cm + allowedspeedsqr*ca));
+            if (brakedist &gt; opponent[i].getDistance()) {
+                return 1.0;
+            }
+        }
+    }
+    return brake;
+}</pre></p>
+
+		<h3>Testdrive</h3>
+		<p>
+		  To check if the code works run a race with <span style="color:red;">bt 3</span>,
+		  <span style="color:red;">bt 1</span> and <span style="color:red;">bt 2</span>
+		  on wheel 1. The cars should
+		  drive behind each other without collisions.
+		</p>
+
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt73.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You can run your robot "family" without collisions.</li>
+		   <li>You know how it works.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./opponents.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./collisions2.html">
+          <p style="text-align:right;">Avoiding side collisions.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

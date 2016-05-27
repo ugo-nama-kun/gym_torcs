@@ -1,0 +1,10 @@
+;
+; inferno2.def
+;
+
+LIBRARY	inferno2
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	inferno2

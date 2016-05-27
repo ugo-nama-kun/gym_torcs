@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : e-track-5.xml
+    created              : Sun Apr 30 15:45:57 CEST 2000
+    copyright            : (C) 2000 by Eric Espie                         
+    email                : torcs@free.fr   
+    version              : $Id: e-track-5.xml,v 1.7 2004/02/09 05:42:42 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+
+<!DOCTYPE params SYSTEM "../../../src/libs/tgf/params.dtd" [
+<!-- general definitions for tracks -->
+<!ENTITY default-surfaces SYSTEM "../../../data/tracks/surfaces.xml">
+]>
+
+<params name="e-track-5" type="template" mode="mw">
+
+  <section name="Surfaces">
+    <section name="List">
+      &default-surfaces;
+    </section>
+  </section>
+
+  <section name="Header">
+    <attstr name="name"        val="E-Track 5"/>
+    <attstr name="category"    val="oval"/>
+    <attnum name="version"     val="3"/>
+    <attstr name="author"      val="E.Espie"/>
+    <attstr name="description" val=""/>
+  </section>
+
+  <section name="Graphic">
+    <attstr name="3d description" val="e-track-5.ac"/>
+    <attstr name="background image" val="background.png"/>
+    <attnum name="background type" val="2"/>
+    <attnum name="background color R" val="0.28125"/>
+    <attnum name="background color G" val="0.4375"/>
+    <attnum name="background color B" val="0.75"/>
+
+    <attnum name="ambient color R" val="0.1"/>
+    <attnum name="ambient color G" val="0.1"/>
+    <attnum name="ambient color B" val="0.05"/>
+
+    <attnum name="diffuse color R" val="1"/>
+    <attnum name="diffuse color G" val="1"/>
+    <attnum name="diffuse color B" val="1"/>
+
+    <attnum name="specular color R" val="0.1"/>
+    <attnum name="specular color G" val="0.1"/>
+    <attnum name="specular color B" val="0.1"/>
+
+
+    <attnum name="light position x" val="-0"/>
+    <attnum name="light position y" val="1000"/>
+    <attnum name="light position z" val="300"/>
+
+
+    <section name="Environment Mapping">
+      <section name="1">
+	<attstr name="env map image" val="env.png"/>
+      </section>
+    </section>
+
+    <section name="Terrain Generation">
+      <attnum name="track step" unit="m" val="30"/>
+      <attnum name="border margin" unit="m" val="100"/>
+      <attnum name="border step" unit="m" val="30"/>
+      <attnum name="border height" unit="m" val="20"/>
+      <attstr name="orientation" val="anti-clockwise"/>
+    </section>
+  </section>
+
+
+
+  <section name="Main Track">
+
+    <attnum name="width" unit="m" val="20"/>
+    <attstr name="surface" in="asphalt,concrete,grass,sand,dirt" val="asphalt-lines"/>
+    <attnum name="rside width" val="4"/>
+    <attstr name="rside surface"  val="grass"/>
+    <attstr name="rside type" in="level,tangent" val="level"/>
+    <attnum name="lside width" val="4"/>
+    <attstr name="lside surface"  val="grass"/>
+    <attstr name="lside type" in="level,tangent" val="level"/>
+
+    <attnum name="profil steps length" val="5" unit="m"/>
+
+    <section name="segments">
+
+      <section name="s1">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+      </section>
+
+      <section name="t1-1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="-5" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="-1"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="t1-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="t2-1">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="42.5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="-0.5"/>
+	<attstr name="surface" val="asphalt-l-right"/>
+      </section>
+
+      <section name="t2-2">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="42.5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attstr name="surface" val="asphalt-l-right"/>
+      </section>
+
+      <section name="t3-1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="-5" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="-1"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="t3-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="s2">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="200"/>
+	<attstr name="surface" val="asphalt-lines"/>
+      </section>
+
+      <section name="t4-1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="-5" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="-1"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="t4-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="t5-1">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="42.5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="10" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="-0.5"/>
+	<attstr name="surface" val="asphalt-l-right"/>
+      </section>
+
+      <section name="t5-2">
+        <attstr name="type" val="rgt"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="42.5"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attstr name="surface" val="asphalt-l-right"/>
+      </section>
+
+      <section name="t6-1">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="-5" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="-1"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="t6-2">
+        <attstr name="type" val="lft"/>
+	<attnum name="radius" unit="m" val="100"/>
+	<attnum name="arc" unit="deg" val="66.25"/>
+	<attstr name="profil" in="linear,spline" val="spline"/>
+ 	<attnum name="banking end" val="0" unit="deg"/>
+ 	<attnum name="z end" unit="m" val="0"/>
+	<attstr name="surface" val="asphalt-l-left"/>
+      </section>
+
+      <section name="s3">
+        <attstr name="type" val="str"/>
+	<attnum name="lg" unit="m" val="100"/>
+	<attstr name="surface" val="asphalt-lines"/>
+      </section>
+
+
+    </section>
+
+  </section>
+
+</params>
+
+

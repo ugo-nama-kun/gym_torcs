@@ -1,0 +1,10 @@
+;
+; telemetry.def
+;
+
+LIBRARY	human
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	telemetry

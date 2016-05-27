@@ -1,0 +1,88 @@
+Changes since 1.3.0 test 1
+--------------------------
+- Fixed bt pit bug reported by Mart Kelder (Mark Kelder, Bernhard).
+- Fixed missing car category reported by Mart Kelder (Mart Kelder, Bernhard).
+- Fixed various gcc warnings (Mart Kelder, Bernhard).
+- Support newer version of OpenAL where ALUT and OpenAL are two distinct
+  libraries (Bernhard).
+- Add X11 libraries in configure.in to LDFLAGS in a later stage (Bernhard).
+- Version number to 1.3.0 (Bernhard)
+
+
+Changes since 1.2.4
+-------------------
+- Added Doppler workaround for OpenAL Windows (Christos)
+- Fixed curb height calculation in rttrack.cpp:RtTrackHeightL() (Christos)
+- Fixed very little steering error around the center discovered by Eugen
+  (Eugen, Christos, Bernhard).
+- Fixed reading and writing of Olethros data files on non-Posix platforms
+  (Bernhard).
+- Verified OpenAL volume jump, seems to be gone, perhaps caused by source
+  scheduler (Christos, Bernhard).
+- Track tutorial added to CVS (Christos).
+- Fixed -s option in Windows and usage of multitexturing if extension is not
+  available (Bernhard).
+- Fixed wrong car corners for cars with noncentral center of gravity (Bernhard).
+- Added support for multiple cars per pit. The cars must be of the same team,
+  define it in the racemanager race section (e.g. "First Race" in endrace.xml)
+  with <attnum name="cars per pit" val="2"/>. Values from 1-4 are accepted. Be
+  aware that the robots are not adopted, this is just for TRB use for now
+  (Bernhard).
+- Fixed segfault in new pit code (Mart Kelder, Bernhard).
+- Updated 360-Modena model and textures for player, berniw, inferno and damned
+  (Bernhard).
+- Added fixed cameras to alpine-1 (Christos).
+- Improved field of view ratio handling (Felix Kühling, Christos).
+- Fixed floating F10 camera (Christos).
+- Updated bt with changes from bt_2004 (Bernhard).
+- Totally reworked lotus-gt1 model (Andrew, Bernhard).
+- New textures for the new lotus-gt1 model (Bernhard).
+- Hide warning about too long debug symbols in vc++ debug project (Bernhard).
+- Updated binary files with admin -kb in CVS to solve problems of WinCVS
+  users (Bernhard).
+- Updated windows project files and code such that the projects compile
+  cleanly (except Olethros, disabled for now, need to resolve the "clock"
+  first) (Bernhard).
+- Fixed a bug which prevented the display of all available resolutions which
+  xrandr advertises (Bernhard).
+- Applied suggested gcc 4.1 compile fix (Mart Kelder, Bernhard).
+- Fixed wrong flags (-kk) in ssggraph (Bernhard).
+- Some corrections in the robot tutorial (Wino, Bernhard).
+- Added track wheel-2 created by Andrew Sumner (Andrew, Bernhard).
+- Added track street-1 created by Andrew Sumner (Andrew, Bernhard).
+- Replaced track dirt-3 with new track created by Andrew Sumner
+  (Andrew, Bernhard).
+- Removed some outdated files (CHANGELOG.html, TODO.html) (Bernhard).
+- Added new track Ruudskogen created by Tor Arne Hustvedt, ported
+  to TORCS by Andrew Sumner (Andrew, Bernhard).
+- Fixed minor visual issues of the lotus-gt1 (Bernhard).
+- Reworked viper (Andrew).
+- Once again totally reworked viper (Bernhard).
+- New textures for all vipers (berniw, player, lliaw) (Bernhard).
+- Reduced front clift/increased rear clift of lotus-gt1 by 0.1
+  to make it more drivable with the keyboard (Bernhard).
+- Replaced the player setups for the viper, lotus and 360-modena
+  by berniw setups with minor adjustments (Bernhard).
+- Fixed aspect ratio of counters, works now fine with any screen
+  resolution (Bernhard).
+- Fixed multiplayer key handling when driver crashed (Mart Kelder,
+  Bernhard).
+- Fixed wrong key-state after pitmenu, excellent report by Mart Kelder,
+  needs more testing (Bernhard).
+- Adjustments on car data files and models (360-modena, viper, lotus)
+  (Bernhard).
+- New car (car1-trb1), prototype/experiment for "unified" cars (unified: usable
+  as direct opponents) (Bernhard).
+- Improved possible packers thickness of category Track-RWD-GrA to 50mm
+  (Bernhard).
+- Totally reworked michigan track (Bernhard).
+- Added -fno-strict-aliasing for now to avoid warnings with newer versions off
+  gcc which enables strict-aliasing by default (Bernhard).
+- Fixed compile warnings in img.cpp (Bernhard).
+- Updated bat files to deploy michigan, ruudskogen and car1-trb1 (Bernhard).
+- Updated installer (Bernhard).
+- Fixed ancient and obscure menu crash bug (not executed "Quit" releases handle
+  of main menu "Quit") (Bernhard).
+- Fixed ole-road-1 beginning/end matching (Bernhard).
+- Screenshots go now to local dir (.torcs/screenshots) (Bernhard).
+- Get/write raceengine.xml to users local dir (Bernhard).

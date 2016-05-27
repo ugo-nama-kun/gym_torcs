@@ -1,0 +1,174 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: collisions2.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Side Collision Avoidance</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="Front Collision Avoidance"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, collision, avoidance, overtaking, opponent, collecting data"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>7.4 Side Collision Avoidance</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  In this section we add collision avoidance for cars that drive aside of our car. The
+		  following implementation will add an additional filter to the steer value. It doesn't
+		  check if we leave the track.
+		</p>
+
+		<h3>Changes in driver.h</h3>
+		<p>
+		  We declare the filter method prototype and the side margin. If the opponent is inside
+		  this margin we will try to avoid a collision.
+		</p>
+
+		<p><pre class="lcolor">        float filterSColl(float steer);</pre></p>
+		<p><pre class="lcolor">        static const float SIDECOLL_MARGIN;</pre></p>
+
+		<h3>Implementation in driver.cpp</h3>
+		<p>
+		  At the beginning of the file we define the new constant.
+		</p>
+		<p><pre class="lcolor">const float Driver::SIDECOLL_MARGIN = 2.0;   /* [m] */</pre></p>
+
+		<p>
+		  In the Driver::drive() method we call the steer filter. Change the line
+		</p>
+
+		<p><pre class="lbcolor">        car-&gt;ctrl.steer = getSteer();</pre></p>
+
+		<p>
+		  to
+		</p>
+
+		<p><pre class="lcolor">        car-&gt;ctrl.steer = filterSColl(getSteer());</pre></p>
+
+		<p>
+		  The filterSColl method searches first for the nearest car aside of ours (approximately).
+		  If there is
+		  another car it checks if it is inside the SIDECOLL_MARGIN. If yes, it computes a new
+		  steer value and returns it.
+		</p>
+
+		<p><pre class="lcolor">/* Steer filter for collision avoidance */
+float Driver::filterSColl(float steer)
+{
+    int i;
+    float sidedist = 0.0, fsidedist = 0.0, minsidedist = FLT_MAX;
+    Opponent *o = NULL;
+
+    /* get the index of the nearest car (o) */
+    for (i = 0; i &lt; opponents-&gt;getNOpponents(); i++) {
+        if (opponent[i].getState() & OPP_SIDE) {</pre></p>
+
+		<p>
+		  Again we iterate through all cars and check those which have been marked with the
+		  OPP_SIDE flag. We init minsidedist with a large value because we search for the
+		  minimum.
+		</p>
+
+		<p><pre class="lcolor">            sidedist = opponent[i].getSideDist();
+            fsidedist = fabs(sidedist);
+            if (fsidedist &lt; minsidedist) {
+                minsidedist = fsidedist;
+                o = &amp;opponent[i];
+            }
+        }
+    }</pre></p>
+
+		<p>
+		  Here we check if the current opponent is the nearest one found so far. If that is the
+		  case we store a pointer to it and update the minimal distance found (minsidedist).
+		</p>
+
+		<p><pre class="lcolor">    /* if there is another car handle the situation */
+    if (o != NULL) {
+        float d = fsidedist - o-&gt;getWidth();
+        /* near enough */
+        if (d &lt; SIDECOLL_MARGIN) {</pre></p>
+
+		<p>
+		  If we found an opponent we check if it is inside the margin. To keep the method simple
+		  I make some assumptions, e. g. our car is parallel to the track (that is obiously not
+		  true).
+		</p>
+
+<p><pre class="lcolor">            /* compute angle between cars */
+            tCarElt *ocar = o-&gt;getCarPtr();
+            float diffangle = ocar-&gt;_yaw - car-&gt;_yaw;
+            NORM_PI_PI(diffangle);
+            const float c = SIDECOLL_MARGIN/2.0;
+            d = d - c;
+            if (d &lt; 0.0) d = 0.0;
+            float psteer = diffangle/car-&gt;_steerLock;
+            return steer*(d/c) + 2.0*psteer*(1.0-d/c);
+        }
+    }
+    return steer;
+}</pre></p>
+
+		<p>
+          Here we compute the angle between the two cars and the weight d. Psteer holds the steer
+		  value needed to drive parallel to the opponent (if you draw the scene it is obvious).
+		  Finally we weight the original steer and the psteer value and sum them up. This will
+		  push away our car from the opponent when we are near. You could improve this function
+		  with more accurate distance values and checking if the normal steer value points
+		  already more away from the opponent than the new computed value.
+		</p>
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt74.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented side collision avoidance.</li>
+		   <li>You know how it works.</li>
+		   <li>You know how to improve it.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./collisions1.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./overtaking1.html">
+          <p style="text-align:right;">Overtaking.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

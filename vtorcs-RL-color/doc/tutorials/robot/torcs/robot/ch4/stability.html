@@ -1,0 +1,164 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: stability.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Stay on the track</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="stay on the track"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, stability, stay, track"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>4.5 Stay on the Track</h1>
+
+        <h3>Overview</h3>
+        <p>
+		  Now we make the car stay again on the track (at least on most of the tracks). We will introduce
+		  a margin around the middle of the track. When we are farther away from the middle we set the
+		  accelerator to zero. We will refine this by distinguish between inside and outside in the turns.
+		  When we are inside we can accelerate further, because the centrifugal force pushes the car outside. 
+		</p>
+		
+        <h3>Implementation</h3>
+        <p>
+		  Here follows the implementation, put it in driver.cpp.
+		</p>
+
+		<p><pre class="lcolor">/* Hold car on the track */
+float Driver::filterTrk(float accel)
+{
+    tTrackSeg* seg = car->_trkPos.seg;
+
+    if (car-&gt;_speed_x &lt; MAX_UNSTUCK_SPEED) return accel;</pre>
+		</p>
+		
+		<p>
+		  If we are very slow do nothing. Then check if we are on a straight. If that's the case,
+		  check both sides. 
+		</p>
+		
+		<p><pre class="lcolor">    if (seg->type == TR_STR) {
+        float tm = fabs(car->_trkPos.toMiddle);
+        float w = seg->width/WIDTHDIV;
+        if (tm > w) return 0.0; else return accel;</pre>
+		</p>
+		
+		<p>
+		  If we are in a turn check if we are inside or outside. If we are inside do nothing.
+		</p>
+        
+		<p><pre class="lcolor">    } else {
+        float sign = (seg->type == TR_RGT) ? -1 : 1;
+        if (car->_trkPos.toMiddle*sign > 0.0) {
+            return accel;</pre>
+		</p>
+		
+		<p>
+		  If we are outside and more than "w" from the middle away set accelerator to zero.
+		</p>
+						
+                
+		<p><pre class="lcolor">        } else {
+            float tm = fabs(car->_trkPos.toMiddle);
+            float w = seg->width/WIDTHDIV;
+            if (tm > w) return 0.0; else return accel;
+        }
+    }
+}</pre>
+		</p>
+		
+		<p>
+		  We need to define WIDTHDIV in driver.cpp.
+		</p>
+
+		<p><pre class="lcolor">const float Driver::WIDTHDIV = 4.0;    /* [-] */</pre>
+		</p>
+		
+		<p>
+		  Add the call in Driver::drive(). Change 
+		</p>
+		
+		<p><pre class="lbcolor">            car->ctrl.accelCmd = filterTCL(getAccel());</pre>
+		</p>
+		
+		<p>
+		  to
+		</p>
+		
+		<p><pre class="lcolor">            car->ctrl.accelCmd = filterTCL(filterTrk(getAccel()));</pre>
+		
+		<p>
+		  Finally we declare the new method and constant in driver.h.
+		</p>
+		
+		<p><pre class="lcolor">        float filterTrk(float accel);</pre>
+		</p>
+		
+		<p><pre class="lcolor">        static const float WIDTHDIV;</pre>
+		</p>
+		
+		<h3>Testdrive</h3>
+        <p>
+		  What you got till now is not too bad. You've written a robot that is able to master most of
+		  the tracks. We also reduced the lap times very much:
+		</p>
+		
+		<ul style="list-style-type:disk; color:black;">
+		  <li>mixed-2: 1:14:70, 0 damage.</li>
+		  <li>e-track-2: 1:24:45, 0 damage.</li>
+		  <li>e-track-4: 1:49:70, 0 damage.</li>
+        </ul>
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt45.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented and understood an almost competitive robot.</li>
+           <li>Congratulations:-)</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./fast.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./trajectories.html">
+          <p style="text-align:right;">Trajectories.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

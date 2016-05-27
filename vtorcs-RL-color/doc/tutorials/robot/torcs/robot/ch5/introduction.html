@@ -1,0 +1,109 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: introduction.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>what is a car setup</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="car setup"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, car, setup, introduction"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>5.1 What is a Car Setup</h1>
+
+        <h3>Introduction</h3>
+        <p>
+		  Racing cars have a lot of parameters one can change. For example you can change
+		  the angle of attack of the spoilers, the gears in the gearbox, the stiffness of the
+		  springs and many more. A car setup is simply a set of such parameters. Our task is
+		  to find an optimal car setup for a given goal. This is a very hard problem, because
+		  the parameters are not independent. In fact it's almost impossible to find the
+		  optimal setup. Why that? You can imagine all possible setups as n dimensional function
+		  (with n the number of parameters) which computes the lap time. We want to find the
+		  minimal lap time, so we have to minimize this function. Because this function has
+		  (at least!) around 10 dimensions it's almost impossible to find the global minimum. What you can
+		  get is a local minimum, which can be much worse than the optimal (global) one.      
+		</p>
+		
+        <h3>Qualifying Setup</h3>
+        <p>
+		  In the qualifying the goal is to get the minimal lap time. Because there are no other
+		  opponents on the track we can drive at the limit. We also just need fuel for a few laps.
+		  The top speed on straights doesn't matter as long we reach the minimal lap time.
+		</p>
+
+		<h3>Racing Setup</h3>
+		<p>
+		  The racing setup is a bit different. Of course you still would like to minimize the lap
+		  time, but other things become also important. For example it is much easier to overtake
+		  on a straight than in a turn, so you want to optimize the setup also for top speed on 
+		  a straight, 
+		  altough it probably will increase the lap time. The car needs also to be more stable,
+		  so that it doesn't spin of the track when it tries to overtake or to avoid a collision.
+		  Keep in mind if you want to win a race you have to reach at least the finish line...
+		</p>
+		
+		<h3>Skill Level</h3>
+		<p>
+		  There are four skill levels available, namely rookie, amateur, semi-pro, and pro.
+		  On rookie you have a lot of adherence and no damages, with pro you get a lot of
+		  damage and less adherence. I mention that here, because this affects the setups. The
+		  default skill level is semi-pro. You can configure it for every car individually
+		  in the <span style="color:red;">bt</span>.xml file. Add the skill level line in the
+		  section of the car you want to configure, e. g. for the car with index 0:
+		</p>
+		          
+		<p>
+		  <pre class="lbcolor">    &lt;section name="0"&gt;
+        &lt;attstr name="skill level" val="semi-pro"/&gt;
+    &lt;/section&gt;</pre>
+		</p>
+		
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know what a car setup is.</li>
+		   <li>You know that for different goals different setups are required.</li>
+		   <li>You know how to change the skill level of your cars.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./ch5.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./loading.html">
+          <p style="text-align:right;">Loading custom setups.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

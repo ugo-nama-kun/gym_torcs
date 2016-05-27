@@ -1,0 +1,122 @@
+<!--
+        file        : carshadow.html
+        created     : Fri Aug  12 13:39:11 CET 2005
+        copyright   : (C) 2005 by Eric Espie
+        email       : torcs@free.fr
+        version     : $Id: carshadow.html,v 1.1 2005/08/17 20:58:37 berniw Exp $
+
+        Permission is granted to copy, distribute and/or modify this document
+        under the terms of the GNU Free Documentation License, Version 1.2
+        or any later version published by the Free Software Foundation;
+        with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+        Texts.  A copy of the license is available at http://www.gnu.org/copyleft.
+-->
+
+	<h1>Car's Shadows for 1.3.x</h1>
+
+    <p>This tutorial explains how to generate shadows for the cars with "The Gimp".</p>
+
+    <p><hr noshade="noshade" size="2" width="100%"></p>
+    <p>
+      First you'll have to create an RGB (uncompressed) blank image (128x128) that you'll name
+      "shadow.rgb" in the car directory:
+    </p>
+    <pre>cars/acura-nsx-sz
+cars/acura-nsx-sz/acura-nsx-sz.xml
+cars/acura-nsx-sz/acura-nsx-sz.rgb
+cars/acura-nsx-sz/tex-wheel.rgb
+cars/acura-nsx-sz/acura-nsx-sz.acc
+cars/acura-nsx-sz/acura-nsx-sz-lod1.acc
+cars/acura-nsx-sz/acura-nsx-sz-lod2.acc
+<b>cars/acura-nsx-sz/shadow.rgb</b>
+</pre>
+    <p>
+      Then edit the "car.xml" ("acura-nsx-sz.xml" in our example) file to add the following line to the "Graphic Objects" section:
+    </p>
+
+    <pre><attstr name="shadow texture" val="shadow.rgb"/></pre>
+
+    <p>
+      Now launch a race with a player using the car you're modifying, and hit the "P" key before the race starts.
+      <br>Select the "F5" view and zoom (with "<" and ">" keys) to have a good view of the car and take a screen-shot with "F12".
+      <br>The image is saved in the torcs runtime directory.
+    </p>
+
+    <img src="images/shadow/sh01.jpg">
+
+    <p>Select the white area and create a new image with the selection Right-Click and "Script-Fu->Selection->To Image".</p>
+
+    <p>Now use the "Fuzzy select" tool to select the white areas:</p>
+
+    <img src="images/shadow/sh02.jpg">
+
+    <p>The result is:</p>
+    
+    <img src="images/shadow/sh03.jpg">
+
+    <p>Now cut the select area with Control-X:</p>
+
+    <img src="images/shadow/sh04.jpg">
+
+    <p>Now select the car with Right-Click and "Layers->Alpha to Selection", then select the "Bucket Fill" tool:</p>
+
+    <img src="images/shadow/sh05.jpg">
+
+    <p>Paint the car in black:</p>
+
+    <img src="images/shadow/sh06.jpg">
+
+    <p>Invert the selection with "Control-I" and paint it too:</p>
+
+    <img src="images/shadow/sh07.jpg">
+
+    <p>Then cut the newly painted area with "Control-X" (this is to have the transperent color made of black).</p>
+
+    <img src="images/shadow/sh08.jpg">
+
+    <p>Now blur the shadow with Right-Click and "Filters->Blur->Gaussian Blur (RLE)..."</p>
+
+    <img src="images/shadow/sh09.jpg">
+
+    <p>The result is:</p>
+
+    <img src="images/shadow/sh10.jpg">
+
+    <p>Now scale the image to 128x128 with Right-Click and "Image->Scale Image..."</p>
+
+    <img src="images/shadow/sh11.jpg">
+
+    <p>The result is:</p>
+
+    <img src="images/shadow/sh12.jpg">
+
+    <p>Set the image transparency to 80%</p>
+
+    <img src="images/shadow/sh13.jpg">
+
+    <p>The result is:</p>
+
+    <img src="images/shadow/sh14.jpg">
+
+    <p>Now save the image in RGB uncompressed format:</p>
+
+    <img src="images/shadow/sh15.jpg">
+
+    <p>important:</p>
+
+    <img src="images/shadow/sh16.jpg">
+
+    <p>The result is:</p>
+
+    <img src="images/shadow/sh17.jpg">
+
+    <p></p>
+
+    <img src="images/shadow/sh18.jpg">
+
+    <hr>
+    <address><a href="mailto:torcs--at--free.fr">torcs</a></address>
+<!-- Created: Sun May 25 08:42:14 CEST 2003 -->
+<!-- hhmts start -->
+Last modified: Sun May 25 11:40:56 CEST 2003
+<!-- hhmts end -->

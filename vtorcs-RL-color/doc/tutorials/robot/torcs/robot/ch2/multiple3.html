@@ -1,0 +1,483 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: multiple3.html,v 1.1 2004/11/30 14:02:08 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Implement Multiple Robots</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="how to implement multiple robots"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, multiple"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>2.5 Finishing Implementation</h1>
+
+        <h3>Overview</h3>
+        <p>
+          In this chapter we will change the structure of the robot. Of course there are other possibilities
+          to structure the robots than the one presented here. We will also clean the code up according to the
+          comments made in chapter 2.2. Don't be afraid about the length of this page, most stuff is familiar
+          for you and is just moved into another file.
+        </p>
+
+        <h3>The Driver Class Definition driver.h</h3>
+        <p>
+          Now I will show you the basic class definition for our driver. Implement it in a new file called
+          driver.h. But why should we take a class? Perhaps you will implement later a very sophisticated
+          robot, which will use a lot of memory. Assume you have 10 cars available in your module. If you
+          declare it static you allocate always the full memory for 10 drivers, even if you just select one out of 10.
+          Instead of putting huge static arrays in <span style="color:red;">bt</span>.cpp, you can get the
+          memory in the constructor of your driver. This way you just allocate the memory you really need.
+          There are also other advantages like you don't mind anymore of the index.
+        </p>
+        <p><pre class="lcolor">/***************************************************************************
+
+    file                 : driver.h
+    created              : Thu Dec 20 01:20:19 CET 2002
+    copyright            : (C) 2002 Bernhard Wymann
+
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef _DRIVER_H_
+#define _DRIVER_H_</pre>
+        </p>
+        <p>
+          With this define we make sure that the file content is just included once. There is also a
+          matching #endif on the end of the file. If you want to learn more about such # stuff, search
+          for information about your C pre-processor.
+        </p>
+
+        <p><pre class="lcolor">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+
+#include &lt;tgf.h&gt;
+#include &lt;track.h&gt;
+#include &lt;car.h&gt;
+#include &lt;raceman.h&gt;
+#include &lt;robottools.h&gt;
+#include &lt;robot.h&gt;
+
+class Driver {
+    public:
+        Driver(int index);
+
+        /* callback functions called from TORCS */
+        void initTrack(tTrack* t, void *carHandle,
+                       void **carParmHandle, tSituation *s);
+        void newRace(tCarElt* car, tSituation *s);
+        void drive(tCarElt* car, tSituation *s);
+        int pitCommand(tCarElt* car, tSituation *s);
+        void endRace(tCarElt *car, tSituation *s);</pre>
+        </p>
+        <p>
+          First we include all the stuff we need. Then we define the constructor, which has the robot index as
+          argument. It will store this index, so the following functions initTrack, newRace, drive and
+          pitCommand don't need it anymore. These are public, because they are called then from <span style="color:red;">bt</span>.cpp and
+          should finally do the work. Shutdown is not implemented here, because we need to call the destructor on
+          shutdown to free the memory. In case you allocate memory with new, don't forget to add a destructor with
+          code to release it.
+        </p>
+
+        <p><pre class="lcolor">    private:
+        /* utility functions */
+        bool isStuck(tCarElt* car);
+        void update(tCarElt* car, tSituation *s);
+
+        /* per robot global data */
+        int stuck;
+        float trackangle;
+        float angle;
+
+        /* data that should stay constant after first initialization */
+        int MAX_UNSTUCK_COUNT;
+        int INDEX;
+
+        /* class constants */
+        static const float MAX_UNSTUCK_ANGLE;
+        static const float UNSTUCK_TIME_LIMIT;
+
+        /* track variables */
+        tTrack* track;
+};</pre>
+        </p>
+        <p>
+          You know already isStuck, we move it also into our class. Update is supposed to prepare data we
+          need in more than one place in our robot like trackangle and angle. You can also see the nice names
+          for the constants here. MAX_UNSTUCK_ANGLE tells you more than 30.0, doesn't it?
+        </p>
+
+        <p><pre class="lcolor">#endif // _DRIVER_H_</pre>
+        </p>
+        <p>
+          This closes the leading #ifndef and first implementation of driver.h.
+        </p>
+
+        <h3>The Driver Class Implementation driver.cpp</h3>
+
+        <p>
+          Now we will put concrete implementations of the above defined stuff in driver.cpp.
+        </p>
+
+        <p><pre class="lcolor">/***************************************************************************
+
+    file                 : driver.cpp
+    created              : Thu Dec 20 01:21:49 CET 2002
+    copyright            : (C) 2002 Bernhard Wymann
+
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#include "driver.h"</pre>
+        </p>
+        <p>
+          This includes the previously defined file driver.h.
+        </p>
+
+        <p><pre class="lcolor">const float Driver::MAX_UNSTUCK_ANGLE = 30.0/180.0*PI;  /* [radians] */
+const float Driver::UNSTUCK_TIME_LIMIT = 2.0;           /* [s] */</pre>
+        </p>
+        <p>
+          Here are the constants implemented which are already defined in driver.h. We do it this way for
+          compatibility with VC++ 6.0. You should put at least the unit into the comment.
+        </p>
+
+        <p><pre class="lcolor">Driver::Driver(int index)
+{
+    INDEX = index;
+}</pre></p>
+        <p>
+          In the constructor we save the index for later use. Probably we can remove the INDEX later, because
+          we don't need it.
+        </p>
+
+        <p><pre class="lcolor">/* Called for every track change or new race. */
+void Driver::initTrack(tTrack* t, void *carHandle, 
+                       void **carParmHandle, tSituation *s)
+{
+    track = t;
+    *carParmHandle = NULL;
+}
+
+/* Start a new race. */
+void Driver::newRace(tCarElt* car, tSituation *s)
+{
+    MAX_UNSTUCK_COUNT = int(UNSTUCK_TIME_LIMIT/RCM_MAX_DT_ROBOTS);
+    stuck = 0;
+}
+</pre>
+        </p>
+        <p>
+          We don't dig into initTrack yet, this will follow in the chapter about how to load custom car setups.
+          In newRace we init our stuck counter variable with 0. Did you recognize that now every driver
+          instance has its own stuck variable? We also replace the former 100 with MAX_UNSTUCK_COUNT, which is
+          computed based on the desired delay in UNSTUCK_TIME_LIMIT and the simulation timestep.
+        </p>
+
+        <p><pre class="lcolor">/* Drive during race. */
+void Driver::drive(tCarElt* car, tSituation *s)
+{
+    update(car, s);
+
+    memset(&amp;car-&gt;ctrl, 0, sizeof(tCarCtrl));
+
+    if (isStuck(car)) {
+        car-&gt;ctrl.steer = -angle / car-&gt;_steerLock;
+        car-&gt;ctrl.gear = -1; // reverse gear
+        car-&gt;ctrl.accelCmd = 0.3; // 30% accelerator pedal
+        car-&gt;ctrl.brakeCmd = 0.0; // no brakes
+    } else {
+        float steerangle = angle - car-&gt;_trkPos.toMiddle/car-&gt;_trkPos.seg-&gt;width;
+
+        car-&gt;ctrl.steer = steerangle / car-&gt;_steerLock;
+        car-&gt;ctrl.gear = 1; // first gear
+        car-&gt;ctrl.accelCmd = 0.3; // 30% accelerator pedal
+        car-&gt;ctrl.brakeCmd = 0.0; // no brakes
+    }
+}</pre>
+        </p>
+        <p>
+          You are already familiar with drive from <span style="color:red;">bt</span>.cpp. New is the update
+          of the data and the use of precomputed variables instead of expensive RtTrackSideTgAngleL() calls.
+        </p>
+
+        <p><pre class="lcolor">/* Set pitstop commands. */
+int Driver::pitCommand(tCarElt* car, tSituation *s)
+{
+    return ROB_PIT_IM; /* return immediately */
+}
+
+/* End of the current race */
+void Driver::endRace(tCarElt *car, tSituation *s)
+{
+}
+
+/* Update my private data every timestep */
+void Driver::update(tCarElt* car, tSituation *s)
+{
+    trackangle = RtTrackSideTgAngleL(&(car-&gt;_trkPos));
+    angle = trackangle - car-&gt;_yaw;
+    NORM_PI_PI(angle);
+}</pre>
+        </p>
+        <p>
+          We will discuss pitCommand in the pit stop chapter. In endRace you can put code which should
+          run after the race. Update does assign the current values to angle
+          and trackangle. Put in here updates to driver variables which you would like to perform on every
+          simulation timestep.
+        </p>
+
+        <p><pre class="lcolor">/* Check if I'm stuck */
+bool Driver::isStuck(tCarElt* car)
+{
+    if (fabs(angle) &lt; MAX_UNSTUCK_ANGLE) {
+        stuck = 0;
+        return false;
+    }
+    if (stuck &lt; MAX_UNSTUCK_COUNT) {
+        stuck++;
+        return false;
+    } else {
+        return true;
+    }
+}</pre>
+        </p>
+        <p>
+          This is also already well known. Changes are the use of constants and the precomputed angle. That
+          finishes the driver.cpp.
+        </p>
+
+        <h3>Changing <span style="color:red;">bt</span>.cpp</h3>
+        <p>
+          Here I will present the fitting <span style="color:red;">bt</span>.cpp file. Major changes include
+          the calls to the driver methods and the construction and destruction of the driver instances. Have
+          a look at it.
+        </p>
+
+        <p><pre class="lcolor">/***************************************************************************
+
+    file                 : bt.cpp
+    created              : Thu Dec 12 02:34:31 CET 2002
+    copyright            : (C) 2002 Bernhard Wymann
+
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifdef _WIN32
+#include &lt;windows.h&gt;
+#endif
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+
+#include &lt;tgf.h&gt;
+#include &lt;track.h&gt;
+#include &lt;car.h&gt;
+#include &lt;raceman.h&gt;
+#include &lt;robottools.h&gt;
+#include &lt;robot.h&gt;
+
+#include "driver.h"
+
+#define BUFSIZE 20
+#define NBBOTS 3
+
+static char *botname[NBBOTS];
+static Driver *driver[NBBOTS];</pre>
+        </p>
+        <p>
+          Here we allocate an array which holds pointers to our drivers.
+        </p>
+        <p><pre class="lcolor">static void initTrack(int index, tTrack* track,
+                      void *carHandle, void **carParmHandle, tSituation *s);
+static void newRace(int index, tCarElt* car, tSituation *s);
+static void drive(int index, tCarElt* car, tSituation *s);
+static int  pitcmd(int index, tCarElt* car, tSituation *s);
+static void shutdown(int index);
+static int InitFuncPt(int index, void *pt);
+static void endRace(int index, tCarElt *car, tSituation *s);
+
+/* Module entry point */
+extern "C" int bt(tModInfo *modInfo)
+{
+    char buffer[BUFSIZE];
+    int i;
+
+    /* clear all structures */
+    memset(modInfo, 0, 10*sizeof(tModInfo));
+
+    for (i = 0; i &lt; NBBOTS; i++) {
+        sprintf(buffer, "bt %d", i+1);
+        botname[i] = strdup(buffer);	  /* store pointer to string */
+        modInfo[i].name    = botname[i];  /* name of the module (short) */
+        modInfo[i].desc    = "";          /* description of the module (can be long) */
+        modInfo[i].fctInit = InitFuncPt;  /* init function */
+        modInfo[i].gfId    = ROB_IDENT;	  /* supported framework version */
+        modInfo[i].index   = i;           /* indices from 0 to 9 */
+    }
+    return 0;
+}
+
+/* Module interface initialization. */
+static int InitFuncPt(int index, void *pt)
+{
+    tRobotItf *itf = (tRobotItf *)pt;
+
+    /* create robot instance for index */
+    driver[index] = new Driver(index);</pre>
+        </p>
+        <p>
+          Create an instance for driver index.
+        </p>
+        <p><pre class="lcolor">    itf-&gt;rbNewTrack = initTrack; /* Give the robot the track view called */
+    itf-&gt;rbNewRace  = newRace;   /* Start a new race */
+    itf-&gt;rbDrive    = drive;     /* Drive during race */
+    itf-&gt;rbPitCmd   = pitcmd;    /* Pit commands */
+    itf-&gt;rbEndRace  = endRace;   /* End of the current race */
+    itf-&gt;rbShutdown = shutdown;  /* Called before the module is unloaded */
+    itf-&gt;index      = index;     /* Index used if multiple interfaces */
+    return 0;
+}
+
+/* Called for every track change or new race. */
+static void initTrack(int index, tTrack* track, void *carHandle,
+                      void **carParmHandle, tSituation *s)
+{
+    driver[index]-&gt;initTrack(track, carHandle, carParmHandle, s);
+}
+
+/* Start a new race. */
+static void newRace(int index, tCarElt* car, tSituation *s)
+{
+    driver[index]-&gt;newRace(car, s);
+}
+
+
+/* Drive during race. */
+static void drive(int index, tCarElt* car, tSituation *s)
+{
+    driver[index]-&gt;drive(car, s);
+}
+
+
+/* Pitstop callback */
+static int pitcmd(int index, tCarElt* car, tSituation *s)
+{
+    return driver[index]-&gt;pitCommand(car, s);
+}
+
+
+/* End of the current race */
+static void endRace(int index, tCarElt *car, tSituation *s)
+{
+    driver[index]-&gt;endRace(car, s);
+}
+
+
+/* Called before the module is unloaded */
+static void shutdown(int index)
+{
+    free(botname[index]);
+    delete driver[index];
+}</pre>
+        </p>
+        <p>
+          Like you can see most functions route now the call to the corresponding driver method. Shutdown does
+          now also delete the instance of driver index.
+        </p>
+
+        <h3>Changing the Makefile</h3>
+        <p>
+          Because we need now to compile the additional file driver.cpp, we have to update the Makefile.
+          Change the line
+        </p>
+        <p><pre class="lbcolor">SOURCES     = ${ROBOT}.cpp</pre>
+        </p>
+        <p>to</p>
+        <p><pre class="lcolor">SOURCES     = ${ROBOT}.cpp driver.cpp</pre>
+        </p>
+        <p>
+          Now you should be able to build the whole bunch.
+        </p>
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt25.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+          <li>You know how the robot works so far.</li>
+          <li>You know how to add source files.</li>
+          <lI>You have implemented it.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./multiple2.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./unstuck2.html">
+          <p style="text-align:right;">Improve getting unstuck. Or fix...?</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

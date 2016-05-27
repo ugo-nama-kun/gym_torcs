@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    file                 : objects.xml
+    created              : Tue May 21 22:42:59 CEST 2002
+    copyright            : (C) 2001 by Eric Espié                         
+    email                : Eric.Espie@torcs.org   
+    version              : $Id: objects.xml,v 1.3 2003/09/01 06:28:39 torcs Exp $                                  
+-->
+
+<!--    This program is free software; you can redistribute it and/or modify  -->
+<!--    it under the terms of the GNU General Public License as published by  -->
+<!--    the Free Software Foundation; either version 2 of the License, or     -->
+<!--    (at your option) any later version.                                   -->
+
+
+  <section name="tree1">
+    <attstr name="object" val="tree1.ac"/>
+    <attnum name="color" val="0x00FF00"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree2">
+    <attstr name="object" val="tree2.ac"/>
+    <attnum name="color" val="0x00F000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree3">
+    <attstr name="object" val="tree3.ac"/>
+    <attnum name="color" val="0x00E000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree4">
+    <attstr name="object" val="tree4.ac"/>
+    <attnum name="color" val="0x00D000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree5">
+    <attstr name="object" val="tree5.ac"/>
+    <attnum name="color" val="0x00C000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree6">
+    <attstr name="object" val="tree6.ac"/>
+    <attnum name="color" val="0x00B000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree7">
+    <attstr name="object" val="tree7.ac"/>
+    <attnum name="color" val="0x00A000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree8">
+    <attstr name="object" val="tree8.ac"/>
+    <attnum name="color" val="0xFFFF00"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree9">
+    <attstr name="object" val="tree9.ac"/>
+    <attnum name="color" val="0xF0F000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree10">
+    <attstr name="object" val="tree10.ac"/>
+    <attnum name="color" val="0xE0E000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree11">
+    <attstr name="object" val="tree11.ac"/>
+    <attnum name="color" val="0xD0D000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree12">
+    <attstr name="object" val="tree12.ac"/>
+    <attnum name="color" val="0xC0C000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree13">
+    <attstr name="object" val="tree13.ac"/>
+    <attnum name="color" val="0xB0B000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree14">
+    <attstr name="object" val="tree14.ac"/>
+    <attnum name="color" val="0xA0A000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree15">
+    <attstr name="object" val="tree15.ac"/>
+    <attnum name="color" val="0xFF8000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree16">
+    <attstr name="object" val="tree16.ac"/>
+    <attnum name="color" val="0xE08000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="tree17">
+    <attstr name="object" val="tree17.ac"/>
+    <attnum name="color" val="0xA08000"/>
+    <attstr name="orientation type" val="random"/>
+  </section>
+
+  <section name="treeg1">
+    <attstr name="object" val="treeg1.ac"/>
+    <attnum name="color" val="0xA04000"/>
+    <attstr name="orientation type" val="random"/>
+    <attnum name="delta height" val="4.0"/>
+    <attnum name="delta vert" val="10.0"/>
+  </section>
+
+
+
+  <section name="stadn">
+    <attstr name="object" val="stadium1.ac"/>
+    <attnum name="color" val="0x0000FF"/>
+    <attstr name="orientation type" val="standard"/>
+    <attnum name="orientation" val="180" unit="deg"/>
+  </section>
+
+  <section name="stads">
+    <attstr name="object" val="stadium1.ac"/>
+    <attnum name="color" val="0x0000FE"/>
+    <attstr name="orientation type" val="standard"/>
+    <attnum name="orientation" val="0" unit="deg"/>
+  </section>
+
+  <section name="stade">
+    <attstr name="object" val="stadium1.ac"/>
+    <attnum name="color" val="0x0000FD"/>
+    <attstr name="orientation type" val="standard"/>
+    <attnum name="orientation" val="90" unit="deg"/>
+  </section>
+
+  <section name="stadw">
+    <attstr name="object" val="stadium1.ac"/>
+    <attnum name="color" val="0x0000FC"/>
+    <attstr name="orientation type" val="standard"/>
+    <attnum name="orientation" val="270" unit="deg"/>
+  </section>

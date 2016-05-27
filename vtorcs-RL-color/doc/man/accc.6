@@ -1,0 +1,89 @@
+.TH "Ac3d Compiler" "6" "1.4" "Rudy Godoy" "Games"
+.SH "NAME"
+.LP
+accc \- Ac3d Compiler
+.SH "SYNTAX"
+.LP
+accc [option] <inputfile> <outputfile> [dist][-order orderstring]
+.SH "DESCRIPTION"
+.TP
+This manual describes the Ac3d compiler application that is shipped with the game TORCS.
+.SH "OPTIONS"
+.TP
+.B \-strip
+stripify any ac3d output models
+.TP
+.B +o
+ac3d to ac3d: the result file is optimized in using groups by zone of 
+track track must be named TKMNxxx dist is used to determine the distance
+of the objects
+.TP
+.B +om
+ac3d to ac3d: the result is a vertex merged unique obj for smooth car 
+only
+.TP
+.B -o
+ac3d to obj
+.B +s
+ac3d to ac3d with strips (used for cars)
+.TP
+.B +es <angle_of_smooth>
+ac3d to ac3d with strips (used for cars) and extended ac3d file output
+(computed normals) angle is in degrees:
+example: \fI+es 80.0 clkdtm_o.ac clkdtm.ac\fP
+the output file will also contains the secondary textcoord for the env sliding
+.TP
+.B +et
+ac3d to ac3d with triangles (used for cars) and extended ac3d file output (normals normals)
+.TP
+.B +etn
+ac3d to ac3d with triangles no split and extended ac3d file output (normals normals)
+.TP
+.B +shad
+ac3d to ac3d with triangles, create a new ac3d file used for track shading\n   vertical mapping of a single texture
+.TP
+.B <inputfile>
+.TP
+.B <outputfile>
+.TP
+.B -order \fIorderstring\fP
+only used with \fB+es\fP , \fB+s\fP and \fB+et\fP \fIorderstring\fP is the order of the objects during the save for example: \fIHB;OB;OBM\fP is the names of the objet separate by a semicolon for imported NFS cars the object name \fIHB\fP must be used instead of: \fIHB\fP
+.TP
+.B -g <outputfile>
+for grouping multilayer ac3d track
+.TP
+.B -l0 <input filename>
+the base geometry
+.TP
+.B -l1 <input filename>
+the base geometry map-tiled
+.TP
+.B -l2 <input filename>
+the base geometry skids/and grass details
+.TP
+.B -l3 <input filename>
+the base geometry shadows
+.TP
+.B -d3 <val>
+the max distance of groups in tkmn
+.TP
+.B -d2 <val>
+the distance of group 2 in tkmn
+.TP
+.B -d1 <val>
+the distance of group 1 in tkmn
+.TP
+.B -S <val>
+the distance of splitting for TERRAIN* objects
+.TP
+.B -es
+for extended ac3d file format for strips
+.TP
+.B -nts
+no texture split (for debug)
+.SH "SEE ALSO"
+.BR torcs (6)
+.SH "AUTHOR"
+.LP
+This manual page was writen by Rudy Godoy <rudy@kernel-panik.org>,
+for the Debian GNU/Linux system (but may be used by others).

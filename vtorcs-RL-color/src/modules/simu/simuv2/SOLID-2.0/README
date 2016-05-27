@@ -1,0 +1,82 @@
+		SOLID - Interference Detection Library
+		Copyright (C) 1997, 1998  Gino van den Bergen
+
+
+Introduction
+	
+SOLID is a library for collision detection of three-dimensional objects
+undergoing rigid motion and deformation. SOLID is designed to be used in
+interactive 3D graphics applications, and is especially suited for
+collision detection of objects and worlds described in VRML.
+
+The objects can be modeled as primitives, such as boxes, cones, cylinders,
+and spheres, or as complex shapes composed of polytopes. The placement of
+an object is given either as a sequence of translations, rotations, and
+nonuniform scalings, or as a 4x4 column-major matrix, that represents an
+affine transformation, as used in OpenGL.   
+
+
+Requirements
+
+The library is written in ANSI/ISO C++ and relies heavily on STL. Currently
+it compiles under GNU g++ version 2.8.1 and Visual C++ 5.0. The library has
+a standard C API and can be linked to both C and C++ applications. Note
+that in order to use in C applications, you need to explicitly include the
+libstdc++ library in the linkage.  
+
+For fast intersection tests and distance computations between convex
+polyhedra, SOLID relies on the Qhull library for convex hull computations.
+Qhull is a free software library and is available for most platforms. 
+The Qhull source code can be downloaded from URL: 
+
+	http://www.geom.umn.edu/software/qhull/
+
+Note that a properly operating SOLID library  can be compiled without using
+Qhull. However, it is recommended to incorporate Qhull for a better
+performance, when polyhedra are used.  
+
+
+License
+
+The SOLID library and accompanying C++ classes for 3D geometry are
+released under the terms of the GNU Library General Public License. 
+See the file COPYING.LIB for details. 
+
+
+Installation
+
+In case you have a recent GNU developers environment installed, simply
+typing `make' in the root of the distribution directory will build the
+library, a sample client and documentation.
+
+If you want to use another compiler, you should make the necessary changes
+to the `Make-config' file in the root directory. Also, if you wish to
+build a SOLID that uses the Qhull library, you need to make adjustments to
+the `Make-config' file. This file contains instructions on how to
+incorporate Qhull.    
+
+The auxiliary C++ classes in `include/3D' may be used for performing 3D
+transformations.  The classes have all their code inlined, so you do not
+need to link a library in order to use them.  
+
+
+Documentation
+
+The SOLID manual is available as: (i) an Emacs info file, (ii) a DVI file
+(use dvips to print as postscript), and (iii) a set of HTML files.  
+
+The HTML files are also made available on the SOLID web page located at
+
+http://www.win.tue.nl/cs/tt/gino/solid/
+
+
+Contact Info
+
+Please send remarks, questions and bug reports to gino@win.tue.nl,
+or write to:
+                  Gino van den Bergen
+		  Department of Mathematics and Computing Science
+		  Eindhoven University of Technology
+		  P.O. Box 513, 5600 MB Eindhoven, The Netherlands
+
+

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE params SYSTEM "params.dtd">
+
+
+<params name="Quick Race">
+  <section name="Header">
+    <attstr name="name" val="Quick Race"/>
+    <attstr name="description" val="Quick Race"/>
+    <attnum name="priority" val="10"/>
+    <attstr name="menu image" val="data/img/splash-qr.png"/>
+  </section>
+
+  <section name="Tracks">
+    <attnum name="maximum number" val="1"/>
+    <section name="1">
+      <attstr name="name" val="backyard4"/>
+      <attstr name="category" val="oval"/>
+    </section>
+
+  </section>
+
+  <section name="Races">
+    <section name="1">
+      <attstr name="name" val="Quick Race"/>
+    </section>
+
+  </section>
+
+  <section name="Quick Race">
+    <attnum name="distance" unit="km" val="0"/>
+    <attstr name="type" val="race"/>
+    <attstr name="starting order" val="drivers list"/>
+    <attstr name="display mode" val="normal"/>
+    <attstr name="display results" val="yes"/>
+    <attstr name="restart" val="yes"/>
+    <attnum name="laps" val="10"/>
+    <section name="Starting Grid">
+      <attnum name="rows" val="2"/>
+      <attnum name="distance to start" val="25"/>
+      <attnum name="distance between columns" val="20"/>
+      <attnum name="offset within a column" val="10"/>
+      <attnum name="initial speed" val="0"/>
+      <attnum name="initial height" val="0.2"/>
+    </section>
+
+  </section>
+
+  <section name="Drivers">
+    <attnum name="maximum number" val="40"/>
+    <attnum name="focused idx" val="0"/>
+    <attstr name="focused module" val="scr_server"/>
+    <section name="1">
+      <attnum name="idx" val="3"/>
+      <attstr name="module" val="tita"/>
+    </section>
+
+    <section name="2">
+      <attnum name="idx" val="3"/>
+      <attstr name="module" val="inferno"/>
+    </section>
+
+    <section name="3">
+      <attnum name="idx" val="3"/>
+      <attstr name="module" val="berniw"/>
+    </section>
+
+    <section name="4">
+      <attnum name="idx" val="0"/>
+      <attstr name="module" val="scr_server"/>
+    </section>
+
+    <section name="5">
+      <attnum name="idx" val="2"/>
+      <attstr name="module" val="bt"/>
+    </section>
+
+    <section name="6">
+      <attnum name="idx" val="3"/>
+      <attstr name="module" val="lliaw"/>
+    </section>
+
+    <section name="7">
+      <attnum name="idx" val="2"/>
+      <attstr name="module" val="olethros"/>
+    </section>
+
+  </section>
+
+  <section name="Configuration">
+    <attnum name="current configuration" val="4"/>
+    <section name="1">
+      <attstr name="type" val="track select"/>
+    </section>
+
+    <section name="2">
+      <attstr name="type" val="drivers select"/>
+    </section>
+
+    <section name="3">
+      <attstr name="type" val="race config"/>
+      <attstr name="race" val="Quick Race"/>
+      <section name="Options">
+        <section name="1">
+          <attstr name="type" val="race length"/>
+        </section>
+
+        <section name="2">
+          <attstr name="type" val="display mode"/>
+        </section>
+
+      </section>
+
+    </section>
+
+  </section>
+
+</params>

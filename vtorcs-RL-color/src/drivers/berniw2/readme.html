@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+	<title>berniw torcs driver readme</title>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
+
+<body>
+
+<h2>berniw development snapshot for torcs-1.2.0</h2>
+
+<h3>1.0 what is berniw?</h3>
+
+<p>
+berniw is a car driver for the open racing car simulator, look at <a href="http://torcs.org">
+torcs.org</a>. at this place i would like to thank the developers of torcs, i had a lot of fun
+during the development of this driver, they do a great job:-)
+</p>
+
+<h3>1.1 license and download</h3>
+
+<p>
+gnu general public license 2. anyway, please don't look too hard in the code yet, or my reputation
+will be lost...;-). download the latest version <a href="download/berniw20020125.tar.bz2">berniw20020125.tar.bz2</a> here (it's more recent than the one included in 1.0.0). if you get the CVS
+version of torcs, you don't need this package, berniw is already included.
+</p>
+
+<h4>1.1.1 older versions</h4>
+<p>
+- <a href="download/berniw20011225.tar.bz2">berniw20011225.tar.bz2</a> for torcs 1.0.0.<br>
+- <a href="download/berniw20011103.tar.bz2">berniw20011103.tar.bz2</a> for torcs 1.0.0-pre7.<br>
+</p>
+
+<h3>1.2 how do i install berniw?</h3>
+
+<p>
+so, first you need a working version of torcs 1.2.0 under linux with sources installed. i
+assume in this instructions the following:<br>
+you have the permisson on the system to do the needed tasks. the torcs sources  are in /usr/src/torcs/torcs and the installation is in
+/usr/local/games/torcs.  in case you use other directories, just replace this directories with the
+ones on your system. i also assume that the <a  href="download/berniw20020125.tar.bz2">berniw20020125.tar.bz2</a>
+is in your home directory.<br>
+<br>
+first export the following environment variables (for bash):<br>
+export TORCS_BASE=/usr/src/torcs/torcs<br>
+export MAKE_DEFAULT=/usr/src/torcs/torcs/Make-default.mk<br>
+<br>
+now change to the drivers directory:<br>
+cd $TORCS_BASE/src/drivers<br>
+<br>
+unpack the berniw package (where YYYYMMDD means the version you got, eg. 20011225):<br>
+tar xfvI ~/berniwYYYYMMDD.tar.bz2<br>
+<br>
+compile and install:<br>
+cd berniw<br>
+make<br>
+make install<br>
+if you discover trouble send me a mail to berni4you@gmx.ch.<br>
+<br>
+run it:<br>
+cd /usr/local/games/torcs<br>
+./torcs<br>
+now choose a berniw, have fun.<br>
+</p>
+
+<h3>1.3 features</h3>
+<p>
+- pit stop.<br>
+- simple collision avoidance.<br>
+- stays quite good on various tracks.<br>
+- overtaking.<br>
+- let opponents overlap.<br>
+- pit speed limiter.
+</p>
+
+<h3>1.4 todo</h3>
+<p>
+- improvment of letting overlap.<br>
+- prepare flag and rule handling (todo is just yellow flag, and perhaps drive through).<br>
+- better strategy.<br>
+- improve stability (of car, not of the code).<br>
+- review the code and choose better names for variables/procedures, improve comments.<br>
+- replace quick hacks with serious routines.<br>
+- communication between berniw's.<br>
+- improve behavior model.<br>
+</p>
+
+<h3>1.5 would you like to get involved?</h3>
+<p>
+if you are interested, you can tune the setups for the cars. they are in the berniw 1-10 directories, named according to the track. if you have a good one, it's welcome, of course (berni4you@gmx.ch).<br>
+</p>
+
+<h3>1.6 contributors</h3>
+<p>
+- windows port has been supported by my brother michael.<br>
+</p>
+
+<h3>1.7 changes</h3>
+
+<h4>till 30. dec. 2002</h4>
+<p>
+- fixed array index underflow.<br>
+- improved gear changing, it uses now enginemaxrpmRedLine instead of enginemaxrpm.<br>
+- setups.<br>
+- improved overlapping support.<br>
+</p>
+
+<h4>8. dec. 2002</h4>
+<p>
+- reduced trajectory footprint, pathfinder.*.<br>
+</p>
+
+<h4>4. dec. 2002</h4>
+<p>
+- changed correctpath(), takes now actual car direction to compute trajectory instead of parrallel to the track.<br>
+- setups.<br>
+- new skin for berniw 2-7.<br>
+</p>
+
+<h4>21. nov. 2002</h4>
+<p>
+- basic overlapping support.<br>
+</p>
+
+<h4>till 19. nov. 2002</h4>
+<p>
+- setups.<br>
+- berniw 5 changed to gt-40.<br>
+- berniw2-7 changed to porsche-gt3.<br>
+- skin for berniw 5.<br>
+</p>
+
+<h4>till 10. oct. 2002</h4>
+<p>
+- setups.<br>
+- berniw 2-10 changed to 360-modena.<br>
+- changed skins of berniw 9 and berniw 2-9.<br>
+- some changes in breaking code.<br>
+</p>
+
+<h4>3. sep. 2002</h4>
+<p>
+- added pit speed limiter.<br>
+</p>
+
+<h4>26. jun. 2002</h4>
+<p>
+- changed some parameters in mycar.cpp to improve starts.<br>
+- some setups.<br>
+- changed braking code.<br>
+- changed overtaking.<br>
+</p>
+
+<h4>25. jun. 2002</h4>
+<p>
+- changed ABS from take care of average slip to maximum slip.<br>
+- some setups.<br>
+</p>
+
+<h4>22. jun. 2002</h4>
+<p>
+- make use of curbs and concrete patches in turns.<br>
+- minor performance improvment.<br>
+- rearranged some code.<br>
+</p>
+
+<h4>21. jun. 2002</h4>
+<p>
+- changed some methods in TrackSegment, to access original data and get rid of local copies. with this i hope to get more cache-hits, because few data is accessed often, and reduce the memory footprint.<br>
+- changed some setups.<br>
+- improved performance of distToMiddleOnSeg(), distToMiddle().<br>
+</p>
+
+<h4>19. jun. 2002</h4>
+<p>
+- changed pathslope() for better connection between spline and track.<br>
+- removed connection smoothing.<br>
+- fixed one of the "stop and go" bugs in overtake().<br>
+</p>
+
+<h4>18. jun. 2002</h4>
+<p>
+- made overtaking more aggressive.<br>
+</p>
+
+<h4>16. jun. 2002</h4>
+<p>
+- some setups.<br>
+- changed parameter MAXALLOWEDPITCH to fix crazy behaviour on a-speedway (mycar.cpp).<br>
+- some changes in steer code (berniw.cpp).<br>
+- changed overtaking, tried to compensate "noise" from interpolation.<br>
+</p>
+
+<h4>12. jun. 2002</h4>
+<p>
+- some setups.<br>
+- some old stuff removed and small changes in overtake code.<br>
+</p>
+
+<h4>20. mai 2002</h4>
+<p>
+- minor change in overtaking code.<br>
+- minor cleanups.<br>
+</p>
+
+<h4>17. mai 2002</h4>
+<p>
+- commited windows port.<br>
+</p>
+
+<h4>12. mai 2002</h4>
+<p>
+- fixed bug #554910 (hopefully...).<br>
+</p>
+
+<h4>10. mai 2002</h4>
+<p>
+- added "anti fly code".<br>
+</p>
+
+<h4>till 9. mai 2002</h4>
+<p>
+- merged with torcs 1.1, eg. no frontwing anymore, etc.<br>
+- added some updates for efficiency.<br>
+- changed berniw 3 to porsche-gt1.<br>
+- fixed a minor bug in my aerodynamics stuff.<br>
+- experimental windows port.
+- ...
+</p>
+
+<h4>12. mar. 2002</h4>
+<p>
+- continued cleanups, introduced linalg.h to put vector stuff into it. messed a bit around with overtaking and breaking code.<br>
+</p>
+
+<h4>4. mar. 2002</h4>
+<p>
+- starting major cleanups in mycar.h, mycar.cpp.<br>
+</p>
+
+<h4>21. feb. 2002</h4>
+<p>
+- bugfix in collision(), minor changes.<br>
+</p>
+
+<h4>29. jan. 2002</h4>
+<p>
+- little overtaking code change, which should avoid some obiously bad overtaking attempts.<br>
+</p>
+
+<h4>25. jan. 2002</h4>
+<p>
+- minor changes and cleanups.<br>
+</p>
+
+<h4>4. jan. 2002</h4>
+<p>
+- minor cleanups (comments, regrouped some code, ...).<br>
+</p>
+
+<h4>29. dec. 2001</h4>
+<p>
+- tried things out (speed dependent margins, ...), improved overtake().<br>
+</p>
+
+<h4>27. dec. 2001</h4>
+<p>
+- did some testing, races are with new overtake more spectacular, so the show improves;-).<br>
+- texture for viper.<br>
+- setups for acura-nsx and viper on e-track-4.<br>
+</p>
+
+
+<h4>26. dec. 2001</h4>
+<p>
+- improved and changed overtake() a bit.<br>
+- setups for acura-nsx and viper on e-track-1.<br>
+</p>
+
+<h4>23-25. dec. 2001</h4>
+<p>
+- tried to improve overtaking and breaking, try it out.<br>
+- reworked some code, later a merge of overtake() and collision () has to be done for efficiency.<br>
+</p>
+
+<h4>19. dec. 2001</h4>
+<p>
+- added a viper (berniw 4), setups and texture are not done.<br>
+- added an acura-nsx (berniw 3), setups and texture not done.<br>
+- minor code cleanups.<br>
+</p>
+
+<h4>18. dec. 2001</h4>
+<p>
+- Eric released torcs 1.0.0. hurray:-).<br>
+- just played a bit with the setups of my cars.<br>
+</p>
+
+<h4>17. dec. 2001</h4>
+<p>
+- added defines in pathfinder.h. you can now choose the trajectory on compile time through defining PATH_K1999 or PATH_BERNIW. if you choose none, the driver will drive on the midde of the track. if you choose both, first a berniw path is generated, then a K1999 optimisation is performed. the reason for having two path's handy is, that you can check, if an idea is "in general" good, and not just on one path.<br>
+- added support to take care of bumps (ala dirt-2).<br>
+</p>
+
+<h4>15. dec. 2001</h4>
+<p>
+- hopefully fixed the SIGSEGV bug.<br>
+</p>
+
+<h4>13. dec. 2001</h4>
+<p>
+- fixed a potential bug (never appeared in tests:-)).<br>
+- cleanups.<br>
+</p>
+
+<h4>12. dec. 2001</h4>
+<p>
+- performance improvements.<br>
+- newlines at *.cpp, *.h files, strange, my gcc 2.95.3 didn't complain?!.<br>
+- make all ready to deploy to cvs.<br>
+</p>
+
+<h4>10. dec. 2001</h4>
+<p>
+- added path finding from Remi Coulom, K1999.cpp, (c) by Remi Coulom.<br>
+- make all ready to deploy to cvs.
+</p>
+
+<h4>7. dec. 2001</h4>
+<p>
+- simple overtaking.
+</p>
+
+<h4>4. dec. 2001</h4>
+<p>
+- setups for berniw 9, so it stays on every track.<br>
+- little strategy (refueling: laps behind leader) change in berniw.cpp.<br>
+</p>
+
+<h4>28. nov. 2001</h4>
+<p>
+- finished setups for eroad, e-track-4.<br>
+</p>
+
+<h4>26. nov. 2001</h4>
+<p>
+- setups for berniw 1-9, eroad, e-track-4.<br>
+- textures for berniw 6-8.<br>
+- handling of rwd, fwd and 4wd.<br>
+- moved some code.<br>
+</p>
+
+<h4>till 25. nov. 2001</h4>
+<p>
+- moved berniw 10 into a buggy.<br>
+- moved berniw 9 into a mc-laren-f1.<br>
+- moved berniw 8 into a corvette.<br>
+- moved berniw 7 into a lotus-gt1.<br>
+- moved berniw 6 into a 155-DTM.<br>
+- new setups for berniw 1-5 (brake balance).<br>
+- cleaned up old stuff.<br>
+- added some trajectory code (not used yet).<br>
+- bug hunting, reporting.<br>
+- berniw becomes integrated into the torcs CVS:-).<br>
+</p>
+
+<h3>1.8 how does it work</h3>
+
+<h4>1.8.1 let opponents overlap</h4>
+<p>
+1. the opponent needs to be nearer (e. g. distance &lt; 50m) than a certain threshold, then a timer gets started.<br>
+2. if the distance becomes again greater than a threshold (e. g. distance &gt; 80m), then the timer is reset to zero.<br>
+3. if the opponent is nearer than another threshold (e. g. distance &lt; 15m) and the timer value is greater than e. g. 10s, let him pass.<br>
+</p>
+
+</body>
+
+</html>
+
+
+

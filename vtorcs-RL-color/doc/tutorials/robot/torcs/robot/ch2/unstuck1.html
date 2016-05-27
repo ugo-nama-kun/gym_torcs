@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: unstuck1.html,v 1.1 2004/11/30 14:02:08 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Basic Getting Unstuck</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="basic getting unstuck"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, stuck, unstuck"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>2.1 Basic Getting Unstuck</h1>
+
+        <h3>Introduction</h3>
+        <p>
+          So far our robot is just able to drive forward. That means if we hit the wall with the front of the
+          car, we still try to drive forward and stuck in the wall. The only way to resolve the
+          situation is to recognize it, and then to back up. Such a recovery procedure is essential even if
+          we drive perfect, because we can be hit by opponents and spin of the track into the wall. It's also
+          important that it works always and fast, because every second counts in the race.
+        </p>
+
+        <h3>Basic Algorithm</h3>
+        <p>
+          Here is the draft for the algorithm to detect if we are stuck:
+        </p>
+        <ul style="list-style-type:disk; color:black;">
+          <li>Init a counter to 0.</li>
+          <li>If the absolute value of the angle between the track and the car is smaller than a
+          certain value, reset counter to 0 and return "not stuck".</li>
+          <li>If the counter is smaller than a certain limit, increase the counter and return "not stuck",
+          else return "stuck".</li>
+        </ul>
+
+        <p>
+          The algorithm to drive is then:
+        </p>
+        <ul style="list-style-type:disk; color:black;">
+          <li>If we are stuck get unstuck else drive normal.</li>
+        </ul>
+        <p>
+          <pre class="lcolor">// counter
+static int stuck = 0;
+
+/* check if the car is stuck */
+bool isStuck(tCarElt* car)
+{
+    float angle = RtTrackSideTgAngleL(&(car-&gt;_trkPos)) - car-&gt;_yaw;
+    NORM_PI_PI(angle);
+    // angle smaller than 30 degrees?
+    if (fabs(angle) &lt; 30.0/180.0*PI) {
+        stuck = 0;
+        return false;
+    }
+    if (stuck &lt; 100) {
+        stuck++;
+        return false;
+    } else {
+        return true;
+    }
+}
+
+
+/* Drive during race. */
+static void
+drive(int index, tCarElt* car, tSituation *s)
+{
+    float angle;
+    const float SC = 1.0;
+
+    memset(&amp;car-&gt;ctrl, 0, sizeof(tCarCtrl));
+
+    if (isStuck(car)) {
+        angle = -RtTrackSideTgAngleL(&(car-&gt;_trkPos)) + car-&gt;_yaw;
+        NORM_PI_PI(angle); // put the angle back in the range from -PI to PI
+        car-&gt;ctrl.steer = angle / car-&gt;_steerLock;
+        car-&gt;ctrl.gear = -1; // reverse gear
+        car-&gt;ctrl.accelCmd = 0.3; // 30% accelerator pedal
+        car-&gt;ctrl.brakeCmd = 0.0; // no brakes
+    } else {
+        angle = RtTrackSideTgAngleL(&(car-&gt;_trkPos)) - car-&gt;_yaw;
+        NORM_PI_PI(angle); // put the angle back in the range from -PI to PI
+        angle -= SC*car-&gt;_trkPos.toMiddle/car-&gt;_trkPos.seg-&gt;width;
+        car-&gt;ctrl.steer = angle / car-&gt;_steerLock;
+        car-&gt;ctrl.gear = 1; // first gear
+        car-&gt;ctrl.accelCmd = 0.3; // 30% accelerator pedal
+        car-&gt;ctrl.brakeCmd = 0.0; // no brakes
+    }
+}</pre>
+        </p>
+        <p>
+          Try to understand why this algorithm works sometimes and implement it in <span style="color:red;">bt</span>.cpp.
+          There is also a case where the algorithm fails, we will fix that in chapter 2.6, but try to find out
+          what's wrong with it. The simulation timestep is 0.02 seconds, so the angle needs to be for 2 (0.02 times 100)
+          seconds greater than 30 degrees, till we start getting unstuck. We will stop getting unstuck, when the
+          angle becomes smaller than 30 degrees.
+        </p>
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt21.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You have implemented the above stuff and played with it.</li>
+           <li>You have found the bug in isStuck(tCarElt * car), eventually.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./ch2.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./comments.html">
+          <p style="text-align:right;">Some comments about that code.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

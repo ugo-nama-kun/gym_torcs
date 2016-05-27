@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: fast.html,v 1.1 2004/11/30 14:02:11 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>reduce the lap time</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="reduce the lap time"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, steer, lap, time, reduce, faster"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>4.4 Reduce the Lap Time</h1>
+
+        <h3>Overview</h3>
+        <p>
+		  In this section we modify Driver::getAllowedSpeed, so that we can pass short turns faster. A
+		  "short" turn in this context means that the angle of the turn is small. You have seen that on
+		  the new path the radius we drive is larger than the radius in the middle of the track. As
+		  heuristic approximation we take first the turns outside radius. Further we divide the radius
+		  by the square root of the remaining angle of the turn (remember, this is a heuristic!). This
+		  will lead to a problem, but we will fix that later.
+		  An interesting feature of this approach is the growing acceleration toward the end of a turn. 
+		</p>
+		
+        <h3>Implementation</h3>
+        <p>
+		  Replace getAllowedSpeed in driver.cpp with the following version:
+		</p>
+		
+		<p><pre class="lcolor">/* Compute the allowed speed on a segment */
+float Driver::getAllowedSpeed(tTrackSeg *segment)
+{
+    if (segment-&gt;type == TR_STR) {
+        return FLT_MAX;
+    } else {</pre></p>
+	
+		<p>
+		  No changes so far. In the next part we compute the remaining angle (arc) of the turn. We
+		  need a loop because large turns can be composed from a lot of small turns.
+		</p>
+        
+		<p><pre class="lcolor">        float arc = 0.0;
+        tTrackSeg *s = segment;
+        
+        while (s-&gt;type == segment->type && arc &lt; PI/2.0) {
+            arc += s-&gt;arc;
+            s = s-&gt;next;
+        }</pre></p>
+		
+		<p>
+		  Because we divide the radius by this angle it makes no sense to have values greater than 1.0,
+		  so we normalize it.
+		</p>
+        
+		<p><pre class="lcolor">        arc /= PI/2.0;
+        float mu = segment->surface->kFriction;</pre>
+		</p>
+		
+		<p>
+		  Compute the magic radius.
+		</p>
+		
+        <p><pre class="lcolor">        float r = (segment->radius + segment->width/2.0)/sqrt(arc);
+        return sqrt((mu*G*r)/(1.0 - MIN(1.0, r*CA*mu/mass)));
+    }
+}</pre>
+		</p>
+
+        <p>
+		<pre class="lcolor"></pre>
+		</p>
+
+		<h3>Testdrive</h3>
+        <p>
+		  Now we come close to some opponents with the lap times. There are just a few seconds on some
+		  tracks left. In the next section we will fix the newly introduced stability problem.
+		</p>
+
+		<h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt44.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You are really hot to beat some opponents.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./steer.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./stability.html">
+          <p style="text-align:right;">Back to track.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

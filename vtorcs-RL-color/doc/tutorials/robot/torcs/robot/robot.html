@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: robot.html,v 1.2 2006/05/20 08:58:37 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>TORCS Robot Tutorial</title>
+  <link rel="stylesheet" type="text/css" href="../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="robot tutorial introduction"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, driver, tutorial"/>
+  <script src="../../js/utilities.js" type="text/javascript"></script>
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>TORCS Robot Tutorial</h1>
+
+        <h2>Introduction</h2>
+        <p>
+          The goal of this tutorial is to motivate you to write your own TORCS robot and to guide you through
+          the first steps. So what does the term "robot" here mean exactly? A robot is a program that drives
+          a car (technically it's a function encapsulated into a shared object in Linux, into a DLL in Windows).
+          It is executed from TORCS and gets as input information about the current status of its car and
+          the situation on the track. Based on this it can compute how much it wants to steer, to brake or accelerate,
+          which gear it needs and if it wants to pit. Your robot returns the data to TORCS and the next
+          simulation step will be performed.<br/>
+          For me it's great fun to develop my robot, because I can implement my ideas and check it in the
+          simulation. I can just say, it didn't really often happen what I expected, because it is a more
+          complex and interesting environment as it seems on the first glimpse. You don't have just to fight
+          with the control of your car, you have also to avoid collisions, to overtake and to resolve other
+          situations.<br/>
+          So, if you like to watch races on TV here is something more exciting for you, you can let your
+          driver enter the race and participate yourself. Take your chance and enter the race!
+        </p>
+
+        <h2>Requirements</h2>
+        <p>
+          You need to have TORCS installed exactly according to the
+          <a href="javascript:changetwoframes('../install/navigation/navigation.html','navigation','../install/install.html','content')">installation</a>
+          section (if you have not read the installation instructions, then do it before you start,
+		  even if TORCS runs perfectly). It helps if you already
+          know a programming language and a bit about data structures like linked lists. You have to write
+          your robot in C or C++, but that's easy if you already know another programming language, because you just
+          need very easy stuff like basic data types, structures, pointers, arrays and functions. So if
+          you are not familiar with C or C++, simply read further and look up a C or C++ tutorial on demand.
+          You can find such tutorials on the internet, pick one that fits your needs.
+        </p>
+
+        <h2>Resources</h2>
+        <p>
+          There is a reference manual and much more on the official <a href="http://torcs.org" target="_parent">TORCS site</a>.
+          Let us know about your robot and make it available, so that the world can enjoy your work. If you want
+          discuss about TORCS, mail to the <a href="mailto:torcs-users@lists.sourceforge.net">torcs-users</a>
+          mailing list.
+        </p>
+
+		<h2>Robot Tutorial Download</h2>
+		<p>
+		  If you prefer to read the tutorial offline, then you can download it
+		  <a href="http://www.berniw.org/aboutme/publications/tutorial-0.tar.bz2">here</a>.
+		</p>
+        <br/><br/>
+
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../torcs.html','content')">
+          <p style="text-align:left;">Up</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="javascript:changetwoframes('./ch1/navigation/navigation.html','navigation','./ch1/ch1.html','content')">
+          <p style="text-align:right;">Let's get our hands dirrrty...</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

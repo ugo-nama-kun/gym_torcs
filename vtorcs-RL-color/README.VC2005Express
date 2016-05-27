@@ -1,0 +1,22 @@
+In order to compile with VC++2005 express you will need to do some modifications in the project.
+
+First don't forget to run the files :
+
+setup_win32.bat
+setup_win32-data-from-CVS.bat
+
+PRIOR to anything else.
+
+Then open the TORCS.dsw file with VC++ and do the fllowing changes :
+
+1. Select "Release" instead of "Debug" as a configuration.
+
+2. in wtorcs -> Source Files (Solution explorer) exclude torcs.rc
+
+3. in client -> Source Files add the file errno.cpp to the solution (located in src/libs/client)
+
+4. change in the properties of all the sub-projects :
+	in "Configuration Properties -> Link Editor -> Entry : Ignore Specific Library"
+	change LIBCD in LIBC if present.
+
+Compile.

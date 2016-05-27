@@ -1,0 +1,29 @@
+;
+; txml.def
+;
+
+LIBRARY
+
+SECTIONS .data READ WRITE
+
+EXPORTS
+	xmlInsertElt
+	xmlReadFile
+	xmlWriteFile
+	xmlGetAttr
+	xmlNextElt
+	xmlSubElt
+	xmlWalkElt
+	xmlWalkSubElt
+	xmlFindNextElt
+	xmlFindEltAttr
+	XML_ParserFree
+	XML_ErrorString
+	XML_GetErrorCode
+	XML_GetCurrentLineNumber
+	XML_Parse
+	XML_SetExternalEntityRefHandler
+	XML_SetElementHandler
+	XML_ParserCreate
+	XML_ExternalEntityParserCreate
+	XML_SetUserData

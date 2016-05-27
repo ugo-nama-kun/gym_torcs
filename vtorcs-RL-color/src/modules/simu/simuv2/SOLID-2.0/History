@@ -1,0 +1,39 @@
+August 13, 1999
+	Fixed the setRotation method and <<-operator in Matrix.h. These
+	were still for column-major matrices, however in SOLID 2.0 matrices
+	are supposed to be row-major. Also, I modified the setEuler method
+	in Quaternion.h. `Yaw' now corresponds with rotation around the
+	Y-axis, `pitch' with the X-axis, and `roll' with the Z-axis.
+
+January 24, 1999
+	Added a safety margin to the extents of the bounding boxes for
+	primitives in correspondence with the absolute error tolerance of
+        the GJK intersection test, in order to avoid problems where objects
+	are found intersecting whereas their bounding boxes are
+	disjoint. Problem spotted by Arthur Johnson Jr.
+
+January 8, 1999
+	Renamed some variables and function names. Visual C++ 6.0 is
+	troubled by too much variables or functions having the same name.
+	Also, dtDeleteObject now removes the responses defined for the
+	deleted object. Problems spotted, and fixes suggested by 
+	Arthur Johnson Jr. 
+
+December 21, 1998
+	Streamlined bounding box computation routines.
+
+December 11, 1998
+	Bug fixed in `Basic.h'. Under Linux Redhat 5.2, `RAND_MAX + 1' used
+	in the function `rnd()' is a negative number. Bug spotted and
+	solved by Jason Surratt. 
+
+September 23, 1998
+	Bug fixed in `C-api.cpp' in the computation of the normal in smart
+	response, spotted and fix suggested by Arthur Johnson Jr.  
+
+September 14, 1998
+	Bug fixed in `C-api.cpp' which prevented the use of multiple
+	complex shapes, spotted and solved by Adam Machnik.
+ 
+August 28, 1998 
+	Public release of SOLID version 2.0

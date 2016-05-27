@@ -1,0 +1,192 @@
+<!DOCTYPE public "-//w3c//dtd html 4.01 transitional//en"
+		"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: splinemath.html,v 1.1 2004/11/30 14:02:15 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>the math of the splines</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="the math of the splines"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, splines, math"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+	#pic1 { border:0px; width:509px; height:263px; border-style:hidden; margin-bottom:5px; }
+	#pic2 { border:0px; width:294px; height:70px; border-style:hidden; margin-top:5px; margin-bottom:5px; }
+	#pic3 { border:0px; width:396px; height:47px; border-style:hidden; margin-top:5px; margin-bottom:5px; }
+	#pic4 { border:0px; width:528px; height:94px; border-style:hidden; margin-bottom:5px; }
+	#pic5 { border:0px; width:442px; height:105px; border-style:hidden; margin-bottom:5px; }
+	#pic6 { border:0px; width:291px; height:64px; border-style:hidden; margin-bottom:5px; }
+	#pic7 { border:0px; width:191px; height:61px; border-style:hidden; margin-bottom:5px; }
+	#pic8 { border:0px; width:289px; height:61px; border-style:hidden; margin-bottom:5px; }
+	#pic9 { border:0px; width:386px; height:76px; border-style:hidden; margin-bottom:5px; }
+	-->
+  </style>
+
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>8.2.S The Math of Cubic Splines</h1>
+
+        <h3>Problem Statement</h3>
+        <p>
+		  Here I show you how to derive the spline algorithm we use. First let us state the problem.
+		  Given is a set of points which belong to an unknown function y=f(x). We also know the
+		  first derivative of the function in the given points y'=f'(x). What we want to compute is
+		  an approximation of the unknown function value y for a given x.
+		</p>
+
+	  </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent" align="center">
+		<img id="pic1" src="images/spline_statement.jpg" alt="spline picture an problem statement" border="0"></img>
+	  </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+	    <h3>Algorithm Overview</h3>
+
+		<p>
+		  Like you can see is the x value for which we want to compute y enclosed between two points.
+		  In a first step the algorithm finds the surrounding points with binary search. After that
+		  we interpolate with the information provided by the two surrounding points.
+		</p>
+
+		<h3>Spline Interpolation</h3>
+
+		<p>
+		  The cubic splines are polynomials of the form: y = a*x<sup>3</sup> + b*x<sup>2</sup> + c*x + d =: P(x)
+		</p>
+		<p>
+		  To evaluate the above expression we have to find the parameters a, b, c and d. If we have
+		  the parameters we can simply evaluate the expression with the given x and we will get y.
+		</p>
+
+		<div align="center">
+		  <img id="pic2" src="images/spline2.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  We call the above polynomial P, and state four equations for the
+		  four unknown parameters a, b, c and d. The first line states the equations of the
+		  two surrounding points, which are known, and the second line shows two equations for
+		  the first derivatives, which are also known. Now you could already solve this system, but it
+		  would lead to quite unpleasant expressions.
+		</p>
+
+		<div align="center">
+		  <img id="pic3" src="images/spline3.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  To avoid that we introduce the new parameter t. Like you can see from the definition and
+		  the expressions it is 0 at x<sub>i</sub> and 1 at x<sub>i+1</sub>. This will be very pleasant,
+		  because evaluating a polynomial for 0 or 1 is much easier than for most of the other numbers.
+		</p>
+
+		<p>
+		  Now we work with t, so I state a new polynomial Q(t) := a*t<sup>3</sup> + b*t<sup>2</sup> + c*t + d
+		</p>
+
+		<div align="center">
+		  <img id="pic4" src="images/spline4.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  We need to convert the given points from P(x) to Q(t), and we get the expected Q(0) and Q(1).
+		</p>
+
+		<div align="center">
+		  <img id="pic5" src="images/spline5.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  The same applies for the derivatives P'(x), we convert it to Q'(t) and get Q'(0) and Q'(1).
+		</p>
+
+		<div align="center">
+		  <img id="pic6" src="images/spline6.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  Now we compute the derivative of the concrete polynomial.
+		</p>
+
+		<div align="center">
+		  <img id="pic7" src="images/spline7.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  We evaluate the equations for t=0 and get the parameters c and d.
+		</p>
+
+		<div align="center">
+		  <img id="pic8" src="images/spline8.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  We evaluate the equations with t=1, and get two equations with two unknown parameters.
+		  You can solve this system for a and b.
+		</p>
+
+		<div align="center">
+		  <img id="pic9" src="images/spline9.jpg" alt="given" border="0"></img>
+		</div>
+
+		<p>
+		  Finally we got all parameters a, b, c and d. We can now evaluate the polynomial. The
+		  expression used in the concrete algorithm uses the Horner-Schema to improve
+		  efficiency.
+		</p>
+
+		<h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+           <li>You know how the spline works.</li>
+        </ul>
+        <br/>
+       </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./splines.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+        <a href="./pitclass.html">
+          <p style="text-align:right;">The pit class.</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

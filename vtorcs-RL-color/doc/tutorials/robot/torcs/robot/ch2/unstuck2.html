@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<!--
+copyright   : (C) 2003-2004 Bernhard Wymann
+email       : berniw@bluewin.ch
+version     : $Id: unstuck2.html,v 1.1 2004/11/30 14:02:08 berniw Exp $
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+-->
+<head>
+  <title>Improving Getting Unstuck</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/format.css"/>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="description" content="how to implement multiple robots"/>
+  <meta name="author" content="Bernhard Wymann"/>
+  <meta name="keywords" content="torcs, berniw, bernhard wymann, robot, stuck, unstuck"/>
+  <script src="../../../js/utilities.js" type="text/javascript"></script>
+  <style type="text/css">
+    <!--
+    #pic1 { float:left; border:0px; width:300px; height:139px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    #pic2 { float:left; border:0px; width:299px; height:179px; border-style:hidden; margin-bottom:5px; margin-right:10px; }
+    -->
+  </style>
+
+</head>
+
+<body bgcolor="#ffffff">
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h1>2.6 Improving Getting Unstuck</h1>
+
+        <h3>Current Version</h3>
+        <p>
+          <img id="pic1" src="images/skid.jpg" alt="sketch of skidding" border="0"></img>
+          First I will show you what the problem is with the current isStuck() function. Let's have a look
+          at the sketch on the left. Assume the car comes from bottom left and wants to drive a left turn.
+          It is too fast and starts oversteering, so the angle between the track tangent and the car becomes
+          bigger and bigger. At a certain point the angle is big enough to start incrementing "stuck". When the
+          car hits the wall with its back "stuck" is 100 and we try to get unstuck. So we are with the back at
+          the wall and try to back up. So we are stuck again... Look careful at the sketch, it shows us also
+          the solution for the problem. The front of the car looks "inside" toward the track middle. But like you
+          can see, there is never such a situation where we need to get unstuck. You simply can drive forward
+          to come back on the track.
+        </p>
+
+        <h3>Look Inside Criteria</h3>
+        <p>
+          <img id="pic2" src="images/bool.jpg" alt="sketch of inside criteria" border="0"></img>
+          If you think about our current code, you can perhaps remember that we already compute the variable
+          "angle", which is the track tangent angle minus the car angle. So "angle" is positive clockwise (I
+          called it alpha on the sketch). You
+          should also remember car->_trkPos.toMiddle, which is positive on the left trackside and negative
+          on the right side. Now you can conclude if "angle" times "tomiddle" is greater than zero we are
+          looking toward the middle. This criteria holds always. You can paint the areas for the different
+          parts of our expressions into the circle to understand it better.
+          So if "fabs(angle) &lt; MAX_UNSTUCK_ANGLE" is true we try to drive forward, else we check if we look outside
+          and the "stuck" is already big enough. If that all is fullfilled, we return true to get unstuck. If
+          not we just increment "stuck".
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <table class="maincontent">
+    <tr>
+      <td class="maincontent">
+
+        <h3>Additional Conditions</h3>
+        <p>
+          As you can see, MAX_UNSTUCK_ANGLE is 30 degrees. This is quite much, and can still cause problems
+          if we try to drive forward along the wall. So we will reduce that angle. We will also add the
+          condition, that the speed has to be below a certain threshold, before we try to get unstuck. An
+          additional problem can occur if we try to get unstuck on the middle of the track. The following
+          implementation will solve most of this problems. It will not solve the case, where the wall itself
+          is not parallel to the track.
+        </p>
+
+        <h3>The Implementation</h3>
+        <p>
+          So finally here is the new isStuck(). Change it in driver.cpp. You can also further improve that.
+        </p>
+        <p>
+        <pre class="lcolor">/* Check if I'm stuck */
+bool Driver::isStuck(tCarElt* car)
+{
+    if (fabs(angle) &gt; MAX_UNSTUCK_ANGLE &&
+        car-&gt;_speed_x &lt; MAX_UNSTUCK_SPEED &&
+        fabs(car-&gt;_trkPos.toMiddle) &gt; MIN_UNSTUCK_DIST) {
+        if (stuck &gt; MAX_UNSTUCK_COUNT && car-&gt;_trkPos.toMiddle*angle &lt; 0.0) {
+            return true;
+        } else {
+            stuck++;
+            return false;
+        }
+    } else {
+        stuck = 0;
+        return false;
+    }
+}</pre>
+        </p>
+
+        <p>
+          Change also in driver.cpp this part of the drive function to apply more throttle to back up.
+        </p>
+        <p>
+        <pre class="lcolor">if (isStuck(car)) {
+    car-&gt;ctrl.steer = -angle / car-&gt;_steerLock;
+    car-&gt;ctrl.gear = -1; // reverse gear
+    car-&gt;ctrl.accelCmd = 0.5; // 50% accelerator pedal
+    car-&gt;ctrl.brakeCmd = 0.0; // no brakes
+} else {</pre>
+        </p>
+
+        <p>
+          Put the constants at the start of driver.cpp. Reduce also MAX_UNSTUCK_ANGLE.
+        </p>
+        <p>
+        <pre class="lcolor">const float Driver::MAX_UNSTUCK_SPEED = 5.0;   /* [m/s] */
+const float Driver::MIN_UNSTUCK_DIST = 3.0;    /* [m] */</pre>
+        </p>
+
+        <p>
+          You need also to define the new constants in driver.h.
+        </p>
+        <p>
+        <pre class="lcolor">static const float MAX_UNSTUCK_SPEED;
+static const float MIN_UNSTUCK_DIST;</pre>
+        </p>
+
+        <h3>Downloads</h3>
+        <p>
+          In case you got lost, you can <a href="../download/bt26.tar.gz">download</a> my robot for TORCS 1.2.0 or later.
+        </p>
+
+        <h3>Feedback</h3>
+        <p>
+          <a href="mailto:berni4you@gmx.ch">Let me know</a>
+          if you read this chapter and your thoughts about it. Please
+          <a href="mailto:berni4you@gmx.ch">send me</a>
+          also spelling, grammar, math and code corrections. Thank you for the feedback.
+        </p>
+
+        <h3>Summary</h3>
+        <ul style="list-style-type:disk; color:black;">
+          <li>You understand how getting unstuck works.</li>
+          <li>You know about every expression why it is necessary.</li>
+          <lI>You have implemented it.</li>
+        </ul>
+
+        <br/>
+      </td>
+    </tr>
+  </table>
+
+  <table class="navigation_foot">
+    <tr>
+      <td class="navigation_foot">
+        <a href="./multiple3.html">
+          <p style="text-align:left;">Back</p>
+        </a>
+      </td>
+      <td class="navigation_foot">
+         <a href="javascript:changetwoframes('../navigation/navigation.html','navigation','../robot.html','content')">
+          <p style="text-align:right;">Up</p>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+
+</body>
+</html>

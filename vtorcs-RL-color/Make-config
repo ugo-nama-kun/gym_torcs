@@ -1,0 +1,70 @@
+# Make-config.  Generated from Make-config.in by configure.
+
+##############################################################################
+#
+#    file                 : Make-config.in
+#    created              : Mon Dec 11 23:47:37 CET 2000
+#    copyright            : (C) 2000 by Eric Espi�                        
+#    email                : Eric.Espie@torcs.org   
+#    version              : $Id: Make-config.in,v 1.17.2.1 2008/06/01 20:19:38 berniw Exp $                                  
+#
+##############################################################################
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+##############################################################################
+
+SHELL = /bin/bash
+
+srcdir = .
+top_srcdir = ${TORCS_BASE}
+
+prefix = /usr/local
+exec_prefix = ${prefix}
+
+bindir = ${exec_prefix}/bin
+libdir = ${exec_prefix}/lib/torcs
+datarootdir = ${prefix}/share
+datadir = ${prefix}/share/games/torcs
+vardir = ${prefix}/var/games/torcs
+
+top_builddir = .
+
+CC = gcc
+CXX = g++
+LD = ld
+AR = ar
+ARFLAGS = ruv
+RANLIB = ranlib
+
+INSTALL = /usr/bin/install -c
+#INSTALL_PROGRAM = /usr/bin/install -c -m 755
+#INSTALL_DATA = /usr/bin/install -c -m 644
+INSTALL_PROGRAM = ${INSTALL}
+INSTALL_DATA = ${INSTALL} -m 644
+INSTALL_SCRIPT = ${INSTALL}
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+
+CFLAGSD = -D_SVID_SOURCE -D_BSD_SOURCE -DSHM -DHAVE_CONFIG_H
+CXXFLAGS =  -g -O2 -Wall -fPIC -fno-strict-aliasing -O2 -DUSE_RANDR_EXT -DGL_GLEXT_PROTOTYPES -Wall -fPIC -fno-strict-aliasing -O2 -DUSE_RANDR_EXT -DGL_GLEXT_PROTOTYPES  ${CFLAGSD}
+CFLAGS   =  -g -O2 -Wall -fPIC -fno-strict-aliasing -O2 -DUSE_RANDR_EXT -DGL_GLEXT_PROTOTYPES -Wall -fPIC -fno-strict-aliasing -O2 -DUSE_RANDR_EXT -DGL_GLEXT_PROTOTYPES ${CFLAGSD}
+
+#EXT_LIBS = -lpthread -lplibssgaux -lplibssg -lplibsm -lplibsl -lplibsg -lplibul -lglut -lGLU -lGL -lpng -lz -ldl -lopenal -lXrandr -lXrender -lXxf86vm -lXmu -lXi -lXt -lSM -lICE -lXext -lX11 -lm 
+EXT_LIBS = -lplibssgaux -lplibssg -lplibsm -lplibsl -lplibsg -lplibul -lglut -lGLU -lGL -lpng -lz -ldl -lopenal -lXrandr -lXrender -lXxf86vm -lXmu -lXi -lXt -lSM -lICE -lXext -lX11 -lm 
+#LDFLAGS =   -lalut -L${EXPORTBASE}/lib -L/usr/lib -L/usr/local/lib
+LDFLAGS =  -L${EXPORTBASE}/lib  -lalut -L/usr/lib
+
+#INCFLAGS =  -I${EXPORTBASE}/include -I/usr/include -I/usr/local/include
+INCFLAGS =  -I${EXPORTBASE}/include -I${TORCS_BASE}
+
+CPP = gcc -E  -M -D__DEPEND__
+
+PACKAGE = torcs
+VERSION = 1.3.1
+
+TAR = gtar
+GZIP_ENV = --best
+
