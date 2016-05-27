@@ -43,7 +43,7 @@ in the second terminal window after you open the TORCS server (just as written a
 After the selection of the driving-window mode, you need to set the appropriate gui size. This is done by using the display option mode in Options --> Display. You can select the Screen Resolution, and you need to select 64x64 for visual input (our immplementation only support this screen size, other screen size results the unreasonable visual information). Then, you need to shut down TORCS to complete the configuration for the vision treatment.
 
 
-# Simple How to
+# Simple How-To
 
 ```python
 from gym_torcs import TorcsEnv
