@@ -34,7 +34,7 @@ sudo torcs
 in the terminal, the GUI of TORCS should be launched.
 Then, you need to choose the race track by following the GUI (Race --> Practice --> Configure Race) and open TORCS server by selecting Race --> Practice --> New Race. This should result that TORCS keeps a blue screen with several text information.
 
-If you need to treat the vision input in your AI agent, you have to set the small image size in TORCS. To do so, you should run
+If you need to treat the vision input in your AI agent, you have to set the small image size in TORCS. To do so, you have to run
 ```
 python snakeoil3_gym.py
 ```
