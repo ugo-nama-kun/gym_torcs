@@ -90,7 +90,7 @@ ImgReadPng(FILE *fp, int *widthp, int *heightp, float screen_gamma)
 	    return (unsigned char *)NULL;
 	}
    
-    if (setjmp(png_ptr->jmpbuf))
+    if (setjmp(png_jmpbuf(png_ptr)))
 	{
 	    /* Free all of the memory associated with the png_ptr and info_ptr */
 	    png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
