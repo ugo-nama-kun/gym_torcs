@@ -10,7 +10,8 @@ and python-client for torcs (http://xed.ch/project/snakeoil/index.html).
 
 The detailed explanation of original TORCS for AI research is given by Daniele Loiacono et al. (https://arxiv.org/pdf/1304.1672.pdf)
 
-Because torcs has memory leak bug at race reset, we relaunch and automate the gui setting in torcs as an ad-hoc solution.
+Because torcs has memory leak bug at race reset.
+As an ad-hoc solution, we relaunch and automate the gui setting in torcs.
 Any better solution is welcome!
 
 # Requirements
