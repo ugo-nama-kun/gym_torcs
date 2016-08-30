@@ -26,6 +26,8 @@
 
 #include "linuxspec.h"
 
+char* window_title = "torcs";
+
 static void
 init_args(int argc, char **argv)
 {
@@ -76,6 +78,11 @@ init_args(int argc, char **argv)
 	} else if (strncmp(argv[i], "-s", 2) == 0) {
 	    i++;
 	    SetSingleTextureMode ();
+  } else if (strncmp(argv[i], "-title", 6) == 0) {
+    i++;
+    printf("Window title set to %s\n", argv[i]);
+    window_title = argv[i];
+    i++;
 	} else if (strncmp(argv[i], "-t", 2) == 0) {
 	    i++;
 	    if (i < argc) {
@@ -129,7 +136,6 @@ init_args(int argc, char **argv)
 		    printf("Speed set to %dx realtime!\n", atoi(argv[i])); 
 		    setSpeedMult((double) (1.0 / (double) atoi(argv[i])));
         i++;
-
 #ifndef FREEGLUT
 	} else if (strncmp(argv[i], "-m", 2) == 0) {
 	    i++;
@@ -171,6 +177,7 @@ main(int argc, char *argv[])
     	GfScrInit(argc, argv);	/* init screen */
 
     TorcsEntry();		/* launch TORCS */
+    glutSetWindowTitle(window_title);
     
     if (getTextOnly()==false)
     	glutMainLoop();		/* event loop of glut */
