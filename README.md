@@ -71,5 +71,24 @@ ob, reward, done, _ = env.step(action)
 env.end()
 ```
 
+# 
+
+# Add Noise in Low-dim Sensors
+
+If you want to apply sensor noise in low-dimensional sensors, you should 
+
+```
+os.system('torcs -nofuel -nodamage -nolaptime -vision -noisy &')
+os.system('torcs -nofuel -nolaptime -noisy &')
+```
+
+at 33 & 35th lines in gym_torcs.py
+
+# Great Application
+gym-torcs was utilized in DDPG experiment with Keras by Ben Lau. 
+This experiment is really great!
+
+https://yanpanlau.github.io/2016/10/11/Torcs-Keras.html
+
 # Acknowledgement
 gym_torcs was developed during the spring internship 2016 at Preferred Networks.
