@@ -226,15 +226,18 @@ class TorcsEnv:
 
     def obs_vision_to_image_rgb(self, obs_image_vec):
         image_vec =  obs_image_vec
-        r = image_vec[0:len(image_vec):3]
-        g = image_vec[1:len(image_vec):3]
-        b = image_vec[2:len(image_vec):3]
-
-        sz = (64, 64)
-        r = np.array(r).reshape(sz)
-        g = np.array(g).reshape(sz)
-        b = np.array(b).reshape(sz)
-        return np.array([r, g, b], dtype=np.uint8)
+        rgb = []
+        temp = []
+        # convert size 64x64x3 = 12288 to 64x64=4096 2-D list 
+        # with rgb values grouped together.
+        # Format similar to the observation in openai gym
+        for i in range(0,12285,3):
+            temp.append(image_vec[i])
+            temp.append(image_vec[i+1])
+            temp.append(image_vec[i+2])
+            rgb.append(temp)
+            temp = []
+        return np.array(rgb, dtype=np.uint8)
 
     def make_observaton(self, raw_obs):
         if self.vision is False:
