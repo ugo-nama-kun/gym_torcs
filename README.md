@@ -15,7 +15,7 @@ As an ad-hoc solution, we relaunch and automate the gui setting in torcs.
 Any better solution is welcome!
 
 # Requirements
-We are assuming you are using Ubuntu 14.04 LTS machine and installed
+We are assuming you are using Ubuntu 14.04 LTS/16.04 LTS machine and installed
 * Python 3
 * xautomation (http://linux.die.net/man/7/xautomation)
 * OpenAI-Gym (https://github.com/openai/gym)
