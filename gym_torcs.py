@@ -231,7 +231,7 @@ class TorcsEnv:
         # convert size 64x64x3 = 12288 to 64x64=4096 2-D list 
         # with rgb values grouped together.
         # Format similar to the observation in openai gym
-        for i in range(0,12285,3):
+        for i in range(0,12286,3):
             temp.append(image_vec[i])
             temp.append(image_vec[i+1])
             temp.append(image_vec[i+2])
