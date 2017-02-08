@@ -7,7 +7,9 @@ import numpy as np
 import copy
 import collections as col
 import os
+import subprocess
 import time
+import signal
 
 
 class TorcsEnv:
@@ -17,29 +19,38 @@ class TorcsEnv:
 
     initial_reset = True
 
+    def start_torcs_process(self):
+        if self.torcs_proc is not None:
+            os.killpg(os.getpgid(self.torcs_proc.pid), signal.SIGKILL)
+            time.sleep(0.5)
+            self.torcs_proc = None
+        window_title = str(self.port)
+        command = 'torcs -nofuel -nodamage -nolaptime -title {} -p {}'.format(window_title, self.port)
+        if self.vision is True:
+            command += ' -vision'
+        self.torcs_proc = subprocess.Popen([command], shell=True, preexec_fn=os.setsid)
+        time.sleep(0.5)
+        os.system('sh autostart.sh {}'.format(window_title))
+        time.sleep(0.5)
 
-    def __init__(self, vision=False, throttle=False, gear_change=False):
+    def __init__(self, vision=False, throttle=False, gear_change=False, port=3101):
        #print("Init")
         self.vision = vision
         self.throttle = throttle
         self.gear_change = gear_change
+        self.port = port
+        self.torcs_proc = None
 
         self.initial_run = True
 
         ##print("launch torcs")
-        os.system('pkill torcs')
         time.sleep(0.5)
-        if self.vision is True:
-            os.system('torcs -nofuel -nodamage -nolaptime  -vision &')
-        else:
-            os.system('torcs  -nofuel -nodamage -nolaptime &')
-        time.sleep(0.5)
-        os.system('sh autostart.sh')
+        self.start_torcs_process()
         time.sleep(0.5)
 
         """
         # Modify here if you use multiple tracks in the environment
-        self.client = snakeoil3.Client(p=3101, vision=self.vision)  # Open new UDP in vtorcs
+        self.client = snakeoil3.Client(p=3101)  # Open new UDP in vtorcs
         self.client.MAX_STEPS = np.inf
 
         client = self.client
@@ -180,7 +191,7 @@ class TorcsEnv:
                 print("### TORCS is RELAUNCHED ###")
 
         # Modify here if you use multiple tracks in the environment
-        self.client = snakeoil3.Client(p=3101, vision=self.vision)  # Open new UDP in vtorcs
+        self.client = snakeoil3.Client(self.start_torcs_process, p=self.port)  # Open new UDP in vtorcs
         self.client.MAX_STEPS = np.inf
 
         client = self.client
@@ -195,21 +206,16 @@ class TorcsEnv:
         return self.get_obs()
 
     def end(self):
-        os.system('pkill torcs')
+        os.killpg(os.getpgid(self.torcs_proc.pid), signal.SIGKILL)
 
     def get_obs(self):
         return self.observation
 
     def reset_torcs(self):
        #print("relaunch torcs")
-        os.system('pkill torcs')
+        self.torcs_proc.terminate()
         time.sleep(0.5)
-        if self.vision is True:
-            os.system('torcs -nofuel -nodamage -nolaptime -vision &')
-        else:
-            os.system('torcs -nofuel -nodamage -nolaptime &')
-        time.sleep(0.5)
-        os.system('sh autostart.sh')
+        self.start_torcs_process()
         time.sleep(0.5)
 
     def agent_to_torcs(self, u):
