@@ -370,7 +370,7 @@ void EstimateSphere (std::vector<Vector> P, ParametricSphere* sphere)
 				}
 				delta_total += delta;
 			}
-			if (isnan(r)) {
+			if (std::isnan(r)) {
 				for (i=0; i<d; i++) {
 					center[i] =  ((*(sphere->C))[i] - mean[i]) / scale;
 				}
