@@ -58,6 +58,7 @@ import sys
 import getopt
 import os
 import time
+import platform
 PI= 3.14159265359
 
 data_size = 2**17
@@ -172,15 +173,20 @@ class Client():
                 print("Count Down : " + str(n_fail))
                 if n_fail < 0:
                     print("relaunch torcs")
-                    os.system('pkill torcs')
-                    time.sleep(1.0)
-                    if self.vision is False:
-                        os.system('torcs -nofuel -nodamage -nolaptime &')
-                    else:
-                        os.system('torcs -nofuel -nodamage -nolaptime -vision &')
-
-                    time.sleep(1.0)
-                    os.system('sh autostart.sh')
+                    try:
+                        if platform.system().lower().startswith('win'):
+                            print('Skipping pkill/relaunch on Windows')
+                        else:
+                            os.system('pkill torcs')
+                            time.sleep(1.0)
+                            if self.vision is False:
+                                os.system('torcs -nofuel -nodamage -nolaptime &')
+                            else:
+                                os.system('torcs -nofuel -nodamage -nolaptime -vision &')
+                            time.sleep(1.0)
+                            os.system('sh autostart.sh')
+                    except Exception:
+                        print('Failed to relaunch torcs')
                     n_fail = 5
                 n_fail -= 1
 
@@ -415,9 +421,9 @@ class ServerState():
                 elif k == 'angle':
                     asyms= [
                           "  !  ", ".|'  ", "./'  ", "_.-  ", ".--  ", "..-  ",
-                          "---  ", ".__  ", "-._  ", "'-.  ", "'\.  ", "'|.  ",
+                          "---  ", ".__  ", "-._  ", "'-.  ", "'\\.  ", "'|.  ",
                           "  |  ", "  .|'", "  ./'", "  .-'", "  _.-", "  __.",
-                          "  ---", "  --.", "  -._", "  -..", "  '\.", "  '|."  ]
+                          "  ---", "  --.", "  -._", "  -..", "  '\\.", "  '|."  ]
                     rad= self.d[k]
                     deg= int(rad*180/PI)
                     symno= int(.5+ (rad+PI) / (PI/12) )
@@ -530,10 +536,10 @@ def drive_example(c):
     '''This is only an example. It will get around the track but the
     correct thing to do is write your own `drive()` function.'''
     S,R= c.S.d,c.R.d
-    target_speed=100
+    target_speed=300
 
     # Steer To Corner
-    R['steer']= S['angle']*10 / PI
+    R['steer']= S['angle']*15 / PI
     # Steer To Center
     R['steer']-= S['trackPos']*.10
 
@@ -566,7 +572,7 @@ def drive_example(c):
 
 # ================ MAIN ================
 if __name__ == "__main__":
-    C= Client(p=3101)
+    C= Client(p=3001)
     for step in range(C.maxSteps,0,-1):
         C.get_servers_input()
         drive_example(C)
