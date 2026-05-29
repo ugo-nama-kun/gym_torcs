@@ -5,6 +5,7 @@ import getopt
 import os
 import time
 PI= 3.14159265359
+import platform
 
 data_size = 2**17
 
@@ -111,15 +112,20 @@ class Client():
                 print("Count Down : " + str(n_fail))
                 if n_fail < 0:
                     print("relaunch torcs")
-                    os.system('pkill torcs')
-                    time.sleep(1.0)
-                    if self.vision is False:
-                        os.system('torcs -nofuel -nodamage -nolaptime &')
-                    else:
-                        os.system('torcs -nofuel -nodamage -nolaptime -vision &')
-
-                    time.sleep(1.0)
-                    os.system('sh autostart.sh')
+                    try:
+                        if platform.system().lower().startswith('win'):
+                            print('Skipping pkill/relaunch on Windows')
+                        else:
+                            os.system('pkill torcs')
+                            time.sleep(1.0)
+                            if self.vision is False:
+                                os.system('torcs -nofuel -nodamage -nolaptime &')
+                            else:
+                                os.system('torcs -nofuel -nodamage -nolaptime -vision &')
+                            time.sleep(1.0)
+                            os.system('sh autostart.sh')
+                    except Exception:
+                        print('Failed to relaunch torcs')
                     n_fail = 5
                 n_fail -= 1
 

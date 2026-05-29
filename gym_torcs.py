@@ -7,6 +7,7 @@ import copy
 import collections as col
 import os
 import time
+import platform
 
 
 class TorcsEnv:
@@ -26,14 +27,14 @@ class TorcsEnv:
         self.initial_run = True
 
         ##print("launch torcs")
-        os.system('pkill torcs')
+        self._maybe_exec('pkill torcs')
         time.sleep(0.5)
         if self.vision is True:
-            os.system('torcs -nofuel -nodamage -nolaptime  -vision &')
+            self._maybe_exec('torcs -nofuel -nodamage -nolaptime  -vision &')
         else:
-            os.system('torcs  -nofuel -nodamage -nolaptime &')
+            self._maybe_exec('torcs  -nofuel -nodamage -nolaptime &')
         time.sleep(0.5)
-        os.system('sh autostart.sh')
+        self._maybe_exec('sh autostart.sh')
         time.sleep(0.5)
 
         """
@@ -125,8 +126,8 @@ class TorcsEnv:
         # Get the current full-observation from torcs
         obs = client.S.d
 
-        # Make an obsevation from a raw observation vector from TORCS
-        self.observation = self.make_observaton(obs)
+        # Make an observation from a raw observation vector from TORCS
+        self.observation = self.make_observation(obs)
 
         # Reward setting Here #######################################
         # direction-dependent positive reward
@@ -186,7 +187,7 @@ class TorcsEnv:
         client.get_servers_input()  # Get the initial input from torcs
 
         obs = client.S.d  # Get the current full-observation from torcs
-        self.observation = self.make_observaton(obs)
+        self.observation = self.make_observation(obs)
 
         self.last_u = None
 
@@ -194,21 +195,21 @@ class TorcsEnv:
         return self.get_obs()
 
     def end(self):
-        os.system('pkill torcs')
+        self._maybe_exec('pkill torcs')
 
     def get_obs(self):
         return self.observation
 
     def reset_torcs(self):
        #print("relaunch torcs")
-        os.system('pkill torcs')
+        self._maybe_exec('pkill torcs')
         time.sleep(0.5)
         if self.vision is True:
-            os.system('torcs -nofuel -nodamage -nolaptime -vision &')
+            self._maybe_exec('torcs -nofuel -nodamage -nolaptime -vision &')
         else:
-            os.system('torcs -nofuel -nodamage -nolaptime &')
+            self._maybe_exec('torcs -nofuel -nodamage -nolaptime &')
         time.sleep(0.5)
-        os.system('sh autostart.sh')
+        self._maybe_exec('sh autostart.sh')
         time.sleep(0.5)
 
     def agent_to_torcs(self, u):
@@ -235,7 +236,7 @@ class TorcsEnv:
             rgb.append([image_vec[i], image_vec[i+1], image_vec[i+2]])
         return np.array(rgb, dtype=np.uint8)
 
-    def make_observaton(self, raw_obs):
+    def make_observation(self, raw_obs):
         if self.vision is False:
             names = ['focus',
                      'speedX', 'speedY', 'speedZ',
@@ -274,3 +275,13 @@ class TorcsEnv:
                                track=np.array(raw_obs['track'], dtype=np.float32)/200.,
                                wheelSpinVel=np.array(raw_obs['wheelSpinVel'], dtype=np.float32),
                                img=image_rgb)
+
+    def _maybe_exec(self, cmd):
+        """Run `cmd` only on POSIX systems; on Windows skip to avoid failures."""
+        try:
+            if platform.system().lower().startswith('win'):
+                print(f"Skipping shell command on Windows: {cmd}")
+            else:
+                os.system(cmd)
+        except Exception:
+            print(f"Failed to run: {cmd}")
