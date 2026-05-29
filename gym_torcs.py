@@ -3,7 +3,6 @@ from gym import spaces
 import numpy as np
 # from os import path
 import snakeoil3_gym as snakeoil3
-import numpy as np
 import copy
 import collections as col
 import os
@@ -225,18 +224,15 @@ class TorcsEnv:
 
 
     def obs_vision_to_image_rgb(self, obs_image_vec):
-        image_vec =  obs_image_vec
+        image_vec = obs_image_vec
         rgb = []
-        temp = []
-        # convert size 64x64x3 = 12288 to 64x64=4096 2-D list 
-        # with rgb values grouped together.
-        # Format similar to the observation in openai gym
-        for i in range(0,12286,3):
-            temp.append(image_vec[i])
-            temp.append(image_vec[i+1])
-            temp.append(image_vec[i+2])
-            rgb.append(temp)
-            temp = []
+        # convert flat RGB vector (H*W*3) to list of [r,g,b] rows
+        if image_vec is None:
+            return np.zeros((0,3), dtype=np.uint8)
+        n = len(image_vec)
+        # iterate by 3 and guard against malformed lengths
+        for i in range(0, n - (n % 3), 3):
+            rgb.append([image_vec[i], image_vec[i+1], image_vec[i+2]])
         return np.array(rgb, dtype=np.uint8)
 
     def make_observaton(self, raw_obs):
@@ -247,7 +243,7 @@ class TorcsEnv:
                      'rpm',
                      'track',
                      'wheelSpinVel']
-            Observation = col.namedtuple('Observaion', names)
+            Observation = col.namedtuple('Observation', names)
             return Observation(focus=np.array(raw_obs['focus'], dtype=np.float32)/200.,
                                speedX=np.array(raw_obs['speedX'], dtype=np.float32)/self.default_speed,
                                speedY=np.array(raw_obs['speedY'], dtype=np.float32)/self.default_speed,
@@ -264,7 +260,7 @@ class TorcsEnv:
                      'track',
                      'wheelSpinVel',
                      'img']
-            Observation = col.namedtuple('Observaion', names)
+            Observation = col.namedtuple('Observation', names)
 
             # Get RGB from observation
             image_rgb = self.obs_vision_to_image_rgb(raw_obs[names[8]])
